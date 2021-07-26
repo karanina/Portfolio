@@ -1,4 +1,4 @@
-#Summary
+# Summary
 
 This Yahtzee Game was designed for my Level 6 Data Structures and Algorithms Paper. 
 
@@ -9,7 +9,7 @@ This Yahtzee Game was designed for my Level 6 Data Structures and Algorithms Pap
 4. Assess the impact of data structures on algorithms.
 5. Analyse the scalability of data structures and algorithms in terms of both space and time complexity.
 
-###Features of the Yahtzee Game include:
+### Features of the Yahtzee Game include:
 + Balanced Binary Search Tree
 + Singly Linked List
 + Delegetes
@@ -17,4 +17,4 @@ This Yahtzee Game was designed for my Level 6 Data Structures and Algorithms Pap
 + SFML Library
 + User Interaction via keyboard and mouse
 
-###Assignment Grade: 100%
+### Assignment Grade: 100%
