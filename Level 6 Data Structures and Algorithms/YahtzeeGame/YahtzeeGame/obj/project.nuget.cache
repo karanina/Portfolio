@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "dgSpecHash": "L9leq90NGZFm3okfcJZptdaJLpAthwROV5A7bwAY/0/dFMJNEPWUF2z0JOx3pfmHKR5LG+5ZT6V8aP0oPkfo1A==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Anna\\Documents\\GitHub\\ISCG6426-Data-Structures-Algorithms\\YahtzeeGame\\YahtzeeGame\\YahtzeeGame.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Anna\\.nuget\\packages\\csfml\\2.5.0\\csfml.2.5.0.nupkg.sha512",
+    "C:\\Users\\Anna\\.nuget\\packages\\sfml.audio\\2.5.0\\sfml.audio.2.5.0.nupkg.sha512",
+    "C:\\Users\\Anna\\.nuget\\packages\\sfml.graphics\\2.5.0\\sfml.graphics.2.5.0.nupkg.sha512",
+    "C:\\Users\\Anna\\.nuget\\packages\\sfml.net\\2.5.0\\sfml.net.2.5.0.nupkg.sha512",
+    "C:\\Users\\Anna\\.nuget\\packages\\sfml.system\\2.5.0\\sfml.system.2.5.0.nupkg.sha512",
+    "C:\\Users\\Anna\\.nuget\\packages\\sfml.window\\2.5.0\\sfml.window.2.5.0.nupkg.sha512"
+  ],
+  "logs": []
+}
