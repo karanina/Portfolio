@@ -2,7 +2,7 @@
 
 This Yahtzee Game was designed for my Level 6 Data Structures and Algorithms Paper. 
 
-###The learning outcomes for the assignment were:
+### The learning outcomes for the assignment were:
 1. Apply object-oriented design and implementation techniques.
 2. Interpret the trade-offs and issues involved in the design, implementation, and application of various data structures with respect to a given problem.
 3. Explain the purpose and answer questions about data structures and design patterns that illustrate strengths and weaknesses with respect to resource consumption.
