@@ -9,6 +9,8 @@ This Yahtzee Game was designed for my Level 6 Data Structures and Algorithms Pap
 4. Assess the impact of data structures on algorithms.
 5. Analyse the scalability of data structures and algorithms in terms of both space and time complexity.
 
+The full assignment brief is in the pdf file *ISCG6426 S1 2021 Project.pdf*.
+
 ### Features of the Yahtzee Game include:
 + Balanced Binary Search Tree
 + Singly Linked List
