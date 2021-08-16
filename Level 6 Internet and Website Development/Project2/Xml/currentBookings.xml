@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/css" href="Css/style.css"?>
+<CurrentBookings>
+    <Booking>
+        <Reference>6-2021-07-05</Reference>
+        <LodgeNumber>6</LodgeNumber>
+        <CheckInDate>Mon Jul 05 2021 15:00:00 GMT+1200 (New Zealand Standard Time)</CheckInDate>
+        <CheckOutDate>Sat Jul 10 2021 10:00:00 GMT+1200 (New Zealand Standard Time)</CheckOutDate>
+        <AgreedNightlyRate>225</AgreedNightlyRate>
+        <TotalCost>1125</TotalCost>
+        <NumberOfGuests>5</NumberOfGuests>
+    </Booking>
+    <Booking>
+        <Reference>11-2021-07-04</Reference>
+        <LodgeNumber>11</LodgeNumber>
+        <CheckInDate>Sun Jul 04 2021 15:00:00 GMT+1200 (New Zealand Standard Time)</CheckInDate>
+        <CheckOutDate>Wed Jul 07 2021 10:00:00 GMT+1200 (New Zealand Standard Time)</CheckOutDate>
+        <AgreedNightlyRate>75</AgreedNightlyRate>
+        <TotalCost>225</TotalCost>
+        <NumberOfGuests>2</NumberOfGuests>
+    </Booking>
+    <Booking>
+        <Reference>13-2021-07-03</Reference>
+        <LodgeNumber>13</LodgeNumber>
+        <CheckInDate>Sat Jul 03 2021 15:00:00 GMT+1200 (New Zealand Standard Time)</CheckInDate>
+        <CheckOutDate>Wed Jul 07 2021 10:00:00 GMT+1200 (New Zealand Standard Time)</CheckOutDate>
+        <AgreedNightlyRate>75.00</AgreedNightlyRate>
+        <TotalCost>300.00</TotalCost>
+        <NumberOfGuests>1</NumberOfGuests>
+        </Booking>
+</CurrentBookings>

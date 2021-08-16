@@ -1,0 +1,942 @@
+/* CSS for general page structure*/
+body {
+    background-color: white;
+    font-family: Arial, Helvetica, sans-serif;
+}
+h1 {
+    text-align: center;
+}
+h2 {
+    text-align: center;
+}
+
+
+/*CSS for navigation menu*/
+.horizontalMenu ul {
+    list-style-type: none;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0;
+    background-color: #05857A;
+    overflow: hidden;
+    border-radius: 15pt;
+}
+.horizontalMenu ul li {
+    float: left;
+    border-right: 1px solid #59D2AC;
+}
+.horizontalMenu ul li:last-child {
+    border-right: none;
+}
+.horizontalMenu ul li a {
+    text-decoration: none;
+    display: block;
+    color: #94DEDB;
+    text-align: center;
+    padding: 14px;
+    width: 225px;
+}
+.horizontalMenu li a:hover {
+    background-color: #59D2AC;
+    color: #05597D;
+}
+.horizontalMenu li a:active {
+    background-color: #59D2AC;
+    color: #05597D;
+}
+.active {
+    background-color: #59D2AC;
+    color: #05597D;
+}
+
+
+/*CSS for horizontal banner at top of page*/
+
+/*CSS for horizontal banner container*/
+#outsideBox {
+    width: 800px;
+    height: 125px;
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #05597D;
+    overflow: hidden;
+    z-index: 1;
+}
+
+/*CSS for photo of Piha landscape animation*/
+#pihaLandscape {
+    opacity: 0;
+    position: absolute;
+    z-index: -2;
+    animation-name: pihaBeach;
+    animation-duration: 15s;
+    -webkit-animation-name: pihaBeach; /*For Chrome*/
+    -webkit-animation-duration: 15s; /*For Chrome*/
+}
+@keyframes pihaBeach {
+    0% {opacity: 1};
+    75% {opacity: 1;}
+    100% {margin-top:-125px; opacity: 0;}
+}
+/*For Chrome*/
+@-webkit-keyframes pihaBeach {
+    0% {opacity: 1};
+    75%{opacity: 1;}
+    100% {margin-top:-125px; opacity: 0;}
+}
+
+/*CSS for the animation text change for the word "Piha"*/
+#pihaScript {
+    color: #05857A;
+    font-family:'Times New Roman', Times, serif;
+    font-size: 20px;
+    margin-left: 575px;
+    opacity: 0;
+    position: absolute;
+    animation-name: pihaTextChange;
+    animation-duration: 7500ms;
+    animation-iteration-count: 2;
+    -webkit-animation-name: pihaTextChange; /*For Chrome*/
+    -webkit-animation-duration: 7500ms; /*For Chrome*/
+    -webkit-animation-iteration-count: 2;/*For Chrome*/
+}
+@keyframes pihaTextChange {
+    0% {font-size: 20px; color:  #05857A; opacity: 0;}
+    10% {opacity: 1.0;}
+    50% {font-size: 40px; color: #59D2AC; opacity: 1;}
+    90% {opacity: 0;}
+    100% {font-size: 20px; color: #05857A; opacity: 0;}
+}
+/*For Chrome*/
+@-webkit-keyframes pihaTextChange {
+    0% {font-size: 20px; color:  #05857A; opacity: 0;}
+    10% {opacity: 1.0;}
+    50% {font-size: 40px; color: #59D2AC; opacity: 1;}
+    90% {opacity: 0;}
+    100% {font-size: 20px; color: #05857A; opacity: 0;}
+}
+
+/*CSS for the animation text change for the word "Wild"*/
+#wildScript {
+    color: #05857A;
+    font-family:'Times New Roman', Times, serif;
+    font-size: 20px;
+    margin-left: 600px;
+    opacity: 0;
+    position: absolute;
+    margin-top: 38px;
+    animation-name: wildTextChange;
+    animation-duration: 7500ms;
+    animation-delay: 2500ms;
+    animation-iteration-count: 2;
+    -webkit-animation-name: wildTextChange; /*For Chrome*/
+    -webkit-animation-duration: 7500ms; /*For Chrome*/
+    -webkit-animation-iteration-count: 2;/*For Chrome*/
+    -webkit-animation-delay: 2500ms;/*For Chrome*/
+}
+@keyframes wildTextChange {
+    0% {font-size: 20px; color:  #05857A; opacity: 0;}
+    10% {opacity: 1.0;}
+    50% {font-size: 40px; color: #59D2AC; opacity: 1;}
+    90% {opacity: 0;}
+    100% {font-size: 20px; color: #05857A; opacity: 0;}
+}
+/*For Chrome*/
+@-webkit-keyframes wildTextChange {
+    0% {font-size: 20px; color:  #05857A; opacity: 0;}
+    10% {opacity: 1.0;}
+    50% {font-size: 40px; color: #59D2AC; opacity: 1;}
+    90% {opacity: 0;}
+    100% {font-size: 20px; color: #05857A; opacity: 0;}
+}
+
+/*CSS for the animation text change for the word "Beauty"*/
+#beautyScript {
+    color: #05857A;
+    font-family:'Times New Roman', Times, serif;
+    font-size: 20px;
+    margin-left: 625px;
+    opacity: 0;
+    position: absolute;
+    margin-top: 76px;
+    animation-name: beautyTextChange;
+    animation-duration: 7500ms;
+    animation-iteration-count: 2;
+    animation-delay: 5000ms;
+    -webkit-animation-name: beautyTextChange; /*For Chrome*/
+    -webkit-animation-duration: 7500ms; /*For Chrome*/
+    -webkit-animation-iteration-count: 2;/*For Chrome*/
+    -webkit-animation-delay: 5000ms;/*For Chrome*/
+}
+@keyframes beautyTextChange {
+    0% {font-size: 20px; color:  #05857A; opacity: 0;}
+    10% {opacity: 1.0;}
+    50% {font-size: 40px; color: #59D2AC; opacity: 1;}
+    90% {opacity: 0;}
+    100% {font-size: 20px; color: #05857A; opacity: 0;}
+}
+/*For Chrome*/
+@-webkit-keyframes beautyTextChange {
+    0% {font-size: 20px; color:  #05857A; opacity: 0;}
+    10% {opacity: 1.0;}
+    50% {font-size: 40px; color: #59D2AC; opacity: 1;}
+    90% {opacity: 0;}
+    100% {font-size: 20px; color: #05857A; opacity: 0;}
+}
+
+/*CSS for animation of a photo of a sunny Piha landscape*/
+#pihaSunny {
+    opacity: 0;
+    position: absolute;
+    z-index: -1;
+    animation-name: sunnySlide;
+    animation-duration: 15s;
+    animation-delay:7500ms;
+    -webkit-animation-name: sunnySlide; /*For Chrome*/
+    -webkit-animation-duration: 15s; /*For Chrome*/
+    -webkit-animation-delay:7500ms ;/*For Chrome*/
+}
+@keyframes sunnySlide {
+    0% {margin-left:0px; opacity: 1;}
+    100% {margin-left:-550px; opacity: 1;}
+}
+/*For Chrome*/
+@-webkit-keyframes sunnySlide {
+    0% {margin-left:0px; opacity: 1;}
+    100% {margin-left:-550px; opacity: 1;}
+}
+
+/*CSS for the animation of my name and student ID number at the end of the animation*/
+#nameNumber {
+    color: #59D2AC;
+    font-family:'Times New Roman', Times, serif;
+    font-size: 16px;
+    position: absolute;
+    text-align: center;
+    margin-left: 330px;
+    margin-top: 45px;
+    opacity: 0;
+    animation-name: nameNumberTextChange;
+    animation-duration: 5s;
+    animation-delay: 20s;
+    animation-iteration-count: infinite;
+    -webkit-animation-name: nameNumberTextChange; /*For Chrome*/
+    -webkit-animation-duration: 5s; /*For Chrome*/
+    -webkit-animation-delay: 20s;/*For Chrome*/
+    -webkit-animation-iteration-count: infinite;/*For Chrome*/
+}
+@keyframes nameNumberTextChange {
+    0% {font-size: 16px; color:  #59D2AC; opacity: 1; margin-left: 330px; margin-top: 45px;}
+    50% {font-size: 28px; color:  #94DEDB; opacity: 1; margin-left: 290px; margin-top: 30px;}
+    100% {font-size: 16px; color:  #59D2AC; opacity: 1; margin-left: 330px; margin-top: 45px;}
+}
+/*For Chrome*/
+@-webkit-keyframes nameNumberTextChange {
+    0% {font-size: 16px; color:  #59D2AC; opacity: 1; margin-left: 330px; margin-top: 45px;}
+    50% {font-size: 28px; color:  #94DEDB; opacity: 1; margin-left: 290px; margin-top: 30px;}
+    100% {font-size: 16px; color:  #59D2AC; opacity: 1; margin-left: 330px; margin-top: 45px;}
+}
+
+
+/*CSS for Vertical Banner*/
+
+/*CSS for the container holding the vertical banner on the Index page*/
+#verticalBanner {
+    float: right;
+    top: -488px;
+    height: 400px;
+    width: 317px;
+    overflow: hidden;
+    background-color: black;
+    color: yellow;
+    font-family: Arial, Helvetica, sans-serif;
+    position: relative;
+}
+
+/*CSS for the container holding the vertical banner on the Booking page*/
+#verticalBannerBooking {
+    float: right;
+    top: 25px;
+    height: 400px;
+    width: 317px;
+    overflow: hidden;
+    background-color: black;
+    color: yellow;
+    font-family: Arial, Helvetica, sans-serif;
+    position: relative;
+}
+
+/*Tairawhiti-Gisborne Tourism Logo animation*/
+#TairawhitiGisborneLogo {
+    position: absolute;
+    margin-top: 2px;
+    margin-left: 2px;
+    opacity: 0;
+    z-index: 1;
+    animation-name: tairawhitiGisborneLogoInFadeOut;
+    animation-duration: 20s;
+    animation-fill-mode: forwards;
+    -webkit-animation-name: tairawhitiGisborneLogoInFadeOut; /*For Chrome*/
+    -webkit-animation-duration: 20s; /*For Chrome*/ 
+    -webkit-animation-fill-mode: forwards;
+}
+@keyframes tairawhitiGisborneLogoInFadeOut {
+    0% {opacity: 0;}
+    2.5% {opacity: 1;}
+    97.5% {opacity: 1;}
+    100% {opacity: 1;}
+}
+/*For Chrome*/
+@-webkit-keyframes tairawhitiGisborneLogoInFadeOut {
+    0% {opacity: 0;}
+    2.5% {opacity: 1;}
+    97.5% {opacity: 1;}
+    100% {opacity: 1;}
+}   
+
+/*(i) information icon button, visible throughout vertical banner animation*/
+#informationIcon {
+    position: absolute;
+    margin-left: 256px;
+    z-index: 1;
+    cursor: pointer;
+}
+
+/*X exit icon button, visible throughout vertical banner animation*/
+#exitIcon {
+    position: absolute;
+    margin-left: 287px;
+    z-index: 1;
+    cursor: pointer;
+}
+
+/*CSS for Air NZ Logo animation*/
+#airNZLogo {
+    position: absolute;
+    margin-left: 317px;
+    margin-top: 30px;
+    opacity: 0;
+    z-index: 1;
+    animation-name: airNZLogoSlide;
+    animation-duration: 18s;
+    -webkit-animation-name: airNZLogoSlide; /*For Chrome*/
+    -webkit-animation-duration: 18s; /*For Chrome*/
+}
+@keyframes airNZLogoSlide {
+    0% {opacity: 1; margin-left: 317px;}
+    5% {opacity: 1; margin-left: 256px;}
+    100% {opacity: 1; margin-left: 256px;}
+}
+/*For Chrome*/
+@-webkit-keyframes airNZLogoSlide {
+    0% {opacity: 1; margin-left: 317px;}
+    5% {opacity: 1; margin-left: 256px;}
+    100% {opacity: 1; margin-left: 256px;}
+}
+
+/*CSS for the animation of the glamping image*/
+#glamping {
+    width: 100%;
+    height: 400px;
+    opacity: 0;
+    animation-name: glampingFadeInFadeOut;
+    animation-duration: 2s;
+    -webkit-animation-name: glampingFadeInOut; /*For Chrome*/
+    -webkit-animation-duration: 2s; /*For Chrome*/ 
+}
+@keyframes glampingFadeInOut {
+    0% {opacity: 0;}
+    25% {opacity: 1;}
+    75% {opacity: 1;}
+    100% {opacity: 0;}
+}
+/*For Chrome*/
+@-webkit-keyframes glampingFadeInOut {
+    0% {opacity: 0;}
+    25% {opacity: 1;}
+    75% {opacity: 1;}
+    100% {opacity: 0;}
+}
+
+/*CSS for the class style for the banner's blurbs that feature over it's images*/
+.verticalBannerBlurbText {
+    text-align: center;
+    position: absolute;
+    font-size: 30px;
+    opacity: 0;
+    width: 100%;
+}
+
+/*CSS for the animation of the text to appear over top of the glamping image*/
+#glampingText {
+    margin-top: -250px;
+    animation-name: glampingTextFadeInOut;
+    animation-duration: 2500ms;
+    -webkit-animation-name: glampingTextFadeInOut; /*For Chrome*/
+    -webkit-animation-duration: 2500ms; /*For Chrome*/ 
+}
+@keyframes glampingTextFadeInOut {
+    0% {opacity: 0;}
+    20% {opacity: 1;}
+    80% {opacity: 1;}
+    100% {opacity: 0;}
+}
+/*For Chrome*/
+@-webkit-keyframes glampingTextFadeInOut {
+    0% {opacity: 0;}
+    20% {opacity: 1;}
+    80% {opacity: 1;}
+    100% {opacity: 0;}
+}
+
+/*CSS for location pointer icon*/
+#locationIcon {
+    position: absolute;
+    margin-top: -12%;
+    opacity: 0;
+    z-index: 1;
+    animation-name: locationIconFadeInOut;
+    animation-duration: 3s;
+    animation-iteration-count: 3;
+    -webkit-animation-name: locationIconFadeInOut; /*For Chrome*/
+    -webkit-animation-duration: 3s; /*For Chrome*/ 
+    -webkit-animation-iteration-count: 3; /*For Chrome*/
+}
+@keyframes locationIconFadeInOut {
+    0% {opacity: 0;}
+    20% {opacity: 1;}
+    50% {opacity: 1;}
+    70% {opacity: 0;}
+    100% {opacity: 0;}
+}
+/*For Chrome*/
+@-webkit-keyframes locationIconFadeInOut {
+    0% {opacity: 0;}
+    20% {opacity: 1;}
+    50% {opacity: 1;}
+    70% {opacity: 0;}
+    100% {opacity: 0;}
+}
+
+/*CSS for the class style for the banner's location text that features alongside the location icon*/
+.verticalBannerLocationText {
+    text-align: left;
+    position: absolute;
+    opacity: 0;
+    margin-top: -10%;
+    margin-left: 10%;
+    font-size: 16px;
+}
+
+/*CSS for the animation of glamping location that sits alongside the location icon*/
+#glampingLocationText {
+    animation-name: glampingLocationTextFadeInOut;
+    animation-duration: 2s;
+    -webkit-animation-name: glampingLocationTextFadeInOut; /*For Chrome*/
+    -webkit-animation-duration: 2s; /*For Chrome*/ 
+}
+@keyframes glampingLocationTextFadeInOut {
+    0% {opacity: 0;}
+    25% {opacity: 1;}
+    75% {opacity: 1;}
+    100% {opacity: 0;}
+}
+/*For Chrome*/
+@-webkit-keyframes glampingLocationTextFadeInOut {
+    0% {opacity: 0;}
+    25% {opacity: 1;}
+    75% {opacity: 1;}
+    100% {opacity: 0;}
+}
+
+/*CSS for the animation of the Rere Falls image*/
+#rereFalls {
+    position:absolute;
+    margin-top: -400px;
+    width: 100%;
+    height: 400px;
+    opacity: 0;
+    animation-name: rereFallsFadeInFadeOut;
+    animation-duration: 2s;
+    animation-delay: 3s;
+    -webkit-animation-name: rereFallsFadeInFadeOut; /*For Chrome*/
+    -webkit-animation-duration: 2s; /*For Chrome*/ 
+    -webkit-animation-delay: 3s; /*For Chrome*/
+}
+@keyframes rereFallsFadeInFadeOut {
+    0% {opacity: 0;}
+    25% {opacity: 1;}
+    75% {opacity: 1;}
+    100% {opacity: 0;}
+}
+/*For Chrome*/
+@-webkit-keyframes rereFallsFadeInFadeOut {
+    0% {opacity: 0;}
+    25% {opacity: 1;}
+    75% {opacity: 1;}
+    100% {opacity: 0;}
+}
+
+/*CSS for the animation of the text to appear over top of the Rere Falls image*/
+#waterfallText {
+    margin-top: -250px;
+    animation-name: waterfallTextFadeInOut;
+    animation-duration: 2500ms;
+    animation-delay: 2500ms;
+    -webkit-animation-name: waterfallTextFadeInOut; /*For Chrome*/
+    -webkit-animation-duration: 2500ms; /*For Chrome*/
+    -webkit-animation-delay: 2500ms; /*For Chrome*/
+}
+@keyframes waterfallTextFadeInOut {
+    0% {opacity: 0;}
+    20% {opacity: 1;}
+    80% {opacity: 1;}
+    100% {opacity: 0;}
+}
+/*For Chrome*/
+@-webkit-keyframes waterfallTextFadeInOut {
+    0% {opacity: 0;}
+    20% {opacity: 1;}
+    80% {opacity: 1;}
+    100% {opacity: 0;}
+}
+
+/*CSS for the animation of Rere Falls location that sits alongside the location icon*/    
+#waterfallLocationText {
+    opacity: 0;
+    animation-name: waterfallLocationTextFadeInFadeOut;
+    animation-duration: 2s;
+    animation-delay: 3s;
+    -webkit-animation-name: waterfallLocationTextFadeInFadeOut; /*For Chrome*/
+    -webkit-animation-duration: 2s; /*For Chrome*/ 
+    -webkit-animation-delay: 3s; /*For Chrome*/
+}
+@keyframes waterfallLocationTextFadeInFadeOut {
+    0% {opacity: 0;}
+    25% {opacity: 1;}
+    75% {opacity: 1;}
+    100% {opacity: 0;}
+}
+/*For Chrome*/
+@-webkit-keyframes waterfallLocationTextFadeInFadeOut {
+    0% {opacity: 0;}
+    25% {opacity: 1;}
+    75% {opacity: 1;}
+    100% {opacity: 0;}
+}
+
+/*CSS for the animation of the person biking image*/
+#personBiking {
+    position:absolute;
+    margin-top: -400px;
+    width: 100%;
+    height: 400px;
+    opacity: 0;
+    animation-name: personBikingFadeInFadeOut;
+    animation-duration: 2s;
+    animation-delay: 6s;
+    -webkit-animation-name: personBikingFadeInFadeOut; /*For Chrome*/
+    -webkit-animation-duration: 2s; /*For Chrome*/ 
+    -webkit-animation-delay: 6s; /*For Chrome*/
+}
+@keyframes personBikingFadeInFadeOut {
+    0% {opacity: 0;}
+    25% {opacity: 1;}
+    75% {opacity: 1;}
+    100% {opacity: 0;}
+}
+/*For Chrome*/
+@-webkit-keyframes personBikingFadeInFadeOut {
+    0% {opacity: 0;}
+    25% {opacity: 1;}
+    75% {opacity: 1;}
+    100% {opacity: 0;}
+}
+
+/*CSS for the animation of the text that appears over the person biking image*/
+#personBikingText {
+    position: absolute;
+    margin-top: -320px;
+    animation-name: personBikingTextFadeInFadeOut;
+    animation-duration: 2500ms;
+    animation-delay: 5500ms;
+    -webkit-animation-name: personBikingTextFadeInFadeOut; /*For Chrome*/
+    -webkit-animation-duration: 2500ms; /*For Chrome*/ 
+    -webkit-animation-delay: 5500ms; /*For Chrome*/
+}
+@keyframes personBikingTextFadeInFadeOut {
+    0% {opacity: 0;}
+    20% {opacity: 1;}
+    80% {opacity: 1;}
+    100% {opacity: 0;}
+}
+/*For Chrome*/
+@-webkit-keyframes personBikingTextFadeInFadeOut {
+    0% {opacity: 0;}
+    20% {opacity: 1;}
+    80% {opacity: 1;}
+    100% {opacity: 0;}
+}
+
+/*CSS for the animation of the location of the person biking image*/
+#personBikingLocationText {
+    opacity: 0;
+    animation-name: personBikingLocationTextFadeInFadeOut;
+    animation-duration: 2s;
+    animation-delay: 6s;
+    -webkit-animation-name: personBikingLocationTextFadeInFadeOut; /*For Chrome*/
+    -webkit-animation-duration: 2s; /*For Chrome*/ 
+    -webkit-animation-delay: 6s; /*For Chrome*/
+}
+@keyframes personBikingLocationTextFadeInFadeOut {
+    0% {opacity: 0;}
+    25% {opacity: 1;}
+    75% {opacity: 1;}
+    100% {opacity: 0;}
+}
+/*For Chrome*/
+@-webkit-keyframes personBikingLocationTextFadeInFadeOut {
+    0% {opacity: 0;}
+    25% {opacity: 1;}
+    75% {opacity: 1;}
+    100% {opacity: 0;}
+}
+
+/*CSS for the animation of the Wainui Beach image*/
+#wainuiBeach {
+    position:absolute;
+    margin-top: -400px;
+    width: 100%;
+    height: 400px;
+    opacity: 0;
+    animation-name: wainuiBeachFadeInFadeOut;
+    animation-duration: 9500ms;
+    animation-delay: 8500ms;
+    -webkit-animation-name: wainuiBeachFadeInFadeOut; /*For Chrome*/
+    -webkit-animation-duration: 9500ms; /*For Chrome*/ 
+    -webkit-animation-delay: 8500ms; /*For Chrome*/
+}
+@keyframes wainuiBeachFadeInFadeOut {
+    0% {opacity: 0;}
+    5% {opacity: 1;}
+    95% {opacity: 1;}
+    100% {opacity: 0;}
+}
+/*For Chrome*/        
+@-webkit-keyframes wainuiBeachFadeInFadeOut {
+    0% {opacity: 0;}
+    5% {opacity: 1;}
+    95% {opacity: 1;}
+    100% {opacity: 0;}
+}
+
+/*CSS for the animation of the text that appears over the Wainui Beach image*/
+#wainuiBeachText {
+    position: absolute;
+    margin-top: -320px;
+    animation-name: wainuiBeachTextFadeInFadeOut;
+    animation-duration: 9500ms;
+    animation-delay: 8500ms;
+    -webkit-animation-name: wainuiBeachTextFadeInFadeOut; /*For Chrome*/
+    -webkit-animation-duration: 9500ms; /*For Chrome*/ 
+    -webkit-animation-delay: 8500ms; /*For Chrome*/
+}
+@keyframes wainuiBeachTextFadeInFadeOut {
+    0% {opacity: 0;}
+    5% {opacity: 1;}
+    95% {opacity: 1;}
+    100% {opacity: 0;}
+}
+/*For Chrome*/
+@-webkit-keyframes wainuiBeachTextFadeInFadeOut {
+    0% {opacity: 0;}
+    5% {opacity: 1;}
+    95% {opacity: 1;}
+    100% {opacity: 0;}
+}
+
+/*CSS for the Air New Zealand text*/
+#airNZText {
+    margin-top: -357px;
+    margin-left: 80px;
+    position: absolute;
+    opacity: 0;
+    animation-name: airNZTextFadeInFadeOut;
+    animation-duration: 9500ms;
+    animation-delay: 8500ms;
+    -webkit-animation-name: airNZTextFadeInFadeOut; /*For Chrome*/
+    -webkit-animation-duration: 9500ms; /*For Chrome*/ 
+    -webkit-animation-delay: 8500ms; /*For Chrome*/
+}
+@keyframes airNZTextFadeInFadeOut {
+    0% {opacity: 0;}
+    5% {opacity: 1;}
+    95% {opacity: 1;}
+    100% {opacity: 0;}
+}
+/*For Chrome*/
+@-webkit-keyframes airNZTextFadeInFadeOut {
+    0% {opacity: 0;}
+    5% {opacity: 1;}
+    95% {opacity: 1;}
+    100% {opacity: 0;}
+}
+
+/*CSS for the Find Out More/Purple Circle animation*/ 
+#findOutMore {
+    position: absolute;
+    margin-left: 83px;
+    margin-top: 0px;
+    opacity: 0;
+    z-index: 1;
+    animation-name: findOutMoreSlide;
+    animation-delay:8500ms;
+    animation-duration: 9500ms;
+    -webkit-animation-name: findOutMoreSlide; /*For Chrome*/
+    -webkit-animation-delay:8500ms; /*For Chrome*/
+    -webkit-animation-duration: 9500ms; /*For Chrome*/
+}
+@keyframes findOutMoreSlide {
+    0% {opacity: 1; margin-top: 0px;}
+    5% {opacity: 1; margin-top: -250px;}
+    95% {opacity: 1; margin-top: -250px;}
+    100%{opacity: 0; margin-top: -250px;}
+}
+/*For Chrome*/
+@-webkit-keyframes findOutMoreSlide {
+    0% {opacity: 1; margin-top: 0px;}
+    5% {opacity: 1; margin-top: -250px;}
+    95% {opacity: 1; margin-top: -250px;}
+    100%{opacity: 0; margin-top: -250px;}
+}
+
+/*CSS for Star Alliance blurb and logo*/
+#starAllianceLogo {
+    position:absolute;
+    margin-top: -30px;
+    margin-left: 60px;
+    opacity: 0;
+    animation-name: starAllianceLogoFadeInFadeOut;
+    animation-duration: 9500ms;
+    animation-delay: 8500ms;
+    -webkit-animation-name: starAllianceLogoFadeInFadeOut; /*For Chrome*/
+    -webkit-animation-duration: 9500ms; /*For Chrome*/ 
+    -webkit-animation-delay: 8500ms; /*For Chrome*/
+}
+@keyframes starAllianceLogoFadeInFadeOut {
+    0% {opacity: 0;}
+    5% {opacity: 1;}
+    95% {opacity: 1;}
+    100% {opacity: 0;}
+}
+/*For Chrome*/
+@-webkit-keyframes starAllianceLogoFadeInFadeOut {
+    0% {opacity: 0;}
+    5% {opacity: 1;}
+    95% {opacity: 1;}
+    100% {opacity: 0;}
+}
+
+/*CSS for the animation of the replay icon*/
+#replayIcon {
+    position: absolute;
+    opacity:0;
+    margin-top: -39px;
+    cursor: pointer;
+    animation-name: replayFadeInFadeOut;
+    animation-delay: 10s;
+    animation-duration: 8s;
+    animation-fill-mode: forwards;
+    -webkit-animation-name: replayFadeIn; /*For Chrome*/
+    -webkit-animation-delay: 10s; /*For Chrome*/
+    -webkit-animation-duration: 8s; /*For Chrome*/
+    -webkit-animation-fill-mode: forwards; /*For Chrome*/
+}
+@keyframes replayFadeIn {
+    0% {opacity: 0;}
+    6% {opacity: 1;}
+    100% {opacity: 1;}
+}
+/*For Chrome*/
+@-webkit-keyframes replayFadeIn {
+    0% {opacity: 0;}
+    6% {opacity: 1;}
+    100% {opacity: 1;}
+}
+
+/*CSS for the animation of my name and student ID number*/
+#nameAndNumber {
+    position:absolute;
+    opacity: 0;
+    margin-top: -250px;
+    animation-name: nameAndNumberFadeIn;
+    animation-delay: 18s;
+    animation-duration: 2s;
+    animation-fill-mode: forwards;
+    -webkit-animation-name: nameAndNumberFadeIn; /*For Chrome*/
+    -webkit-animation-delay: 18s; /*For Chrome*/
+    -webkit-animation-duration: 2s; /*For Chrome*/
+    -webkit-animation-fill-mode: forwards /*For Chrome*/
+}
+@keyframes nameAndNumberFadeIn {
+    0% {opacity: 0;}
+    25% {opacity: 1;}
+    100% {opacity: 1;}
+}
+/*For Chrome*/
+@-webkit-keyframes nameAndNumberFadeIn {
+    0% {opacity: 0;}
+    25% {opacity: 1;}
+    100% {opacity: 1;}
+}
+
+/*CSS for Hero images*/
+#imageSpace {
+    float: left;
+    position: relative;
+    top: 0px;
+    width: 30%;
+}
+#imagePicture {
+    max-width: 100%  ;
+}
+
+/*CSS for main section on index page*/
+#welcome {
+    width: 43%;
+    margin-left: 32%;
+    margin-right: 25%;
+    white-space: wrap;
+}
+
+/*CSS for booking page*/
+
+/*CSS for booking div*/
+#booking {
+    float: left;
+    width: 75%;
+}
+
+/*CSS for progress bar*/
+#progressContainer {
+    width: 800px;
+    height: 25px;
+    margin-left: auto;
+    margin-right:auto;
+    background-color: lightgrey;
+    border-radius: 15px;
+}
+#progressBar {
+    height: 20px;
+    padding-top: 5px;
+    background-color: #05597D;
+    text-align: center;
+    color: #94DEDB;
+    border-radius: 15px;
+    width: 0%;
+}
+
+/*CSS for sections of the booking form*/
+#bookingDetails {
+    display: initial;
+}
+#activityExperience {
+    display: none;
+}
+#bookingNumbers {
+    display: none;
+}
+#contactDetails {
+    display: none;
+}
+
+/*CSS for the Booking Table*/
+
+.bookingTable, tbody, tr, td {
+    padding-top: 25px;
+    width: 40%;
+    margin-left: auto;
+    margin-right: auto;
+}
+.leftCol {
+    text-align: right;
+}
+.rightCol {
+    text-align: left;
+}
+.wholeRow{
+    text-align: left;
+}
+.shortRow {
+    white-space: wrap;
+}
+.longRow {
+    white-space: nowrap;
+}
+
+/*CSS for the range sliders*/
+.ranges {
+    width: 400px;
+}
+.rangeCaptionLeft {
+    text-align: left;
+    padding-top: 0px;
+}
+.rangeCaptionRight {
+    text-align: right;
+    padding-top: 0px;
+}
+.rangeQuestion {
+    padding-bottom: 0px;
+}
+
+/*CSS for questions using drop down selectors*/
+.selectQuestion {
+    text-align: center;
+}
+
+/*CSS for number and color pickers*/
+#numberAdults, #numberChildren, #numberLodges, #colourWelcomePack {
+    width: 50px;
+}
+
+/*CSS for buttons*/
+button {
+    width: 100px;
+    margin-top: 25px;
+}
+button a {
+    text-decoration: none;
+    color: black;
+}
+.previousButton {
+float: left;
+}
+.nextButton {
+float: right;
+}
+
+/*CSS for the Booking Confirmation Sumary Table*/
+.confirmationTable {
+    width: 40%;
+    margin-left: auto;
+    margin-right: auto;
+    white-space: nowrap;
+    padding-top: 10px;
+}
+caption {
+    padding-top: 25px;
+    padding-bottom: 0px;
+    font-weight: bold;
+    text-align: center;
+}
+.confirmationTableLeftCol {
+    padding: 0px;
+    text-align: right;
+}
+.confirmationTableRightCol {
+    padding: 0px;
+    text-align: left;
+}
