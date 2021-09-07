@@ -1,6 +1,6 @@
 # Summary
 
-This website was designed for my Level 6 Internet and Website Development Paper. 
+This website was designed for my Level 6 Internet and Website Development paper. 
 
 ### The deliverables for the project were:
 1. Create an advertisement using CSS.
@@ -17,4 +17,4 @@ The full assignment brief is in the pdf file [Project1_IWD_Sem1_2021_Assignment_
 + Input fields
 + Javascript to populate a table with user's entered information
 
-### Assignment Grade: 96%
+### Assignment Grade: 97%
