@@ -11,6 +11,17 @@ function replay() {
     parent.replaceChild(newAnimation, animation);
     }
 
+// Function to replay the vertical animation on the booking page.
+function replay() {
+    var parent;
+    var animation;
+    var newAnimation;
+    parent = document.getElementById("verticalBannerColumn")
+    animation = document.getElementById("verticalBannerBooking");
+    newAnimation = animation.cloneNode(true);
+    parent.replaceChild(newAnimation, animation);
+    }
+
 // Function repsonding to the (i) information icon on the vertical animation.
 function info() {
     alert("This is an advertisement for the tourism arm of Trust Tairawhiti, the regional development trust for Te Tairawhiti.")
