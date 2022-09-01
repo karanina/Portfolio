@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}
+    My Grades
+{% endblock %}
+
+{% block content %}
+    {% if user.id == student.id %}
+        <h1>My Grades</h1>
+        <br>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">Semester</th>
+                <th scope="col">Class Number</th>
+                <th scope="col">Course Code</th>
+                <th scope="col">Course Name</th>
+                <th scope="col">Grade</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for class in studentEnrollments %}
+                <tr>
+                    <td>
+                        {{ class.classID.semester.year }} {{ class.classID.semester.semester }}
+                    </td>
+                    <td>{{ class.classID.number }}</td>
+                    <td>
+                        {{ class.classID.course.code }}
+                    </td>
+                    <td>
+                        {{ class.classID.course.name }}
+                    </td>
+                    <td>
+                        {{ class.grade }}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>You are not authorised to view this page.</p>
+    {% endif %}
+{% endblock %}

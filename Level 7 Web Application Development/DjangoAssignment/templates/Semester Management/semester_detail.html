@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Semester Details
+{% endblock %}
+
+{% block content %}
+    {% if user.groups.all.0.name == 'Administrators' %}
+        <h1>Semester Detail</h1>
+        <br>
+        <table>
+            <tr>
+                <td>
+                    Year:
+                </td>
+                <td>
+                    {{ semester.year }}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Semester:
+                </td>
+                <td>
+                    {{ semester.semester }}
+                </td>
+            </tr>
+        </table>
+        <a href="{% url "update_semester" semester.id %}" class="btn btn-success">Update</a>
+        <a href="{% url "delete_semester" semester.id %}" class="btn btn-danger">Delete</a>
+
+    {% else %}
+        <p>You are not authorised to view this page.</p>
+    {% endif %}
+{% endblock %}

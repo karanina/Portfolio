@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Assign Lecturer to Class
+{% endblock %}
+
+{% block content %}
+    {% if user.groups.all.0.name == 'Administrators' %}
+        <h1>Assign Lecturer</h1>
+        <br>
+        <form method="post" action="{% url 'create_lecturer_class_assignment' class.id %}">
+            {% csrf_token %}
+            <div class="mb-3">
+                <input type="hidden" class="form-control" name="number" value="{{ class.number }}" readonly="readonly">
+                <input type="hidden" class="form-control" name="semester" value="{{ class.semester_id }}"
+                       readonly="readonly">
+                <input type="hidden" class="form-control" name="course" value="{{ class.course_id }}"
+                       readonly="readonly">
+            </div>
+            <table>
+                <tr>
+                    <td>Class Number:</td>
+                    <td> {{ class.number }}</td>
+                </tr>
+                <tr>
+                    <td>Semester Number:</td>
+                    <td>{{ class.semester.year }} {{ class.semester.semester }}</td>
+                </tr>
+                <tr>
+                    <td>Course Number:</td>
+                    <td>{{ class.course.code }} {{ class.course.name }}</td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="lecturer" class="form_label">Lecturer:</label>
+                    </td>
+
+                    <td>
+                        <select name="lecturer">
+                            {% for lecturer in lecturers %}
+                                <option value=“{{ lecturer.id }}”>
+                                    {{ lecturer.firstname }} {{ lecturer.lastname }}
+                                </option>
+
+                            {% endfor %}
+                        </select>
+                    </td>
+                </tr>
+            </table>
+            <button class="btn btn-success">Assign Lecturer</button>
+
+        </form>
+    {% else %}
+        <p>You are not authorised to view this page.</p>
+    {% endif %}
+{% endblock %}

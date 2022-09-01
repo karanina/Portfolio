@@ -1,0 +1,15 @@
+{% extends "base.html" %}#}
+
+{% block title %}
+    Delete Lecturer
+{% endblock %}
+
+{% block content %}
+    {% if user.groups.all.0.name == 'Administrators' %}
+        <h1>Delete Lecturer</h1>
+        <br>
+        {{ message }}
+    {% else %}
+        <p>You are not authorised to view this page.</p>
+    {% endif %}
+{% endblock %}

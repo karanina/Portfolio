@@ -1,0 +1,32 @@
+{% extends "base.html" %}#}
+
+{% block title %}
+    Un-enroll Student From Class
+{% endblock %}
+
+{% block content %}
+    {% if user.groups.all.0.name == 'Administrators' %}
+        <h1>Un-enroll Student From Class</h1>
+        <br>
+        <form method="post" action="{% url 'remove_student_enrollment' studentEnrollment.id %}">
+            {% csrf_token %}
+            <p>
+                Are you sure you want to remove
+                <strong>{{ studentEnrollment.studentID.firstname }} {{ studentEnrollment.studentID.lastname }}</strong>
+                from:
+            </p>
+            <p>
+                Semester: {{ studentEnrollment.classID.semester.year }} {{ studentEnrollment.classID.semester.semester }}
+            </p>
+            <p>
+                Class: {{ studentEnrollment.classID.number }}
+            </p>
+            <p>
+                Course: {{ studentEnrollment.classID.course.code }} {{ studentEnrollment.classID.course.name }}
+            </p>
+            <button class="btn btn-danger">Un-enroll Student</button>
+        </form>
+    {% else %}
+        <p>You are not authorised to view this page.</p>
+    {% endif %}
+{% endblock %}

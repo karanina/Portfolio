@@ -1,0 +1,19 @@
+{% extends "base.html" %}#}
+
+{% block title %}
+    Delete Course
+{% endblock %}
+
+{% block content %}
+    {% if user.groups.all.0.name == 'Administrators' %}
+        <h1>Delete Course</h1>
+        <br>
+        <form method="post">
+            {% csrf_token %}
+            <p>Are you sure you want to delete <strong> {{ course.code }} {{ course.name }}</strong>?</p>
+            <button class="btn btn-danger">Delete Course</button>
+        </form>
+    {% else %}
+        <p>You are not authorised to view this page.</p>
+    {% endif %}
+{% endblock %}

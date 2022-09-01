@@ -1,0 +1,77 @@
+{% extends "base.html" %}#}
+
+{% block title %}
+    List Students
+{% endblock %}
+
+{% block content %}
+    {% if user.groups.all.0.name == 'Administrators' or user.groups.all.0.name == 'Lecturers' %}
+    <h1>Students</h1>
+    <br>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">Student ID</th>
+            <th scope="col">Name</th>
+            {% if user.groups.all.0.name == 'Administrators' %}
+                <th scope="col">Student Enrollment Actions</th>
+                <th scope="col">Student Profile Actions</th>
+                <th scope="col"></th>
+            {% elif user.groups.all.0.name == 'Lecturers' %}
+                <th scope="col">Class Number</th>
+                <th scope="col">Course</th>
+                <th scope="col">Grade</th>
+                <th scope="col"></th>
+            {% endif %}
+        </tr>
+        </thead>
+        <tbody>
+        {% if user.groups.all.0.name == 'Administrators' %}
+            {% for student in students %}
+                <tr>
+                    <td>
+                        <a href="{% url "student_detail" student.id %}">{{ student.id }}</a>
+                    </td>
+                    <td>{{ student.lastname }}, {{ student.firstname }}</td>
+                    <td>
+                        <a href="{% url "enroll_student_form" student.id %}" class="btn btn-success">Enroll in
+                            Class</a>
+                    </td>
+                    <td>
+                        <a href="{% url "update_student_form" student.id %}" class="btn btn-success">Update</a>
+                    </td>
+                    <td>
+                        <a href="{% url "delete_student" student.id %}" class="btn btn-danger">Delete</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        {% elif user.groups.all.0.name == 'Lecturers' %}
+            {% for studentEnrollment in studentEnrollments %}
+                {% if user.id == studentEnrollment.classID.lecturer.id %}
+                    <tr>
+                    <td>
+                        {{ studentEnrollment.studentID.id }}
+                    </td>
+                    <td>{{ studentEnrollment.studentID.lastname }}, {{ studentEnrollment.studentID.firstname }}</td>
+                    <td>{{ studentEnrollment.classID.number }}</td>
+                    <td>{{ studentEnrollment.classID.course.code }} {{ studentEnrollment.classID.course.name }}</td>
+                    <td>
+                    {% if studentEnrollment.grade %}
+                        {{ studentEnrollment.grade }}
+                        <td>
+                            <a href="{% url "send_email" studentEnrollment.id %}" class="btn btn-success">Email Grade</a>
+                    </td>
+                    {% else %}
+                        <a href="{% url "add_grade_form" studentEnrollment.id %}" class="btn btn-success">Add Grade</a>
+                    {% endif %}
+                        </td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+        </tbody>
+    </table>
+    {% else %}
+        <p>You are not authorised to view this page.</p>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Update Student
+{% endblock %}
+
+{% block content %}
+    {% if user.groups.all.0.name == 'Administrators' %}
+        <script>
+            $(function () {
+                    $("#studentDOB").datepicker()
+                    $("#studentDOB").datepicker("option", "dateFormat", "yy-mm-dd");
+                    $("#studentDOB").datepicker("option", "defaultDate", setDOB());
+                }
+            );
+
+            function setDOB() {
+                return new Date({{ student.DOB.year }} +"-" + {{ student.DOB.month }} +"-" + {{ student.DOB.day}});
+            }
+        </script>
+        <h1>Update Student</h1>
+        <br>
+        <form method="post" action="{% url 'update_student' student.id %}">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="firstname" class="form_label">First Name:</label>
+                <input type="text" class="form-control" value="{{ student.firstname }}" name="firstname">
+                <label for="lastname" class="form_label">Last Name:</label>
+                <input type="text" class="form-control" value="{{ student.lastname }}" name="lastname">
+                <label for="emailAddress" class="form_label">Email:</label>
+                <input type="email" class="form-control" value="{{ student.email }}" name="emailAddress">
+                <label for="DOB" class="form_label">Date of Birth:</label>
+                <input type="text" class="form-control" name="DOB" id="studentDOB">
+                <button class="btn btn-success">Update Student</button>
+            </div>
+        </form>
+    {% else %}
+        <p>You are not authorised to view this page.</p>
+    {% endif %}
+
+{% endblock %}

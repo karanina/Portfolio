@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Send Email
+{% endblock %}
+
+{% block content %}
+    {% if user.groups.all.0.name == 'Lecturers' %}
+        <h1>Grade Publication</h1>
+        <br>
+        {{ message }}
+    {% else %}
+        <p>You are not authorised to view this page.</p>
+    {% endif %}
+{% endblock %}

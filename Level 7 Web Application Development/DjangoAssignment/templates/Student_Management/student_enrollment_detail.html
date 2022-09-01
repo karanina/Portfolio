@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Student Enrollment Details
+{% endblock %}
+
+{% block content %}
+        {% if user.groups.all.0.name == 'Administrators' or user.groups.all.0.name == 'Lecturers' %}
+    <h1>Student Enrollment Details</h1>
+    <div>
+        <p>
+            Student: {{ studentenrollment.studentID.firstname }} {{ studentenrollment.studentID.lastname }}
+        </p>
+        <p>
+            Class: {{ studentenrollment.classID }}
+        </p>
+    <p>Date Enrolled: {{ studentenrollment.enrolTime }}</p>
+        {% if user.groups.all.0.name == 'Lecturers' %}
+    <p>Grade: {{ studentenrollment.grade }}</p>
+            {% if studentenrollment.grade != None %}
+    <p>Grade issued: {{ studentenrollment.gradeTime }}</p>
+            {% endif %}
+            {% endif %}
+    </div>
+    {% else %}
+    <p>You are not authorised to view this page.</p>
+    {% endif %}
+{% endblock %}

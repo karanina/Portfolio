@@ -1,0 +1,19 @@
+{% extends "base.html" %}#}
+
+{% block title %}
+    Delete Semester
+{% endblock %}
+
+{% block content %}
+    {% if user.groups.all.0.name == 'Administrators' %}
+        <h1>Delete Semester</h1>
+        <br>
+        <form method="post">
+            {% csrf_token %}
+            <p>Are you sure you want to delete <strong> {{ semester.year }} {{ semester.semester }}</strong>?</p>
+            <button class="btn btn-danger">Delete Semester</button>
+        </form>
+    {% else %}
+        <p>You are not authorised to view this page.</p>
+    {% endif %}
+{% endblock %}

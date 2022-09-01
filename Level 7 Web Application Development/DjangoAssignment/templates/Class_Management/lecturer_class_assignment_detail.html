@@ -1,0 +1,50 @@
+{% extends "base.html" %}#}
+
+{% block title %}
+    Lecturer-Class Assignment Details
+{% endblock %}
+
+{% block content %}
+    {% if user.groups.all.0.name == 'Administrators' %}
+        <h1>Class Detail</h1>
+        <table>
+            <tr>
+                <td>
+                    Class
+                </td>
+                <td>
+                    {{ class.number }}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Course
+                </td>
+                <td>
+                    {{ class.course }}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Lecturer
+                </td>
+                <td>
+                    {{ class.lecturer }}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Semester
+                </td>
+                <td>
+                    {{ class.semester }}
+                </td>
+            </tr>
+        </table>
+        <a href="{% url "update_lecturer_class_assignment_form" class.id %}" class="btn btn-success">Change Lecturer</a>
+        <a href="{% url "delete_lecturer_class_assignment" class.id %}" class="btn btn-danger">Remove Lecturer</a>
+
+    {% else %}
+        <p>You are not authorised to view this page.</p>
+    {% endif %}
+{% endblock %}

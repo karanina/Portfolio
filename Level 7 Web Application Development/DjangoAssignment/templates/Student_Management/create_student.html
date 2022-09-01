@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Create Student
+{% endblock %}
+
+{% block content %}
+    {% if user.groups.all.0.name == 'Administrators' %}
+        {{ message }}
+    {% else %}s
+        <p>You are not authorised to view this page.</p>
+    {% endif %}
+{% endblock %}

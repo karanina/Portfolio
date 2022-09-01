@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Enroll Student in Class
+{% endblock %}
+
+{% block content %}
+    {% if user.groups.all.0.name == 'Administrators' %}
+        <h1>Enroll Student in Class</h1>
+        <br>
+        <form method="post" action="{% url 'enroll_student' student.id %}">
+            {% csrf_token %}
+            <p>Enroll {{ student.firstname }} {{ student.lastname }} in:
+                <select name="classID">
+                    {% for class in classes %}
+                        <option value=“{{ class.id }}”>
+                            Class: {{ class.id }} Semester: {{ class.semester.year }} {{ class.semester.semester }}
+                            Course: {{ class.course.code }} {{ class.course.name }}
+                        </option>
+
+                    {% endfor %}
+                </select>
+            </p>
+            <button class="btn btn-success">Enroll Student</button>
+        </form>
+    {% else %}
+        <p>You are not authorised to view this page.</p>
+    {% endif %}
+{% endblock %}

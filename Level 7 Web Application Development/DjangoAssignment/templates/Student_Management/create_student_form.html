@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Create Lecturer
+{% endblock %}
+
+{% block content %}
+    {% if user.groups.all.0.name == 'Administrators' %}
+       <script>
+        $(function () {
+                    $("#studentDOB").datepicker()
+                    $("#studentDOB").datepicker("option", "dateFormat", "yy-mm-dd");
+                }
+            );
+       </script>
+        <h1>Create Student</h1>
+        <br>
+        <form method="post" action="{% url 'create_student' %}">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="firstname" class="form_label">First Name:</label>
+                <input type="text" class="form-control" name="firstname">
+                <label for="lastname" class="form_label">Last Name:</label>
+                <input type="text" class="form-control" name="lastname">
+                <label for="emailAddress" class="form_label">Email:</label>
+                <input type="email" class="form-control" name="emailAddress">
+                <label for="DOB" class="form_label">Date of Birth:</label>
+                <input type="text" class="form-control" name="DOB" id="studentDOB">
+                <button class="btn btn-success">Create Student</button>
+            </div>
+        </form>
+    {% else %}
+        <p>You are not authorised to view this page.</p>
+    {% endif %}
+
+{% endblock %}

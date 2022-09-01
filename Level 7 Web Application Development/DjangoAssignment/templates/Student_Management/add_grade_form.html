@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Add Grade
+{% endblock %}
+
+{% block content %}
+    {% if user.id == studentEnrollment.classID.lecturer.id %}
+        <h1>Add Grade</h1>
+        <br>
+        <form method="post" action="{% url 'add_grade' studentEnrollment.id %}">
+
+            {% csrf_token %}
+            <table>
+                <tr>
+                    <td>Student ID:
+                    </td>
+                    <td>{{ studentEnrollment.studentID.id }}</td>
+                </tr>
+                <tr>
+                    <td>Name:</td>
+                    <td>{{ studentEnrollment.studentID.firstname }} {{ studentEnrollment.studentID.lastname }}</td>
+                </tr>
+                <td>
+                    Class Number:
+                </td>
+                <td>{{ studentEnrollment.classID.id }}</td>
+                <tr>
+                    <td>Course:</td>
+                    <td>{{ studentEnrollment.classID.course.code }} {{ studentEnrollment.classID.course.name }}</td>
+                </tr>
+                <tr>
+                    <td><label for="grade" class="form_label">Grade:</label></td>
+                    <td><input type="text" class="form-control" name="grade"></td>
+                </tr>
+            </table>
+            <button class="btn btn-success">Save Grade</button>
+        </form>
+    {% else %}
+        <p>You are not authorised to view this page.</p>
+    {% endif %}
+{% endblock %}

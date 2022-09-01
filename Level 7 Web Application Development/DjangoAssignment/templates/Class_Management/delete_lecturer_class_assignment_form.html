@@ -1,0 +1,28 @@
+{% extends "base.html" %}#}
+
+{% block title %}
+    Remove Lecturer-Class Assignment
+{% endblock %}
+
+{% block content %}
+    {% if user.groups.all.0.name == 'Administrators' %}
+        <h1>Remove Lecturer</h1>
+        <br>
+        <form method="post" action="{% url 'delete_lecturer_class_assignment' class.id %}">
+            {% csrf_token %}
+            <input type="hidden" class="form-control" name="number" value="{{ class.number }}" readonly="readonly">
+            <input type="hidden" class="form-control" name="semester" value="{{ class.semester_id }}"
+                   readonly="readonly">
+            <input type="hidden" class="form-control" name="course" value="{{ class.course_id }}"
+                   readonly="readonly">
+            <input type="hidden" class="form-control" name="lecturer" value="{{ class.lecturer_id }}"
+                   readonly="readonly">
+            Are you sure you want to remove
+            <strong> {{ class.lecturer.firstname }} {{ class.lecturer.lastname }}</strong>
+            from {{ class.number }} {{ class.course }}?
+            <button class="btn btn-danger">Remove Lecturer</button>
+        </form>
+    {% else %}
+        <p>You are not authorised to view this page.</p>
+    {% endif %}
+{% endblock %}

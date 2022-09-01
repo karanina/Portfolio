@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Bulk Student Upload
+<script src="https://www.gstatic.com/firebasejs/3.7.4/firebase.js"></script>
+<script>
+    var firebaseConfig = {
+    apiKey: "AIzaSyCgHtFhWXBicwRfi68f526vmURvwBImejs",
+    authDomain: "iscg7420-gradebook.firebaseapp.com",
+    projectId: "iscg7420-gradebook",
+    storageBucket: "iscg7420-gradebook.appspot.com",
+    messagingSenderId: "833413915587",
+    appId: "1:833413915587:web:9a26a7660b80dc973c5376",
+    measurementId: "G-VGLFXZWRCZ"
+};
+  firebase.initializeApp(firebaseConfig);
+  function uploadfile(){
+  var storage = firebase.storage();
+  var file=document.getElementById("files").files[0];
+  var storageref=storage.ref();
+  var thisref=storageref.child(file.name).put(file);
+  thisref.on('state_changed',function(snapshot) {
+  console.log('Done');
+
+  }, function(error) {
+  console.log('Error',error);
+
+}, function() {
+  // Uploaded completed successfully, now we can get the download URL
+  thisref.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+    console.log('File available at', downloadURL);
+    document.getElementById("url").value=downloadURL;
+    alert('uploaded successfully');
+  });
+});
+}
+</script>
+{% endblock %}
+
+{% block content %}
+    {% if user.groups.all.0.name == 'Administrators' %}
+        <h1>Bulk Student Upload</h1>
+        <br>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="file" name="theFile">
+            <button onclick="uploadfile()" class="btn btn-success">Upload</button>
+        </form>
+
+        {% if uploaded_file_url %}
+            <p>Uploaded file at: <a href="{{ uploaded_file_url }}">{{ uploaded_file_url }}</a></p>
+        {% elif message %}
+            {{ message }}
+        {% endif %}
+
+        <p><a href="{% url 'list_student' %}">Go to Student List</a></p>
+    {% else %}
+        <p>You are not authorised to view this page.</p>
+    {% endif %}
+
+
+{% endblock %}

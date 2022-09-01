@@ -1,0 +1,36 @@
+{% extends "base.html" %}#}
+
+{% block title %}
+    List Lecturers
+{% endblock %}
+
+{% block content %}
+    {% if user.groups.all.0.name == 'Administrators' %}
+        <h1>Lecturers</h1>
+        <br>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Actions</th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for lecturer in object_list %}
+                <tr>
+                    <td>
+                        <a href="{% url "lecturer_detail" lecturer.id %}">{{ lecturer.lastname }}, {{ lecturer.firstname }}</a>
+                    </td>
+                    <td>{{ lecturer.email }}</td>
+                    <td><a href="{% url "update_lecturer_form" lecturer.id %}" class="btn btn-success">Update</a></td>
+                    <td><a href="{% url "delete_lecturer" lecturer.id %}" class="btn btn-danger">Delete</a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>You are not authorised to view this page.</p>
+    {% endif %}
+{% endblock %}

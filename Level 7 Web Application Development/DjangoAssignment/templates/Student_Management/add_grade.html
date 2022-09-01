@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Add Grade
+{% endblock %}
+
+{% block content %}
+    {% if user.id == lecturer %}
+        {{ message }}
+    {% else %}
+        <p>You are not authorised to view this page.</p>
+    {% endif %}
+{% endblock %}

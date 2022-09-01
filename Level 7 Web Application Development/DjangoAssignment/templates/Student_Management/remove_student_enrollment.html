@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Un-enroll Student from Class
+{% endblock %}
+
+{% block content %}
+    <h1>Un-enroll Student From Class</h1>
+    <br>
+    {% if user.groups.all.0.name == 'Administrators' %}
+        {{ message }}
+    {% else %}s
+        <p>You are not authorised to view this page.</p>
+    {% endif %}
+{% endblock %}

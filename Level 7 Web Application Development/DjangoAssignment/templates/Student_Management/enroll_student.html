@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Enroll Student
+{% endblock %}
+
+{% block content %}
+    <h1>Student Enrollment</h1>
+    <br>
+    {% if user.groups.all.0.name == 'Administrators' %}
+        {{ message }}
+    {% else %}
+        <p>You are not authorised to view this page.</p>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,55 @@
+{% extends "base.html" %}#}
+
+{% block title %}
+    List Classes
+{% endblock %}
+
+{% block content %}
+    {% if user.groups.all.0.name == 'Administrators' %}
+        <h1>Classes</h1>
+        <br>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">Semester</th>
+                <th scope="col">Class Number</th>
+                <th scope="col">Course</th>
+                <th scope="col">Lecturer</th>
+                <th scope="col">Lecturer Actions</th>
+                <th scope="col"></th>
+                <th scope="col">Class Actions</th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for class in object_list %}
+                <tr>
+                    <td><a href="{% url "semester_detail" class.semester.id %}">{{ class.semester }}</a></td>
+                    <td><a href="{% url "class_detail" class.id %}">{{ class.number }}</a></td>
+                    <td>
+                        <a href="{% url "course_detail" class.course.id %}">{{ class.course.code }} {{ class.course.name }}</a>
+                    </td>
+                    {% if class.lecturer %}
+                        <td>
+                            <a href="{% url "lecturer_detail" class.lecturer.id %}">{{ class.lecturer.firstname }} {{ class.lecturer.lastname }}</a>
+                        </td>
+                        <td><a href="{% url "update_lecturer_class_assignment_form" class.id %}"
+                               class="btn btn-success">Change Lecturer</a></td>
+                        <td><a href="{% url "delete_lecturer_class_assignment_form" class.id %}" class="btn btn-danger">Remove
+                            Lecturer</a></td>
+                    {% else %}
+                        <td></td>
+                        <td><a href="{% url "create_lecturer_class_assignment_form" class.id %}" class="btn btn-success">Assign
+                            Lecturer</a></td>
+                        <td></td>
+                    {% endif %}
+                    <td><a href="{% url "update_class" class.id %}" class="btn btn-success">Update Class</a></td>
+                    <td><a href="{% url "delete_class" class.id %}" class="btn btn-danger">Delete Class</a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>You are not authorised to view this page.</p>
+    {% endif %}
+{% endblock %}
