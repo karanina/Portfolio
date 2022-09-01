@@ -8,8 +8,8 @@
     {% if user.groups.all.0.name == 'Administrators' %}
        <script>
         $(function () {
-                    $("#lecturerDOB").datepicker()
-                    $("#lecturerDOB").datepicker("option", "dateFormat", "yy-mm-dd");
+                    $( "#lecturerDOB" ).datepicker();
+                    $( "#lecturerDOB" ).datepicker("option", "dateFormat", "yy-mm-dd");
                 }
             );
        </script>
