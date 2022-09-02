@@ -8,6 +8,7 @@ This website was designed for my Level 7 Web Application Development paper.
 3. Deploy the application on Heroku or AWS.
 
 The full assignment brief is in the pdf file [AssignmentBrief.pdf](Level 7 Web Application Development/DjangoAssignment/AssignmentBrief.pdf).
+
 The web application is hosted [here](http://ec2-13-239-7-84.ap-southeast-2.compute.amazonaws.com/).
 
 ### Features of the web application include:
