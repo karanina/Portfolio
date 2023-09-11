@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_gradient"
+    android:orientation="vertical"
+    tools:context=".CreateQuiz">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:paddingHorizontal="50sp"
+                android:text="@string/create_quiz"
+                android:textAlignment="center"
+                android:textColor="@color/Neon_Green"
+                android:textSize="36sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/et_quizName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_margin="20dp"
+                android:background="@drawable/background_rounded_corners"
+                android:backgroundTint="@color/Ivory"
+                android:hint="@string/enter_quiz_name"
+                android:padding="10dp"
+                android:textColor="@color/Blue"
+                android:textColorHint="@color/Blue"
+                android:textSize="18sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="10dp"
+                android:textSize="18sp"
+                android:text="@string/select_category"
+                android:textColor="@color/Ivory"/>
+            <Spinner
+                android:id="@+id/spin_category"
+                android:layout_width="match_parent"
+                android:layout_height="38dp"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/background_rounded_corners"
+                android:backgroundTint="@color/Ivory"
+                android:dropDownSelector="@color/Neon_Green"
+                android:padding="10dp"
+                android:popupBackground="@color/Ivory"
+                android:spinnerMode="dropdown"
+                android:textAllCaps="false"
+                android:textColor="@color/Ivory"
+                android:textSize="18sp" />
+<TextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="20dp"
+    android:layout_marginTop="15dp"
+    android:textSize="18sp"
+    android:text="@string/select_difficulty"
+    android:textColor="@color/Ivory"/>
+            <Spinner
+                android:id="@+id/spin_difficulty"
+                android:layout_width="match_parent"
+                android:layout_height="38dp"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginBottom="15dp"
+                android:background="@drawable/background_rounded_corners"
+                android:backgroundTint="@color/Ivory"
+                android:dropDownSelector="@color/Neon_Green"
+                android:padding="10dp"
+                android:popupBackground="@color/Ivory"
+                android:spinnerMode="dropdown"
+                android:textAllCaps="false"
+                android:textColor="@color/Ivory"
+                android:textSize="18sp" />
+
+            <Button
+                android:id="@+id/btn_startDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="10dp"
+                android:backgroundTint="@color/Neon_Green"
+                android:padding="10dp"
+                android:text="@string/start_date"
+                android:textAllCaps="false"
+                android:textColor="@color/Ivory"
+                android:textSize="18sp" />
+            <TextView
+                android:id="@+id/tv_startDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginBottom="10dp"
+                android:textSize="18sp"
+                android:textAlignment="textEnd"
+                android:textColor="@color/Ivory"/>
+
+            <Button
+                android:id="@+id/btn_endDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="10dp"
+                android:backgroundTint="@color/Neon_Green"
+                android:padding="10dp"
+                android:text="@string/end_date"
+                android:textAllCaps="false"
+                android:textColor="@color/Ivory"
+                android:textSize="18sp" />
+            <TextView
+                android:id="@+id/tv_endDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginBottom="10dp"
+                android:textSize="18sp"
+                android:textAlignment="textEnd"
+                android:textColor="@color/Ivory"/>
+
+            <Button
+                android:id="@+id/btn_generateQuestions"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginVertical="10dp"
+                android:backgroundTint="@color/Neon_Green"
+                android:padding="10dp"
+                android:text="@string/generate_questions"
+                android:textAllCaps="false"
+                android:textColor="@color/Ivory"
+                android:textSize="18sp" />
+
+            <Button
+                android:id="@+id/btn_previewQuiz"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginVertical="10dp"
+                android:backgroundTint="@color/Neon_Green"
+                android:padding="10dp"
+                android:text="@string/preview_quiz"
+                android:textAllCaps="false"
+                android:textColor="@color/Ivory"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/et_quizPreview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_margin="20dp"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginVertical="10dp"
+                android:background="@drawable/background_rounded_corners"
+                android:backgroundTint="@color/Ivory"
+                android:padding="10dp"
+                android:textColor="@color/Blue"
+                android:textSize="18sp"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/btn_saveQuiz"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginVertical="10dp"
+                android:backgroundTint="@color/Neon_Green"
+                android:padding="10dp"
+                android:text="@string/save_quiz"
+                android:textAllCaps="false"
+                android:textColor="@color/Ivory"
+                android:textSize="18sp" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

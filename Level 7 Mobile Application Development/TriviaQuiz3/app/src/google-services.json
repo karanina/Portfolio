@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "416360848695",
+    "project_id": "assignment2triviaquiz",
+    "storage_bucket": "assignment2triviaquiz.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:416360848695:android:ec8e3a8d68bfb1944e0eb2",
+        "android_client_info": {
+          "package_name": "io.github.karanina.triviaquiz"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "416360848695-1dsnuddivtqeurap7uegejrq8nharkjg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBXxCvah0XCISlR4UcgG2BNT-w9DppVv_Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "416360848695-1dsnuddivtqeurap7uegejrq8nharkjg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,51 @@
+<resources>
+    <string-array name="difficulty">
+        <item>Easy</item>
+        <item>Medium</item>
+        <item>Hard</item>
+    </string-array>
+    <string name="app_name">TriviaQuiz</string>
+    <string name="trivia_quiz">Trivia Quiz</string>
+    <string name="email_address">Email address</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="registration">Registration</string>
+    <string name="menu">Menu</string>
+    <string name="quiz_tournaments">Quiz Tournaments</string>
+    <string name="ongoing">Ongoing</string>
+    <string name="upcoming">Upcoming</string>
+    <string name="past">Past</string>
+    <string name="participated">Participated</string>
+    <string name="logout">Logout</string>
+    <string name="don_t_have_an_account">Don\'t have an account?</string>
+    <string name="all_quizzes">All Quizzes</string>
+    <string name="create_quiz">Create Quiz</string>
+    <string name="admin_menu">Admin Menu</string>
+    <string name="update_quiz">Update Quiz</string>
+    <string name="delete_quiz">Delete Quiz</string>
+    <string name="username">Username</string>
+    <string name="save_quiz">Save Quiz</string>
+    <string name="start_date">Start Date</string>
+    <string name="end_date">End Date</string>
+    <string name="generate_questions">Generate Questions</string>
+    <string name="preview_quiz">Preview Quiz</string>
+    <string name="enter_quiz_name">Enter Quiz Name</string>
+    <string name="quiz_name">Quiz Name: </string>
+    <string name="start_date_">Start Date: </string>
+    <string name="end_date_">End Date: </string>
+    <string name="category">Category: </string>
+    <string name="difficulty">Difficulty: </string>
+    <string name="ongoing_quizzes">Ongoing Quizzes</string>
+    <string name="upcoming_quizzes">Upcoming Quizzes</string>
+    <string name="past_quizzes">Past Quizzes</string>
+    <string name="participated_quizzes">Participated Quizzes</string>
+    <string name="return_to_main_menu">Return to Main Menu</string>
+    <string name="select_difficulty">Select Difficulty</string>
+    <string name="select_category">Select Category</string>
+    <string name="quiz_score">Quiz Score: </string>
+    <string name="preview_questions_wait_message">Your questions aren\'t ready yet. Wait a few seconds and try to preview the quiz again.</string>
+    <string name="change_start_date">Change Start Date</string>
+    <string name="change_end_date">Change End Date</string>
+    <string name="register_admin_user">Register Admin User</string>
+</resources>
