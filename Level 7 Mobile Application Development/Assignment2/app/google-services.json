@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "538347372422",
+    "project_id": "assignment2exercises",
+    "storage_bucket": "assignment2exercises.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:538347372422:android:a005f9f27495440896b607",
+        "android_client_info": {
+          "package_name": "io.github.karanina.exercises"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "538347372422-poiqtluvkqed4h5m7ic9up308jea9o1i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyANppab7j2AdCRAgyXfluZ24EP-ymB8COM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "538347372422-poiqtluvkqed4h5m7ic9up308jea9o1i.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_gradient"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/cocktail_planner"
+            android:textAlignment="center"
+            android:textColor="@color/dark_cream"
+            android:textSize="45sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/btn_addIngredient"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginHorizontal="15dp"
+            android:layout_marginVertical="30dp"
+            android:backgroundTint="@color/dusky_rose"
+            android:padding="15dp"
+            android:text="@string/add_ingredient"
+            android:textAllCaps="false"
+            android:textColor="@color/crimson"
+            android:textSize="25sp" />
+
+        <Button
+            android:id="@+id/btn_listIngredients"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginHorizontal="15dp"
+            android:backgroundTint="@color/dusky_rose"
+            android:padding="15dp"
+            android:text="@string/ingredient_pantry"
+            android:textAllCaps="false"
+            android:textColor="@color/crimson"
+            android:textSize="25sp" />
+
+        <Button
+            android:id="@+id/btn_allCocktails"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginHorizontal="15dp"
+            android:layout_marginVertical="30dp"
+            android:backgroundTint="@color/dusky_rose"
+            android:padding="15dp"
+            android:text="@string/all_cocktails"
+            android:textAllCaps="false"
+            android:textColor="@color/crimson"
+            android:textSize="25sp" />
+
+        <Button
+            android:id="@+id/btn_favouriteCocktails"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginHorizontal="15dp"
+            android:backgroundTint="@color/dusky_rose"
+            android:padding="15dp"
+            android:text="@string/favourite_cocktails"
+            android:textAllCaps="false"
+            android:textColor="@color/crimson"
+            android:textSize="25sp" />
+    </LinearLayout>
+</LinearLayout>
