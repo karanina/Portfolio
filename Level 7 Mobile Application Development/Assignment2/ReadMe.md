@@ -18,4 +18,4 @@ The full assignment brief is in the pdf file (Exercises section) [ISCG7424 Mobil
 
 ### User Guide and Demo
 + [User Guide](https://github.com/karanina/Portfolio/blob/a71bc5441a244b915c8c0a42b91fb9b2ed67f18b/Level%207%20Mobile%20Application%20Development/Assignment2%20Cocktail%20Planner%20Documentation/Cocktail_Planner_User_Guide.docx)
-+ [Demonstration](https://youtu.be/bPDF7P2r9GA)https://youtu.be/bPDF7P2r9GA)
++ [Demonstration](https://youtu.be/bPDF7P2r9GA)
