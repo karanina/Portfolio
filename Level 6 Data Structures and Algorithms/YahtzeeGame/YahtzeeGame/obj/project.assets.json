@@ -248,10 +248,14 @@
           "SFML.Window": "2.5.0"
         },
         "compile": {
-          "lib/netstandard2.0/SFML.Audio.dll": {}
+          "lib/netstandard2.0/SFML.Audio.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/netstandard2.0/SFML.Audio.dll": {}
+          "lib/netstandard2.0/SFML.Audio.dll": {
+            "related": ".xml"
+          }
         }
       },
       "SFML.Graphics/2.5.0": {
@@ -262,10 +266,14 @@
           "SFML.Window": "2.5.0"
         },
         "compile": {
-          "lib/netstandard2.0/SFML.Graphics.dll": {}
+          "lib/netstandard2.0/SFML.Graphics.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/netstandard2.0/SFML.Graphics.dll": {}
+          "lib/netstandard2.0/SFML.Graphics.dll": {
+            "related": ".xml"
+          }
         }
       },
       "SFML.Net/2.5.0": {
@@ -283,10 +291,14 @@
           "CSFML": "2.5.0"
         },
         "compile": {
-          "lib/netstandard2.0/SFML.System.dll": {}
+          "lib/netstandard2.0/SFML.System.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/netstandard2.0/SFML.System.dll": {}
+          "lib/netstandard2.0/SFML.System.dll": {
+            "related": ".xml"
+          }
         }
       },
       "SFML.Window/2.5.0": {
@@ -296,10 +308,14 @@
           "SFML.System": "2.5.0"
         },
         "compile": {
-          "lib/netstandard2.0/SFML.Window.dll": {}
+          "lib/netstandard2.0/SFML.Window.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/netstandard2.0/SFML.Window.dll": {}
+          "lib/netstandard2.0/SFML.Window.dll": {
+            "related": ".xml"
+          }
         }
       }
     }
@@ -444,27 +460,25 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Anna\\.nuget\\packages\\": {},
-    "C:\\Microsoft\\Xamarin\\NuGet\\": {},
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
+    "C:\\Users\\annam\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Anna\\Documents\\GitHub\\ISCG6426-Data-Structures-Algorithms\\YahtzeeGame\\YahtzeeGame\\YahtzeeGame.csproj",
+      "projectUniqueName": "C:\\Users\\annam\\Documents\\GitHub\\Portfolio\\Level 6 Data Structures and Algorithms\\YahtzeeGame\\YahtzeeGame\\YahtzeeGame.csproj",
       "projectName": "YahtzeeGame",
-      "projectPath": "C:\\Users\\Anna\\Documents\\GitHub\\ISCG6426-Data-Structures-Algorithms\\YahtzeeGame\\YahtzeeGame\\YahtzeeGame.csproj",
-      "packagesPath": "C:\\Users\\Anna\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Anna\\Documents\\GitHub\\ISCG6426-Data-Structures-Algorithms\\YahtzeeGame\\YahtzeeGame\\obj\\",
+      "projectPath": "C:\\Users\\annam\\Documents\\GitHub\\Portfolio\\Level 6 Data Structures and Algorithms\\YahtzeeGame\\YahtzeeGame\\YahtzeeGame.csproj",
+      "packagesPath": "C:\\Users\\annam\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\annam\\Documents\\GitHub\\Portfolio\\Level 6 Data Structures and Algorithms\\YahtzeeGame\\YahtzeeGame\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "C:\\Microsoft\\Xamarin\\NuGet\\",
-        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\Anna\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+        "C:\\Users\\annam\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "netcoreapp3.1"
@@ -483,7 +497,13 @@
         "warnAsError": [
           "NU1605"
         ]
-      }
+      },
+      "restoreAuditProperties": {
+        "enableAudit": "true",
+        "auditLevel": "low",
+        "auditMode": "direct"
+      },
+      "SdkAnalysisLevel": "9.0.100"
     },
     "frameworks": {
       "netcoreapp3.1": {
@@ -500,7 +520,8 @@
           "net47",
           "net471",
           "net472",
-          "net48"
+          "net48",
+          "net481"
         ],
         "assetTargetFallback": true,
         "warn": true,
@@ -509,7 +530,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.103\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.102\\RuntimeIdentifierGraph.json"
       }
     }
   }
