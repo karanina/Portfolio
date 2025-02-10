@@ -1,0 +1,15 @@
+c:\Users\annam\Documents\GitHub\Portfolio\CodingKataBackToTheCheckout\Checkout\bin\Debug\net9.0\Checkout.exe
+c:\Users\annam\Documents\GitHub\Portfolio\CodingKataBackToTheCheckout\Checkout\bin\Debug\net9.0\Checkout.deps.json
+c:\Users\annam\Documents\GitHub\Portfolio\CodingKataBackToTheCheckout\Checkout\bin\Debug\net9.0\Checkout.runtimeconfig.json
+c:\Users\annam\Documents\GitHub\Portfolio\CodingKataBackToTheCheckout\Checkout\bin\Debug\net9.0\Checkout.dll
+c:\Users\annam\Documents\GitHub\Portfolio\CodingKataBackToTheCheckout\Checkout\bin\Debug\net9.0\Checkout.pdb
+c:\Users\annam\Documents\GitHub\Portfolio\CodingKataBackToTheCheckout\Checkout\obj\Debug\net9.0\Checkout.GeneratedMSBuildEditorConfig.editorconfig
+c:\Users\annam\Documents\GitHub\Portfolio\CodingKataBackToTheCheckout\Checkout\obj\Debug\net9.0\Checkout.AssemblyInfoInputs.cache
+c:\Users\annam\Documents\GitHub\Portfolio\CodingKataBackToTheCheckout\Checkout\obj\Debug\net9.0\Checkout.AssemblyInfo.cs
+c:\Users\annam\Documents\GitHub\Portfolio\CodingKataBackToTheCheckout\Checkout\obj\Debug\net9.0\Checkout.csproj.CoreCompileInputs.cache
+c:\Users\annam\Documents\GitHub\Portfolio\CodingKataBackToTheCheckout\Checkout\obj\Debug\net9.0\Checkout.sourcelink.json
+c:\Users\annam\Documents\GitHub\Portfolio\CodingKataBackToTheCheckout\Checkout\obj\Debug\net9.0\Checkout.dll
+c:\Users\annam\Documents\GitHub\Portfolio\CodingKataBackToTheCheckout\Checkout\obj\Debug\net9.0\refint\Checkout.dll
+c:\Users\annam\Documents\GitHub\Portfolio\CodingKataBackToTheCheckout\Checkout\obj\Debug\net9.0\Checkout.pdb
+c:\Users\annam\Documents\GitHub\Portfolio\CodingKataBackToTheCheckout\Checkout\obj\Debug\net9.0\Checkout.genruntimeconfig.cache
+c:\Users\annam\Documents\GitHub\Portfolio\CodingKataBackToTheCheckout\Checkout\obj\Debug\net9.0\ref\Checkout.dll
