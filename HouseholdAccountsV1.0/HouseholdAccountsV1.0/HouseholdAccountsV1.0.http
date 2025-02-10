@@ -1,0 +1,6 @@
+@HouseholdAccountsV1._0_HostAddress = http://localhost:5223
+
+GET {{HouseholdAccountsV1._0_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

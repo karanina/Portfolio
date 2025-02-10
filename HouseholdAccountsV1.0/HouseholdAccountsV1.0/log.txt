@@ -1,0 +1,48 @@
+INSERT INTO [dbo].[Transaction]
+                    ([Year],
+                    [Month],
+                    [Day],
+                    [AccountOwner],
+                    [Notes],
+                    [Amount],
+                    [Category],
+                    [TransactionDate])
+                VALUES
+                    ('2024','January','01','Anna','Opening Balance',47.79,24,'2024-01-01')
+
+INSERT INTO [dbo].[Transaction]
+                    ([Year],
+                    [Month],
+                    [Day],
+                    [AccountOwner],
+                    [Notes],
+                    [Amount],
+                    [Category],
+                    [TransactionDate])
+                VALUES
+                    ('2024','January','01','Anna','Opening Balance',47.79,24,'2024-01-01')
+
+INSERT INTO [dbo].[Transaction]
+                    ([Year],
+                    [Month],
+                    [Day],
+                    [AccountOwner],
+                    [Notes],
+                    [Amount],
+                    [Category],
+                    [TransactionDate])
+                VALUES
+                    ('2024','January','01','Anna','Opening Balance',47.79,24,'2024-01-01')
+
+INSERT INTO [dbo].[Transaction]
+                    ([Year],
+                    [Month],
+                    [Day],
+                    [AccountOwner],
+                    [Notes],
+                    [Amount],
+                    [Category],
+                    [TransactionDate])
+                VALUES
+                    ('2024','January','01','Anna','Opening Balance',47.79,24,'2024-01-01')
+
