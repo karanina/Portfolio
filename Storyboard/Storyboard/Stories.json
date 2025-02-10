@@ -1,0 +1,26 @@
+[
+    {
+        "title": "The Wizard of Oz",
+        "genre": "Childrens"
+    },
+    {
+        "title": "Dune",
+        "genre": "Science Fiction"
+    },
+    {
+        "title": "The Handmaids Tale",
+        "genre": "Post Apocalyptic"
+    },
+    {
+        "title": "The Firm",
+        "genre": "Thriller"
+    },
+    {
+        "title": "The Warlord Wants Forever",
+        "genre": "Paranormal Romance"
+    },
+    {
+        "title": "The Waking Fire",
+        "genre": "Fantasy"
+    }
+]
