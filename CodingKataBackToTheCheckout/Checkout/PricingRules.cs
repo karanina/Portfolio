@@ -1,36 +1,53 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Dynamic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace Checkout;
-
-public class PricingRules
+namespace Checkout
 {
-    public string item { get; set; }
-    public decimal unit_price { get; set; }
-    public string special_price { get; set; }
-
-    public PricingRules()
+    public class PricingRules
     {
-        // default constructor
-        this.item = "";
-        this.unit_price = 0;
-        this.special_price = "";
-    }
+        public string item { get; set; }
+        public decimal unitPrice { get; set; }
+        public string specialPrice { get; set; }
 
-    // constructor for an item with a special price as well as a unit price.
-    public PricingRules(string item, decimal unit_price, string special_price)
-    {
-        this.item = item;
-        this.unit_price = unit_price;
-        this.special_price = special_price;
-    }
+        public PricingRules()
+        {
+            // default constructor
+            this.item = "";
+            this.unitPrice = 0;
+            this.specialPrice = "";
+        }
 
-    // constructor for an item with only a unit price.
-    public PricingRules(string item, decimal unit_price)
-    {
-        this.item = item;
-        this.unit_price = unit_price;
-        this.special_price = "";
+        // constructor for an item with a special price as well as a unit price.
+        public PricingRules(string item, decimal unitPrice, string specialPrice)
+        {
+            if (unitPrice > 0)
+            {
+                this.item = item;
+                this.unitPrice = unitPrice;
+                this.specialPrice = specialPrice;
+            }
+            else
+            {
+                throw new ArgumentException("Unit price cannot be negative", "unitPrice");
+            }
+        }
+
+        // constructor for an item with only a unit price.
+        public PricingRules(string item, decimal unitPrice)
+        {
+            if (unitPrice > 0)
+            {
+                this.item = item;
+                this.unitPrice = unitPrice;
+                this.specialPrice = "";
+            }
+            else
+            {
+                throw new ArgumentException("Unit price cannot be negative", "unitPrice");
+            }
+        }
     }
 }
