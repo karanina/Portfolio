@@ -1,11 +1,9 @@
 // this file is for the Dapper version of database queries
-using System.Collections.Generic;
 using System.Data;
-using System.Transactions;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
-using Storyboard.Models;
 using Microsoft.Extensions.Configuration;
+using Storyboard.Models;
 
 namespace Storyboard.Data
 {
@@ -13,10 +11,13 @@ namespace Storyboard.Data
     {
         private IConfiguration _config;
 
-        public DataContextEF(IConfiguration config){
+        public DataContextEF(IConfiguration config)
+        {
             _config = config;
         }
-        public DbSet<Story>? Story { get; set; }
+
+        public virtual DbSet<Story> Stories { get; set; }
+        public virtual DbSet<User> Users { get; set; }
 
         // called when DataContextEF (DbContext) is created, gives access to the connection string
         protected override void OnConfiguring(DbContextOptionsBuilder options)
@@ -29,7 +30,7 @@ namespace Storyboard.Data
                 // checks if options have been configured, and if not tries and retries on failure
                 // checks the default schema (dbo), if using a named schema specify it in the OnModelCreating method
                 options.UseSqlServer(
-                   _config.GetConnectionString("DefaultConnection"),
+                    _config.GetConnectionString("DefaultConnection"),
                     options => options.EnableRetryOnFailure()
                 );
             }
@@ -39,10 +40,17 @@ namespace Storyboard.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasDefaultSchema("dbo");
-            // table name in SQL server
-            // specifies the primary key - needed to wrok
-            modelBuilder.Entity<Story>().ToTable("Story").HasKey(s => s.ID);
-            // alternatively .ToTable("tableName", "schemaName")
+
+            modelBuilder
+                .Entity<Story>()
+                .ToTable("Story")
+                // specifies the primary key - needed to work
+                .HasKey(s => s.Id);
+            modelBuilder
+                .Entity<User>()
+                // alternatively .ToTable("tableName", "schemaName")
+                .ToTable("Users")
+                .HasKey(u => u.UserId);
         }
     }
 }

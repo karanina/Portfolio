@@ -1,3 +1,5 @@
+using System.Text.Json.Serialization;
+
 namespace HouseholdAccountsV1._0.Models
 {
     // Represents a Transaction in the DB
@@ -16,6 +18,7 @@ namespace HouseholdAccountsV1._0.Models
         public decimal Amount { get; set; }
         public int Category { get; set; } = 0;
         public string TranType { get; set; } = "";
+       // [JsonPropertyName("uniqueId")] // simpler way to do to mapping from json if required, rather than use auto mapper.
         public string BankUniqueID { get; set; } = "";
         public DateTime TransactionDate { get; set; }
 

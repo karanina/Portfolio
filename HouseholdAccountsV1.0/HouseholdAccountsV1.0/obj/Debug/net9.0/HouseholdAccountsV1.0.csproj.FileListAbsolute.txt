@@ -74,3 +74,4 @@ C:\Users\annam\Documents\GitHub\Portfolio\HouseholdAccountsV1.0\HouseholdAccount
 C:\Users\annam\Documents\GitHub\Portfolio\HouseholdAccountsV1.0\HouseholdAccountsV1.0\obj\Debug\net9.0\HouseholdAccountsV1.0.genruntimeconfig.cache
 C:\Users\annam\Documents\GitHub\Portfolio\HouseholdAccountsV1.0\HouseholdAccountsV1.0\obj\Debug\net9.0\ref\HouseholdAccountsV1.0.dll
 C:\Users\annam\Documents\GitHub\Portfolio\HouseholdAccountsV1.0\HouseholdAccountsV1.0\bin\Debug\net9.0\Transactions.json
+C:\Users\annam\Documents\GitHub\Portfolio\HouseholdAccountsV1.0\HouseholdAccountsV1.0\bin\Debug\net9.0\AutoMapper.dll

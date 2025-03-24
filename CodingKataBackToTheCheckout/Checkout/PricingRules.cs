@@ -10,14 +10,15 @@ namespace Checkout
     {
         public string item { get; set; }
         public decimal unitPrice { get; set; }
-        public string specialPrice { get; set; }
+        //public string specialPrice { get; set; }
+        public List<string> specialPrices { get; set; }
 
         public PricingRules()
         {
             // default constructor
             this.item = "";
             this.unitPrice = 0;
-            this.specialPrice = "";
+            this.specialPrices = new List<string>();
         }
 
         // constructor for an item with a special price as well as a unit price.
@@ -27,8 +28,9 @@ namespace Checkout
             {
                 this.item = item;
                 this.unitPrice = unitPrice;
-                this.specialPrice = specialPrice;
-            }
+                this.specialPrices = new List<string>() { specialPrice };
+              //  this.specialPrice = specialPrice;
+                    }
             else
             {
                 throw new ArgumentException("Unit price cannot be negative", "unitPrice");
@@ -42,7 +44,8 @@ namespace Checkout
             {
                 this.item = item;
                 this.unitPrice = unitPrice;
-                this.specialPrice = "";
+                this.specialPrices = new List<string>();
+              //  this.specialPrice = "";
             }
             else
             {

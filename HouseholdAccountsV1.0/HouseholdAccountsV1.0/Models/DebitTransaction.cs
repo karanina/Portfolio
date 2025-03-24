@@ -4,10 +4,11 @@ namespace HouseholdAccountsV1._0.Models
     public class DebitTransaction : SourceTransaction
     {
         //Date,Unique Id,Tran Type,Cheque Number,Payee,Memo,Amount
-        private DateOnly? date;
+        public DateOnly? date { get; set; }
 
-        private string? chequeNumber;
-        private string? payee;
-        private string? memo;
+        public string? chequeNumber { get; set; }
+        public string? payee { get; set; }
+        public string? memo { get; set; }
+
     }
 }

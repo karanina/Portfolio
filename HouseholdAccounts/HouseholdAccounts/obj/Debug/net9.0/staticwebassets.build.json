@@ -1,0 +1,12 @@
+{
+  "Version": 1,
+  "Hash": "3WbZBlwvKbYJAcVWgkEd2bUiMrhRgJ7Sfflxz9Rw7NY=",
+  "Source": "HouseholdAccounts",
+  "BasePath": "_content/HouseholdAccounts",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": [],
+  "Endpoints": []
+}

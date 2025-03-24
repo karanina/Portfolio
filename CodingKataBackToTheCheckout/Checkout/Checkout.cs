@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -85,6 +86,7 @@ namespace Checkout
                 if (!string.IsNullOrWhiteSpace(rule.specialPrice))
                 {
                     total += CalculateLineTotalSpecialPrice(
+                        rule.specialPrices,
                         rule.specialPrice,
                         rule.unitPrice,
                         item.Value
@@ -107,13 +109,13 @@ namespace Checkout
         }
 
         // calculates the line total for an item in the cart where a special price is applicable.
-        public decimal CalculateLineTotalSpecialPrice(string specialPrice, decimal unitPrice, decimal quantity)
+        public decimal CalculateLineTotalSpecialPrice(List<string> specialPrices, decimal quantity)
         {
             // used to keep track of muliple rounds of special price application.
             decimal remainingQuantity = quantity;
             decimal lineTotal = 0;
 
-            (decimal multiQty, decimal multiPrice) = ExtractSpecialPrice(specialPrice);
+            (decimal multiQty, decimal multiPrice) = ExtractSpecialPrice(specialPrices, quantity);
 
             while ((remainingQuantity / multiQty) >= 1)
             {
@@ -135,31 +137,41 @@ namespace Checkout
         /// <returns>multiQty -  the quantity applicable for the multibuy
         /// multiPrice - the price applicable for the multibuy</returns>
         /// <exception cref="ArgumentException"></exception>
-        public (decimal, decimal) ExtractSpecialPrice(string specialPrice)
+        public (decimal, decimal) ExtractSpecialPrice(List<string> specialPrices, decimal quantity)
         {
             decimal multiQty = 0;
             decimal multiPrice = 0;
+            List<(decimal, decimal)> validSpecials = new List<(decimal, decimal)>();
 
-            if (specialPrice != "")
+            if (specialPrices.Count >= 1)
             {
-                string[] parts = specialPrice.Split();
-
-                for (int i = 0; i < parts.Length; i++)
+                for (int k = 0; k < specialPrices.Count; k++)
                 {
-                    if (parts[i].Contains("$"))
+
+                    string[] parts = specialPrices[k].Split();
+
+                    for (int i = 0; i < parts.Length; i++)
                     {
-                        parts[i] = parts[i].Replace("$", "");
-                    }
-                    if (decimal.TryParse(parts[i], out decimal num))
-                    {
-                        if (multiPrice == 0)
+                        if (parts[i].Contains("$"))
                         {
-                            multiPrice = num;
+                            parts[i] = parts[i].Replace("$", "");
                         }
-                        else
+                        if (decimal.TryParse(parts[i], out decimal num))
                         {
-                            multiQty = multiPrice;
-                            multiPrice = num;
+                            if (multiPrice == 0)
+                            {
+                                multiPrice = num;
+                            }
+                            else
+                            {
+                                multiQty = multiPrice;
+                                multiPrice = num;
+                            }
+                        }
+
+                        if (multiQty >= quantity)
+                        {
+                            validSpecials.Add((multiQty, multiPrice));
                         }
                     }
                 }
@@ -168,38 +180,59 @@ namespace Checkout
             {
                 throw new ArgumentException("Special Price is empty.", "specialPrice");
             }
+            // 
+            int bestMatch = 0;
+            if (validSpecials.Count > 1)
+            {
+                for (int i = 0; i < validSpecials.Count - 1; i++)
+                {
+                    (var mQty1, var mPrice1 ) = validSpecials[i];
+                    (var mQty2, var mPrice2) = validSpecials[i + 1];
+
+                    if (mQty1 > mQty2)
+                    {
+                        bestMatch = i;
+                    }
+                }
+                return validSpecials[bestMatch];
+            }
+            else
+            {
+                return validSpecials[0];
+            }
+            // for (int j = 0, j < qualified
 
             if (multiQty == 0 && multiPrice == 0)
-            {
-                throw new ArgumentException("Special Price format is not recognised.", "specialPrice");
+                {
+                    throw new ArgumentException("Special Price format is not recognised.", "specialPrice");
+                }
+
+                // if there is only one decimal in the string, return a 1 so the total calculation methods don't break.
+                multiQty = (multiQty == 0) ? 1 : multiQty;
+                return (multiQty, multiPrice);
             }
 
-            // if there is only one decimal in the string, return a 1 so the total calculation methods don't break.
-            multiQty = (multiQty == 0) ? 1 : multiQty;
-            return (multiQty, multiPrice);
+
+
+
+            // multiQty is the quantity applicable for the multibuy
+            // multiPrice is the price applicable for the multibuy
+            //public (decimal, decimal) ExtractSpecialPrice(string specialPrice)
+            //{
+            //    // this works for strings like "3 for 20"
+            //    string[] parts = specialPrice.Split();
+
+            //    if (parts.Contains("for"))
+            //    {
+            //        decimal.TryParse(parts[0], out decimal multiQty);
+            //        decimal.TryParse(parts[2], out decimal multiPrice);
+
+            //        return (multiQty, multiPrice);
+            //    }
+            //    else
+            //    {
+            //        throw new ArgumentException("Special Price format is not recognised.", "specialPrice");
+            //    }
+            //}
         }
-    
-
-
-
-        // multiQty is the quantity applicable for the multibuy
-        // multiPrice is the price applicable for the multibuy
-        //public (decimal, decimal) ExtractSpecialPrice(string specialPrice)
-        //{
-        //    // this works for strings like "3 for 20"
-        //    string[] parts = specialPrice.Split();
-
-        //    if (parts.Contains("for"))
-        //    {
-        //        decimal.TryParse(parts[0], out decimal multiQty);
-        //        decimal.TryParse(parts[2], out decimal multiPrice);
-
-        //        return (multiQty, multiPrice);
-        //    }
-        //    else
-        //    {
-        //        throw new ArgumentException("Special Price format is not recognised.", "specialPrice");
-        //    }
-        //}
     }
-}

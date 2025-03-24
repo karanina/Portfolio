@@ -260,5 +260,22 @@ namespace Checkout.Tests
 
             Assert.Throws<ArgumentException>("specialPrice", () => co.ExtractSpecialPrice(specialPrice));
         }
+
+        [Fact]
+        public void ExtractSpecialPrice_ExtractsMultiplePricingRules()
+        {
+            string item = "A";
+            decimal unitPrice = 10;
+            string specialPrice = "3 for 130";
+
+            decimal quantity = 3;
+            
+            PricingRules pr = new PricingRules(item, unitPrice, specialPrice);
+
+
+            Checkout co = new Checkout();
+
+            (decimal multiQty, decimal multiPrice) = co.ExtractSpecialPrice(pr.specialPrices, quantity);
+        }
     }
 }

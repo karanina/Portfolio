@@ -1,0 +1,88 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\annam\\Documents\\GitHub\\Portfolio\\HouseholdAccountsV1.0\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{A7978BD0-F9C8-EE95-A413-972AD2C5ABF8}|HouseholdAccountsV1.0\\HouseholdAccountsV1.0.csproj|c:\\users\\annam\\documents\\github\\portfolio\\householdaccountsv1.0\\householdaccountsv1.0\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A7978BD0-F9C8-EE95-A413-972AD2C5ABF8}|HouseholdAccountsV1.0\\HouseholdAccountsV1.0.csproj|solutionrelative:householdaccountsv1.0\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A7978BD0-F9C8-EE95-A413-972AD2C5ABF8}|HouseholdAccountsV1.0\\HouseholdAccountsV1.0.csproj|c:\\users\\annam\\documents\\github\\portfolio\\householdaccountsv1.0\\householdaccountsv1.0\\models\\transaction.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A7978BD0-F9C8-EE95-A413-972AD2C5ABF8}|HouseholdAccountsV1.0\\HouseholdAccountsV1.0.csproj|solutionrelative:householdaccountsv1.0\\models\\transaction.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A7978BD0-F9C8-EE95-A413-972AD2C5ABF8}|HouseholdAccountsV1.0\\HouseholdAccountsV1.0.csproj|c:\\users\\annam\\documents\\github\\portfolio\\householdaccountsv1.0\\householdaccountsv1.0\\models\\debittransaction.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A7978BD0-F9C8-EE95-A413-972AD2C5ABF8}|HouseholdAccountsV1.0\\HouseholdAccountsV1.0.csproj|solutionrelative:householdaccountsv1.0\\models\\debittransaction.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A7978BD0-F9C8-EE95-A413-972AD2C5ABF8}|HouseholdAccountsV1.0\\HouseholdAccountsV1.0.csproj|c:\\users\\annam\\documents\\github\\portfolio\\householdaccountsv1.0\\householdaccountsv1.0\\models\\sourcetransaction.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A7978BD0-F9C8-EE95-A413-972AD2C5ABF8}|HouseholdAccountsV1.0\\HouseholdAccountsV1.0.csproj|solutionrelative:householdaccountsv1.0\\models\\sourcetransaction.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 3,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Transaction.cs",
+              "DocumentMoniker": "C:\\Users\\annam\\Documents\\GitHub\\Portfolio\\HouseholdAccountsV1.0\\HouseholdAccountsV1.0\\Models\\Transaction.cs",
+              "RelativeDocumentMoniker": "HouseholdAccountsV1.0\\Models\\Transaction.cs",
+              "ToolTip": "C:\\Users\\annam\\Documents\\GitHub\\Portfolio\\HouseholdAccountsV1.0\\HouseholdAccountsV1.0\\Models\\Transaction.cs",
+              "RelativeToolTip": "HouseholdAccountsV1.0\\Models\\Transaction.cs",
+              "ViewState": "AgIAAAUAAAAAAAAAAAAuwBAAAAAvAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-21T04:01:29.269Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "DebitTransaction.cs",
+              "DocumentMoniker": "C:\\Users\\annam\\Documents\\GitHub\\Portfolio\\HouseholdAccountsV1.0\\HouseholdAccountsV1.0\\Models\\DebitTransaction.cs",
+              "RelativeDocumentMoniker": "HouseholdAccountsV1.0\\Models\\DebitTransaction.cs",
+              "ToolTip": "C:\\Users\\annam\\Documents\\GitHub\\Portfolio\\HouseholdAccountsV1.0\\HouseholdAccountsV1.0\\Models\\DebitTransaction.cs",
+              "RelativeToolTip": "HouseholdAccountsV1.0\\Models\\DebitTransaction.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAbAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-21T03:59:58.343Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "SourceTransaction.cs",
+              "DocumentMoniker": "C:\\Users\\annam\\Documents\\GitHub\\Portfolio\\HouseholdAccountsV1.0\\HouseholdAccountsV1.0\\Models\\SourceTransaction.cs",
+              "RelativeDocumentMoniker": "HouseholdAccountsV1.0\\Models\\SourceTransaction.cs",
+              "ToolTip": "C:\\Users\\annam\\Documents\\GitHub\\Portfolio\\HouseholdAccountsV1.0\\HouseholdAccountsV1.0\\Models\\SourceTransaction.cs",
+              "RelativeToolTip": "HouseholdAccountsV1.0\\Models\\SourceTransaction.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAeAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-21T03:59:48.99Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\annam\\Documents\\GitHub\\Portfolio\\HouseholdAccountsV1.0\\HouseholdAccountsV1.0\\Program.cs",
+              "RelativeDocumentMoniker": "HouseholdAccountsV1.0\\Program.cs",
+              "ToolTip": "C:\\Users\\annam\\Documents\\GitHub\\Portfolio\\HouseholdAccountsV1.0\\HouseholdAccountsV1.0\\Program.cs",
+              "RelativeToolTip": "HouseholdAccountsV1.0\\Program.cs",
+              "ViewState": "AgIAAA4AAAAAAAAAAAAAACIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-21T03:26:20.957Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

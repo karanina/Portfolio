@@ -12,7 +12,7 @@ namespace Checkout
         {
             List<PricingRules> rules = new List<PricingRules>();
             rules.Add(new PricingRules("A", 50, "3 for $130"));
-            rules.Add(new PricingRules("B", 30, "$45 per gram"));
+            rules.Add(new PricingRules("B", 30, "2 for 45"));
             rules.Add(new PricingRules("C", 20));
             rules.Add(new PricingRules("D", 15));
 
@@ -23,34 +23,14 @@ namespace Checkout
                 co.New(rule);
             }
 
-            string[] shoppingList = new string[]
-            {
-            "A",
-            "B",
-            "C",
-            "D",//
-            "A",
-            "B",
-            "C",
-            "D",//
-            "A",
-            "B",
-            "C",
-            "D",//
-            "A",
-            "B",
-            "C",
-            "D",//
-            };
+            string[] shoppingList = new string[] { "D", "A", "C", "B", "B", "D", "A", "A" };
 
             foreach (string item in shoppingList)
             {
                 co.Scan(item);
             }
 
-          //  Console.WriteLine("Total of the shopping list comes to: " + co.Total());
-
-            Console.WriteLine(co.ExtractSpecialPrice("three for one hundred and thirty"));
+          Console.WriteLine("Total of the shopping list comes to: " + co.Total());
         }
     }
 }

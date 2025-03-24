@@ -74,3 +74,7 @@ c:\Users\annam\Documents\GitHub\Portfolio\Storyboard\Storyboard\obj\Debug\net9.0
 c:\Users\annam\Documents\GitHub\Portfolio\Storyboard\Storyboard\obj\Debug\net9.0\ref\Storyboard.dll
 C:\Users\annam\Documents\GitHub\Portfolio\Storyboard\Storyboard\bin\Debug\net9.0\Stories.json
 C:\Users\annam\Documents\GitHub\Portfolio\Storyboard\Storyboard\bin\Debug\net9.0\Newtonsoft.Json.dll
+C:\Users\annam\Documents\GitHub\Portfolio\Storyboard\Storyboard\bin\Debug\net9.0\AutoMapper.dll
+C:\Users\annam\Documents\GitHub\Portfolio\Storyboard\Storyboard\bin\Debug\net9.0\Swashbuckle.AspNetCore.Swagger.dll
+C:\Users\annam\Documents\GitHub\Portfolio\Storyboard\Storyboard\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\Users\annam\Documents\GitHub\Portfolio\Storyboard\Storyboard\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerUI.dll

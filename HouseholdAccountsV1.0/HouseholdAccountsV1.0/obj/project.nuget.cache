@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "0vkt8pp14G8=",
+  "dgSpecHash": "0OxWbhBAtoA=",
   "success": true,
   "projectFilePath": "C:\\Users\\annam\\Documents\\GitHub\\Portfolio\\HouseholdAccountsV1.0\\HouseholdAccountsV1.0\\HouseholdAccountsV1.0.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\annam\\.nuget\\packages\\automapper\\14.0.0\\automapper.14.0.0.nupkg.sha512",
     "C:\\Users\\annam\\.nuget\\packages\\azure.core\\1.38.0\\azure.core.1.38.0.nupkg.sha512",
     "C:\\Users\\annam\\.nuget\\packages\\azure.identity\\1.11.4\\azure.identity.1.11.4.nupkg.sha512",
     "C:\\Users\\annam\\.nuget\\packages\\dapper\\2.1.35\\dapper.2.1.35.nupkg.sha512",

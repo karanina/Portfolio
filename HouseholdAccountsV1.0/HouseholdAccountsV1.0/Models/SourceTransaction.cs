@@ -3,10 +3,10 @@ namespace HouseholdAccountsV1._0.Models
     // Parent class for bank statement attributes
     public class SourceTransaction
     {
-        private string? uniqueId;
-        private string? tranType;
+        public string? uniqueId;
+        public string? tranType;
 
-        private double? amount;
-        private string? account;
+        public double? amount;
+        public string? account;
     }
 }
