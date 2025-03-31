@@ -5,6 +5,10 @@ using HouseholdAccounts.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Configuration.UserSecrets;
 using System.Data.SqlTypes;
+using System.Data;
+using System;
+using Dapper;
+using HouseholdAccounts.Helpers;
 
 namespace HouseholdAccounts.Controllers
 {
@@ -13,124 +17,67 @@ namespace HouseholdAccounts.Controllers
     [Route("[controller]")]
     public class UserController : ControllerBase
     {
-        DataContextDapper _dapper;
+        private readonly DataContextDapper _dapper;
+        private readonly ReusableSql _reusableSql;
         public UserController(IConfiguration config)
         {
             _dapper = new DataContextDapper(config);
+            _reusableSql = new ReusableSql(config);
         }
 
-       // [HttpGet("GetUsers/{userId}/{isActive}")]
-        [HttpGet("GetUsers")]
-       // public IEnumerable<User> GetUsers(int userID, bool isActive)
-        public IEnumerable<User> GetUsers()
+        // userId  and isActive are explicit parameters, so users know how to pass in the test value in order to get a correct response
+        [HttpGet("GetUsers/{userId}/{isActive}")]
+        public IEnumerable<User> GetUsers(int userID, bool isActive)
         {
-            // replace sql query with stored procedures
-            //string sql = @"EXEC [dbo].[spUsers_Get]";
-            string parameters = "";
+            string sql = @"EXEC [Accounts].[spUsers_Get]";
+            string stringParameters = "";
+            DynamicParameters sqlParameters = new DynamicParameters();
             // 0 can be sent in as a placeholder for all users, if you want to get all users.
-            //if (userID != 0)
-            //{
-            //parameters += ", @UserID=" + userID.ToString();
-            //}
-            //if (isActive)
-            //{
-            //parameters += ", @Active=" + isActive;
-            //}
-            // sql += parameters.Substring(1) //this removes the superflous comma at the beginning of the parameters string
-            string sql = @"
-                SELECT UserId, 
-                    Username, 
-                    FirstName, 
-                    LastName, 
-                    Email, 
-                    Active 
-                FROM dbo.Users";
-            return _dapper.LoadData<User>(sql);
+            if (userID != 0)
+            {
+                stringParameters += ", @UserID=@UserIParam";
+                sqlParameters.Add("@UserIDParam", userID, DbType.Int32);
+            }
+            if (isActive)
+            {
+                stringParameters += ", @Active=@ActiveParam";
+                sqlParameters.Add("@ActiveParam, isActive", DbType.Boolean);
+            }
+            if (stringParameters.Length > 0)
+            {
+                sql += stringParameters.Substring(1); //this removes the superflous comma at the beginning of the parameters string
+            }
+            return _dapper.LoadDataWithParameters<User>(sql, sqlParameters);
         }
 
-        // userId is an explicit parameter, so users know how to pass in the test value in order to get a correct response
-        [HttpGet("GetSingleUser/{userId}")]
-        public User GetSingleUser(int userId)
-        {
-            string sql = @$"
-                SELECT UserId, 
-                    Username, 
-                    FirstName, 
-                    LastName, 
-                    Email, 
-                    Active 
-                FROM dbo.Users 
-                WHERE UserId = {userId}";
-            return _dapper.LoadDataSingle<User>(sql);
-        }
 
         // IActionResult tells you what happened without returning a chunk of data, in this case failure or success
-        [HttpPut("EditUser")]
-        public IActionResult EditUser(User user)
+        [HttpPut("UpsertUser")]
+        public IActionResult UpsertUser(User user)
         {
-            string sql = @$"
-                UPDATE dbo.Users
-                SET Username = '{user.Username}',
-                    FirstName = '{user.FirstName}',
-                    LastName = '{user.LastName}',
-                    Email = '{user.Email}',
-                    Active = '{user.Active}'
-                WHERE UserId = {user.UserId}";
-            Console.WriteLine(sql);
-            if (_dapper.ExecuteSql(sql))
+            if (_reusableSql.UpsertUser(user))
             {
                 // Ok() comes from ControllerBase class, refers status code 200
                 return Ok();
             }
-            throw new Exception("Failed to update User");    
+            throw new Exception("Failed to upsert User");
         }
 
-        [HttpPost("AddUser")]
-        public IActionResult AddUser(UserToAddDTO user)
+        [HttpDelete("DeactivateUser/{userID}")]
+        public IActionResult DeactivateUser(int userID)
         {
-            string sql = @$"
-                INSERT INTO dbo.Users (
-                    Username, 
-                    FirstName, 
-                    LastName, 
-                    Email, 
-                    Active
-                ) VALUES (
-                    '{user.Username}',
-                    '{user.FirstName}',
-                    '{user.LastName}',
-                    '{user.Email}',            
-                    '{user.Active}'
-                )";
-            Console.WriteLine(sql);
-            if (_dapper.ExecuteSql(sql))
+            string sql = @$"EXEC [Accounts].[spUsers_Deactivate] 
+                    @UserID = @UserIDParam";
+
+            DynamicParameters sqlParameters = new DynamicParameters();
+            sqlParameters.Add("UserIDParam", userID, DbType.Int32);
+
+            if (_dapper.ExecuteSqlWithDynamicParameters(sql, sqlParameters))
             {
                 // Ok() comes from ControllerBase class, refers status code 200
                 return Ok();
             }
-            throw new Exception("Failed to add User");
+            throw new Exception("Failed to deactivate User");
         }
-
-        [HttpDelete("DeleteUser/{userId}")]
-        public IActionResult DeleteUser(int userId)
-        {
-            string sql = @$"
-                    DELETE FROM dbo.Users 
-                    WHERE UserId = {userId}";
-
-            if (_dapper.ExecuteSql(sql))
-            {
-                // Ok() comes from ControllerBase class, refers status code 200
-                return Ok();
-            }
-            throw new Exception("Failed to delete User");
-        }
-
-        [HttpGet("TestConnection")]
-        public DateTime TestConnection()
-        {
-            return _dapper.LoadDataSingle<DateTime>("SELECT GETDATE();");
-        }
-
     }
 }

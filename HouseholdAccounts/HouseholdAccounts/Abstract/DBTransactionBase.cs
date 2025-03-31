@@ -7,15 +7,12 @@ namespace HouseholdAccounts.Abstract
 {
     public abstract class DBTransactionBase : ITransaction, IDbTransaction
     {
-        public string Year { get; set; }
-        public string Month { get; set; }
-        public string Day { get; set; }
-        public string Account { get; set; }
-        public string AccountOwner { get; set; }
+        public int AccountID { get; set; }
+        public int AccountOwnerID { get; set; }
         public string Payee { get; set; }
         public string Notes { get; set; }
         public decimal Amount { get; set; }
-        public int Category { get; set; }
+        public int CategoryID { get; set; }
         public string TranType { get; set; }
         public string BankUniqueID { get; set; }
 
@@ -43,70 +40,50 @@ namespace HouseholdAccounts.Abstract
         }
 
         [JsonIgnore] // to not interfere with the derived classes
-        public DateTime TransactionLoaded
+        public DateTime TransactionLoadedDate
         {
-            get => _transactionLoaded;
-            set => _transactionLoaded = value;
+            get => _transactionLoadedDate;
+            set => _transactionLoadedDate = value;
         }
 
-        private DateTime _transactionLoaded;
-        public string TransactionLoadedString
+        private DateTime _transactionLoadedDate;
+        public string TransactionLoadedDateString
         {
-            get => DateHelper.GetDate(_transactionLoaded);
+            get => DateHelper.GetDate(_transactionLoadedDate);
             set
             {
                 if (!string.IsNullOrEmpty(value))
                 {
-                    _transactionLoaded = DateHelper.SetDate(value);
+                    _transactionLoadedDate = DateHelper.SetDate(value);
                 }
             }
         }
-       public int TransactionLoadedBy { get; set; } // a user ID
+       public int TransactionLoadedByUserID { get; set; } // a user ID
 
         [JsonIgnore] // to not interfere with the derived classes
-        public DateTime TransactionUpdated
+        public DateTime TransactionUpdatedDate
         {
-            get => _transactionUpdated;
-            set => _transactionUpdated = value;
+            get => _transactionUpdatedDate;
+            set => _transactionUpdatedDate = value;
         }
 
-        private DateTime _transactionUpdated;
-        public string TransactionUpdatedString
+        private DateTime _transactionUpdatedDate;
+        public string TransactionUpdatedDateString
         {
-            get => DateHelper.GetDate(_transactionUpdated);
+            get => DateHelper.GetDate(_transactionUpdatedDate);
             set
             {
                 if (!string.IsNullOrEmpty(value))
                 {
-                    _transactionUpdated = DateHelper.SetDate(value);
+                    _transactionUpdatedDate = DateHelper.SetDate(value);
                 }
             }
         }
 
-        public int TransactionUpdatedBy { get; set; } // a user ID
+        public int TransactionUpdatedByUserID { get; set; } // a user ID
 
         public DBTransactionBase()
         {
-            if (Year == null)
-            {
-                Year = "";
-            }
-            if (Month == null)
-            {
-                Month = "";
-            }
-            if (Day == null)
-            {
-                Day = "";
-            }
-            if (Account == null)
-            {
-                Account = "";
-            }
-            if (AccountOwner == null)
-            {
-                AccountOwner = "";
-            }
             if (Payee == null)
             {
                 Payee = "";

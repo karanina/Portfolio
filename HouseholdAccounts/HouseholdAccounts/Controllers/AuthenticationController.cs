@@ -13,21 +13,31 @@ using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
+using Microsoft.AspNetCore.Identity;
+using AutoMapper;
+using Dapper;
 
 namespace HouseholdAccounts.Controllers
 {
-    [Authorize] // tells the controller to authorise the user when they access the controller (ie they need a token to access the controller,
-                // unless opted out as anonymous)
+    [Authorize] /// tells the controller to authorise the user when they access the controller (ie they need a token to access the controller,
+                /// unless opted out as anonymous)
     [ApiController]
     [Route("[controller]")]
     public class AuthenticationController : ControllerBase
     {
         private readonly DataContextDapper _dapper;
         private readonly AuthenticationHelper _authenticationHelper;
+        private readonly ReusableSql _reusableSql;
+        private readonly IMapper _mapper;
         public AuthenticationController(IConfiguration config)
         {
             _dapper = new DataContextDapper(config);
             _authenticationHelper = new AuthenticationHelper(config);
+            _reusableSql = new ReusableSql(config);
+            _mapper = new Mapper(new MapperConfiguration(cfg =>
+            {
+                cfg.CreateMap<UserForRegistrationDTO, User>();
+            }));
         }
 
         [AllowAnonymous] // lets this endpoint receive an anonymous request, ie one where they don't have a token
@@ -37,62 +47,27 @@ namespace HouseholdAccounts.Controllers
             if (userForRegistration.Password == userForRegistration.PasswordConfirm)
             {
                 string sqlCheckUserExists = @$"SELECT [Email] 
-                                                FROM [dbo].[Authentication] WHERE Email = '{userForRegistration.Email}'";
+                                                FROM [Accounts].[Authentication] WHERE Email = '{userForRegistration.Email}'";
 
                 IEnumerable<string> existingUsers = _dapper.LoadData<string>(sqlCheckUserExists);
 
                 if (existingUsers.Count() == 0)
                 {
-                    byte[] passwordSalt = new byte[128 / 8]; // 128 bytes
+                   UserForLoginDTO userForSetPassword = new UserForLoginDTO()
+                   {
+                       Email = userForRegistration.Email,
+                       Password = userForRegistration.Password,
+                   };
 
-                    using (RandomNumberGenerator rng = RandomNumberGenerator.Create())
+                    if(_authenticationHelper.SetPassword(userForSetPassword))
                     {
-                        rng.GetNonZeroBytes(passwordSalt);
-                    }
+                        User userToAdd = _mapper.Map<User>(userForRegistration);
+                        // Active is not a property in UserForRegistrationDTO
+                        userToAdd.Active = true;
 
-                    byte[] passwordHash = _authenticationHelper.GetPasswordHash(userForRegistration.Password, passwordSalt);
-
-                    string sqlAddAuthentication = @$"INSERT INTO [dbo].[Authentication] (
-                                                        [Email],
-                                                        [PasswordHash],
-                                                        [PasswordSalt]
-                                                    ) VALUES (
-                                                        '{userForRegistration.Email}',
-                                                        @PasswordHash,
-                                                        @PasswordSalt
-                                                    )";
-
-                    List<SqlParameter> sqlParameters = new List<SqlParameter>();
-
-                    SqlParameter passwordSaltParameter = new SqlParameter("@PasswordSalt", SqlDbType.VarBinary);
-                    passwordSaltParameter.Value = passwordSalt;
-
-                    SqlParameter passwordHashParameter = new SqlParameter("@PasswordHash", SqlDbType.VarBinary);
-                    passwordHashParameter.Value = passwordHash;
-
-                    sqlParameters.Add(passwordSaltParameter);
-                    sqlParameters.Add(passwordHashParameter);
-
-                    if (_dapper.ExecuteSqlWithParameters(sqlAddAuthentication, sqlParameters))
-                    {
-                        // setting active to 1 / True by default when adding a user
-                        string sqlAddUser = @$"
-                                            INSERT INTO dbo.Users (
-                                                Username, 
-                                                FirstName, 
-                                                LastName, 
-                                                Email, 
-                                                Active
-                                            ) VALUES (
-                                                '{userForRegistration.Username}',
-                                                '{userForRegistration.FirstName}',
-                                                '{userForRegistration.LastName}',
-                                                '{userForRegistration.Email}',            
-                                                1
-                                            )";
-
-                        if (_dapper.ExecuteSql(sqlAddUser))
+                        if (_reusableSql.UpsertUser(userToAdd));
                         {
+                            // Ok() comes from ControllerBase class, refers status code 200
                             return Ok();
                         }
                         throw new Exception("Failed to add User");
@@ -104,17 +79,28 @@ namespace HouseholdAccounts.Controllers
             throw new Exception("Passwords do not match!");
         }
 
+        [HttpPut("ResetPassword")]
+        public IActionResult ResetPassword(UserForLoginDTO userForSetPassword) {
+            if (_authenticationHelper.SetPassword(userForSetPassword))
+            {
+                return Ok();
+            }
+            throw new Exception("Failed to update password");
+        }
+
         [AllowAnonymous] // lets this endpoint receive an anonymous request, ie one where they don't have a token
         [HttpPost("Login")]
         public IActionResult Login(UserForLoginDTO userForLogin)
         {
-            string sqlForHashAndSalt = $@"SELECT [PasswordHash], 
-                                            [PasswordSalt]
-                                        FROM [dbo].[Authentication]
-                                        WHERE Email = '{userForLogin.Email}'";
+            string sqlForHashAndSalt = "EXEC Accounts.spLoginConfirmation_Get @Email = @EmailParam";
+
+            DynamicParameters sqlParameters = new DynamicParameters();
+
+            // using parameters like this protect against sql injection
+            sqlParameters.Add("@EmailParam", userForLogin.Email, DbType.String);
 
             UserForLoginConfirmationDTO userForConfirmation = _dapper
-                .LoadDataSingle<UserForLoginConfirmationDTO>(sqlForHashAndSalt);
+                .LoadDataSingleWithParameters<UserForLoginConfirmationDTO>(sqlForHashAndSalt, sqlParameters);
 
             byte[] passwordHash = _authenticationHelper.GetPasswordHash(userForLogin.Password, userForConfirmation.PasswordSalt);
 
@@ -126,15 +112,15 @@ namespace HouseholdAccounts.Controllers
                 }
             }
 
-            string sqlForUserId = @$"SELECT UserId 
-                                    FROM [dbo].[Users] 
+            string sqlForUserId = @$"SELECT ID 
+                                    FROM [Accounts].[Users] 
                                     WHERE Email = '{userForLogin.Email}'";
 
-            int userId = _dapper.LoadDataSingle<int>(sqlForUserId);
+            int userID = _dapper.LoadDataSingle<int>(sqlForUserId);
 
             return Ok(new Dictionary<string, string>
             {
-                {"token", _authenticationHelper.CreateToken(userId) }
+                {"token", _authenticationHelper.CreateToken(userID) }
             });
         }
 
@@ -142,18 +128,18 @@ namespace HouseholdAccounts.Controllers
         public IActionResult RefreshToken()
         {
             // string because claims are stored in a string format
-            string userId = User.FindFirst("userId")?.Value + ""; // User comes from controller base class
+            string userID = User.FindFirst("userID")?.Value + ""; // User comes from controller base class
 
-            // check if the userId claim value is valid in our database. If it is we're ok to give a new token.
-            string SqlForUserId = @$"SELECT UserId 
-                                    FROM [dbo].[Users] 
-                                    WHERE UserId = {userId}";
+            // check if the userID claim value is valid in our database. If it is we're ok to give a new token.
+            string SqlForUserID = @$"SELECT UserId 
+                                    FROM [Accounts].[Users] 
+                                    WHERE UserId = {userID}";
 
-            int userIdFromDb = _dapper.LoadDataSingle<int>(SqlForUserId);
+            int userIDFromDb = _dapper.LoadDataSingle<int>(SqlForUserID);
 
             return Ok(new Dictionary<string, string>
             {
-                {"token", _authenticationHelper.CreateToken(userIdFromDb) }
+                {"token", _authenticationHelper.CreateToken(userIDFromDb) }
             });
         }
     }

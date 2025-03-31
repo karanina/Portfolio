@@ -15,18 +15,18 @@ namespace HouseholdAccounts.Models
             set => base.TransactionDateString = value;
         }
 
-        [JsonPropertyName("transactionLoaded")]
-        public string TransactionLoadedString
+        [JsonPropertyName("transactionLoadedDate")]
+        public string TransactionLoadedDateString
         {
-            get => base.TransactionLoadedString;
-            set => base.TransactionLoadedString = value;
+            get => base.TransactionLoadedDateString;
+            set => base.TransactionLoadedDateString = value;
         }
 
-        [JsonPropertyName("transactionUpdated")]
-        public string TransactionUpdatedString
+        [JsonPropertyName("transactionUpdatedDate")]
+        public string TransactionUpdatedDateString
         {
-            get => base.TransactionUpdatedString;
-            set => base.TransactionUpdatedString = value;
+            get => base.TransactionUpdatedDateString;
+            set => base.TransactionUpdatedDateString = value;
         }
     
     }

@@ -4,18 +4,18 @@ namespace HouseholdAccounts.DTOs
 {
     public partial class CategoryToAddDTO
     {
-        public string Name { get; set; }
-        public string Item { get; set; }
+        public string GroupName { get; set; }
+        public string CategoryName { get; set; }
 
         public CategoryToAddDTO()
         {
-            if (Name == null)
+            if (GroupName == null)
             {
-                Name = "";
+                GroupName = "";
             }
-            if (Item == null)
+            if (CategoryName == null)
             {
-                Item = "";
+                CategoryName = "";
             }
         }
     }

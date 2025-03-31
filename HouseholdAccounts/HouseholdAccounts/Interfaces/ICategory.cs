@@ -2,7 +2,7 @@
 {
     public interface ICategory
     {
-        string Name { get; set; }
-        string Item {  get; set; }
+        string GroupName { get; set; }
+        string CategoryName {  get; set; }
     }
 }

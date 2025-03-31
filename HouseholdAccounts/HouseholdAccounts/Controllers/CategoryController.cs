@@ -21,8 +21,8 @@ namespace HouseholdAccounts.Controllers
         public IEnumerable<Category> GetCategories()
         {
             string sql = @"SELECT [ID], 
-                                [Name], 
-                                [Item] 
+                                [GroupName], 
+                                [CategoryName] 
                             FROM [dbo].[Category]";
             return _dapper.LoadData<Category>(sql);
         }
@@ -31,8 +31,8 @@ namespace HouseholdAccounts.Controllers
         public Category GetSingleCategory(int categoryId)
         {
             string sql = @$"SELECT [ID], 
-                                [Name], 
-                                [Item] 
+                                [GroupName], 
+                                [CategoryName] 
                             FROM [dbo].[Category]
                             WHERE [ID] = {categoryId}";
             return _dapper.LoadDataSingle<Category>(sql);
@@ -42,8 +42,8 @@ namespace HouseholdAccounts.Controllers
         public IEnumerable<Category> SearchCategories(string searchParam)
         {
             string sql = @$"SELECT [ID], 
-                                [Name], 
-                                [Item] 
+                                [GroupName], 
+                                [CategoryName] 
                             FROM [dbo].[Category]
                             WHERE [Name] LIKE '%{searchParam}%' 
                                 OR [Item] LIKE '%{searchParam}%'";
@@ -55,8 +55,8 @@ namespace HouseholdAccounts.Controllers
         {
             string sql = $@"UPDATE [dbo].[Category]
                             SET 
-                            [Name] = '{category.Name}',
-                            [Item] = '{category.Item}'
+                            [GroupName] = '{category.GroupName}',
+                            [CategoryName] = '{category.CategoryName}'
                             WHERE [ID] = {category.ID}";
 
             if (_dapper.ExecuteSql(sql))
@@ -71,11 +71,11 @@ namespace HouseholdAccounts.Controllers
         public IActionResult AddCategory(CategoryToAddDTO category)
         {
             string sql = $@"INSERT INTO [dbo].[Category] (
-                                [Name],
-                                [Item]
+                                [GroupName],
+                                [CategoryName]
                             ) VALUES (
-                                '{category.Name}',
-                                '{category.Item}'
+                                '{category.GroupName}',
+                                '{category.CategoryName}'
                             )";
             if (_dapper.ExecuteSql(sql))
             {

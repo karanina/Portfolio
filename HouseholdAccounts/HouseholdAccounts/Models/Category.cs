@@ -5,18 +5,18 @@ namespace HouseholdAccounts.Models
     public class Category : ICategory
     {
         public int ID { get; set; }
-        public string Name { get; set; }
-        public string Item { get; set; }
+        public string GroupName { get; set; }
+        public string CategoryName { get; set; }
 
         public Category()
         {
-            if (Name == null)
+            if (GroupName == null)
             {
-                Name = "";
+                GroupName = "";
             }
-            if (Item == null)
+            if (CategoryName == null)
             {
-                Item = "";
+                CategoryName = "";
             }
         }
     }

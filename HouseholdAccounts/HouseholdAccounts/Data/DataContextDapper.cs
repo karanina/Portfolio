@@ -46,7 +46,13 @@ namespace HouseholdAccounts.Data
 
         }
 
-        public bool ExecuteSqlWithParameters(string sql, List<SqlParameter> parameters)
+        /// <summary>
+        /// An example of how the SqlParameter datatype is executed.
+        /// </summary>
+        /// <param name="sql"></param>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
+        public bool ExecuteSqlWithSqlParameters(string sql, List<SqlParameter> parameters)
         {
             SqlCommand commandWithParams = new SqlCommand(sql);
 
@@ -63,6 +69,49 @@ namespace HouseholdAccounts.Data
             dbConnection.Close();
 
             return rowsAffected > 0;
+        }
+
+        /// <summary>
+        /// An example of how Dynamic Parameters is used.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="sql"></param>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
+        public IEnumerable<T> LoadDataWithParameters<T>(string sql, DynamicParameters parameters)
+        {
+            IDbConnection dbConnection = new SqlConnection(_config.GetConnectionString("DefaultConnection"));
+            return dbConnection.Query<T>(sql, parameters);
+
+        }
+
+        /// <summary>
+        /// An example of how Dynamic Parameters is used.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="sql"></param>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
+        public T LoadDataSingleWithParameters<T>(string sql, DynamicParameters parameters)
+        {
+            IDbConnection dbConnection = new SqlConnection(_config.GetConnectionString("DefaultConnection"));
+            return dbConnection.QuerySingle<T>(sql,parameters );
+
+        }
+
+        /// <summary>
+        /// An example of how Dynamic Parameters is used.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="sql"></param>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
+        public bool ExecuteSqlWithDynamicParameters(string sql, DynamicParameters parameters)
+        {
+            IDbConnection dbConnection = new SqlConnection(_config.GetConnectionString("DefaultConnection"));
+            return dbConnection.Execute(sql,parameters) > 0;
+            // if execute is greater than zero, it's true
+
         }
     }
 }
