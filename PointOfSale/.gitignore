@@ -1,0 +1,7 @@
+.vscode
+
+/PointOfSale/bin
+/PointOfSale/obj
+
+/PointOfSale.Tests/bin
+/PointOfSale.Tests/obj
