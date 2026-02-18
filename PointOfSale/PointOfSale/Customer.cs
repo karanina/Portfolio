@@ -1,16 +1,14 @@
-using System;
-using System.Collections.Generic;
-
 namespace PointOfSale
 {
-    public class CustomerCollection
-    {
-        public List<Customer> Customers;
-        public CustomerCollection()
-        {
-            Customers = new List<Customer>();
-        }
-    }
+    // public class CustomerCollection
+    // {
+    //     public List<Customer> Customers;
+
+    //     public CustomerCollection()
+    //     {
+    //         Customers = new List<Customer>();
+    //     }
+    // }
 
     public interface ICustomer
     {
@@ -32,26 +30,27 @@ namespace PointOfSale
             Name = name;
 
             // Optional parameters
-            UpdateDiscountRate(discountRate);
+            // UpdateDiscountRate(discountRate);
+            DiscountRate = discountRate;
         }
 
-        public int GetDiscountRate()
-        {
-            return DiscountRate;
-        }
+        // public int GetDiscountRate()
+        // {
+        //     return DiscountRate;
+        // }
 
-        public void UpdateDiscountRate(int newDiscountRate)
-        {
-            ValidateDiscountRate(newDiscountRate);
-            DiscountRate = newDiscountRate;
-        }
+        // public void UpdateDiscountRate(int newDiscountRate)
+        // {
+        //     ValidateDiscountRate(newDiscountRate);
+        //     DiscountRate = newDiscountRate;
+        // }
 
-        public void ValidateDiscountRate(int discountRate)
-        {
-            if (discountRate < 0 || discountRate > 100)
-            {
-                throw new ArgumentException("Discount rates must be between 0 and 100 percent");
-            }
-        }
+        // public void ValidateDiscountRate(int discountRate)
+        // {
+        //     if (discountRate < 0 || discountRate > 100)
+        //     {
+        //         throw new ArgumentException("Discount rates must be between 0 and 100 percent");
+        //     }
+        // }
     }
 }
