@@ -34,6 +34,3 @@ Additionally, **sales are frequently negotiated**, meaning prices and discounts 
 
 - Database Integration - At present I am using in memory storage, but when I have an MVP I will switch over to a SQL Server database.
 - Authentication & Authorisation - Security is essential in the jewellery industry due to the high value of product being sold.
-
-- **UC1:** As a Salesperson, I want to **create an invoice**, so that I can **record a sale**.
-
