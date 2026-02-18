@@ -1,0 +1,30 @@
+﻿Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.2.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PointOfSale", "PointOfSale\PointOfSale.csproj", "{917584A7-4D89-0219-A37B-59168E7FE174}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PointOfSale.Tests", "PointOfSale.Tests\PointOfSale.Tests.csproj", "{775C341F-2E1F-400C-9286-8A0516DB9815}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{917584A7-4D89-0219-A37B-59168E7FE174}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{917584A7-4D89-0219-A37B-59168E7FE174}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{917584A7-4D89-0219-A37B-59168E7FE174}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{917584A7-4D89-0219-A37B-59168E7FE174}.Release|Any CPU.Build.0 = Release|Any CPU
+		{775C341F-2E1F-400C-9286-8A0516DB9815}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{775C341F-2E1F-400C-9286-8A0516DB9815}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{775C341F-2E1F-400C-9286-8A0516DB9815}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{775C341F-2E1F-400C-9286-8A0516DB9815}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {229DC192-B99B-4685-A05D-95AD9594C098}
+	EndGlobalSection
+EndGlobal
