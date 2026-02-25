@@ -42,34 +42,58 @@ namespace PointOfSale.Tests
         }
 
         [Fact]
+        public void CreateingSale_StatusIsOpen()
+        {
+            // Arrange
+            IProductCatalogue catalogue = new ProductCatalogue();
+            InventoryManagement inventory = new InventoryManagement();
+            Customer customer = new Customer(1, "Test customer", 10);
+
+            // Act
+            Sale sale = new Sale(customer, inventory, catalogue);
+
+            // Assert
+            Assert.Equal(SaleStatus.Open, sale.Status);
+        }
+
+        [Fact]
+        public void CreatingSale_HasNoPaymentsRegistered()
+        {
+            // Arrange
+            IProductCatalogue catalogue = new ProductCatalogue();
+            InventoryManagement inventory = new InventoryManagement();
+            Customer customer = new Customer(1, "Test customer", 10);
+
+            // Act
+            Sale sale = new Sale(customer, inventory, catalogue);
+
+            // Assert
+            Assert.Equal(0m, sale.GetTotalPaid());
+        }
+
+        [Fact]
         public void AddItem_AddsSingleItemToSale()
         {
             // Arrange
             string productId = "B0001-65mm-9Y";
             int quantityOnHand = 10;
 
-            TestProductSpecification product = new TestProductSpecification(
+            SaleTestContext context = new SaleTestContext(
                 productId,
+                quantityOnHand,
                 "Test Product",
-                199.99m
+                199.99m,
+                new Customer(1, "Test customer", 10)
             );
 
-            IProductCatalogue catalogue = new ProductCatalogue();
-            catalogue.AddProduct(product);
-
-            InventoryManagement inventory = new InventoryManagement();
-            inventory.IncreaseStock(productId, quantityOnHand);
-
-            Sale sale = new Sale(new Customer(1, "Test customer", 10), inventory, catalogue);
-
             // Act
-            sale.AddItem(productId, 1);
+            context.Sale.AddItem(productId, 1);
 
             // Assert
-            var items = sale.GetItems();
+            var items = context.Sale.GetItems();
             Assert.Single(items);
             Assert.Contains(items, i => i.ProductId == productId);
-            Assert.Equal(1, sale.GetItemQuantity(productId));
+            Assert.Equal(1, context.Sale.GetItemQuantity(productId));
         }
 
         [Fact]
@@ -79,22 +103,17 @@ namespace PointOfSale.Tests
             string productId = "B0001-65mm-9Y";
             int quantityOnHand = 10;
 
-            TestProductSpecification product = new TestProductSpecification(
+            SaleTestContext context = new SaleTestContext(
                 productId,
+                quantityOnHand,
                 "Test Product",
-                199.99m
+                199.99m,
+                new Customer(1, "Test customer", 10)
             );
-
-            IProductCatalogue catalogue = new ProductCatalogue();
-            catalogue.AddProduct(product);
-
-            InventoryManagement inventory = new InventoryManagement();
-            inventory.IncreaseStock(productId, quantityOnHand);
-
-            Sale sale = new Sale(new Customer(1, "Test customer", 10), inventory, catalogue);
-
             // Act & Assert
-            var exception = Assert.Throws<QuantityException>(() => sale.AddItem(productId, 0));
+            var exception = Assert.Throws<QuantityException>(
+                () => context.Sale.AddItem(productId, 0)
+            );
             Assert.Equal("Quantity cannot be less than 1.", exception.Message);
         }
 
@@ -106,28 +125,52 @@ namespace PointOfSale.Tests
             int initialQuantity = 10;
             int saleQuantity = 3;
 
-            TestProductSpecification product = new TestProductSpecification(
+            SaleTestContext context = new SaleTestContext(
                 productId,
+                initialQuantity,
                 "Test Product",
-                199.99m
+                199.99m,
+                new Customer(1, "Test customer", 10)
             );
 
-            IProductCatalogue catalogue = new ProductCatalogue();
-            catalogue.AddProduct(product);
-
-            InventoryManagement inventory = new InventoryManagement();
-            inventory.IncreaseStock(productId, initialQuantity);
-
-            Sale sale = new Sale(new Customer(1, "Test customer", 10), inventory, catalogue);
-
             // Act
-            sale.AddItem(productId, saleQuantity);
+            context.Sale.AddItem(productId, saleQuantity);
 
             // Assert
             Assert.Equal(
                 initialQuantity - saleQuantity,
-                inventory.GetAllStockItems()[productId].QuantityOnHand
+                context.Inventory.GetAllStockItems()[productId].QuantityOnHand
             );
+        }
+
+        [Fact]
+        public void AddItem_WhenSaleStatusIsCompleted_ThrowsException()
+        {
+            // Arrange
+            string productId = "B0001-65mm-9Y";
+            int quantityOnHand = 10;
+
+            SaleTestContext context = new SaleTestContext(
+                productId,
+                quantityOnHand,
+                "Test Product",
+                199.99m,
+                new Customer(1, "Test customer", 10)
+            );
+
+            context.Sale.AddItem(productId, 1);
+
+            SaleCalculator calculator = new SaleCalculator(context.Sale);
+            decimal totalDue = calculator.CalculateSubTotal();
+            context.Sale.MakePayment(totalDue);
+
+            context.Sale.CompleteSale(totalDue);
+
+            // Act & Assert
+            var exception = Assert.Throws<InvalidOperationException>(
+                () => context.Sale.AddItem(productId, 1)
+            );
+            Assert.Equal("Sale cannot be modified unless it is open.", exception.Message);
         }
 
         [Fact]
@@ -137,59 +180,76 @@ namespace PointOfSale.Tests
             string productId = "B0001-65mm-9Y";
             int quantityOnHand = 10;
 
-            TestProductSpecification product = new TestProductSpecification(
+            SaleTestContext context = new SaleTestContext(
                 productId,
+                quantityOnHand,
                 "Test Product",
-                199.99m
+                199.99m,
+                new Customer(1, "Test customer", 10)
             );
-
-            IProductCatalogue catalogue = new ProductCatalogue();
-            catalogue.AddProduct(product);
-
-            InventoryManagement inventory = new InventoryManagement();
-            inventory.IncreaseStock(productId, quantityOnHand);
-
-            Sale sale = new Sale(new Customer(1, "Test customer", 10), inventory, catalogue);
-            sale.AddItem(productId, 1);
+            context.Sale.AddItem(productId, 1);
 
             // Act
-            sale.RemoveItem(productId);
+            context.Sale.RemoveItem(productId);
 
             // Assert
-            Assert.Empty(sale.GetItems());
+            Assert.Empty(context.Sale.GetItems());
         }
 
         [Fact]
-        public void RemoveItem_ThrowsException_ItemNotInSale()
+        public void RemoveItem_ItemNotInSale_ThrowsException()
         {
             // Arrange
             string productId = "B0001-65mm-9Y";
             int quantityOnHand = 10;
             string nonExistentItemId = "NON-EXISTENT-ID";
 
-            TestProductSpecification product = new TestProductSpecification(
+            SaleTestContext context = new SaleTestContext(
                 productId,
+                quantityOnHand,
                 "Test Product",
-                199.99m
+                199.99m,
+                new Customer(1, "Test customer", 10)
             );
 
-            IProductCatalogue catalogue = new ProductCatalogue();
-            catalogue.AddProduct(product);
-
-            InventoryManagement inventory = new InventoryManagement();
-            inventory.IncreaseStock(productId, quantityOnHand);
-
-            Sale sale = new Sale(new Customer(1, "Test customer", 10), inventory, catalogue);
-            sale.AddItem(productId, 1);
+            context.Sale.AddItem(productId, 1);
 
             // Act & Assert
             var exception = Assert.Throws<SaleItemNotFoundException>(
-                () => sale.RemoveItem(nonExistentItemId)
+                () => context.Sale.RemoveItem(nonExistentItemId)
             );
             Assert.Equal(
                 $"The product with ID {nonExistentItemId} was not found in your sale",
                 exception.Message
             );
+        }
+
+        [Fact]
+        public void RemoveItem_WhenSaleStatusIsCompleted_ThrowsException()
+        {
+            // Arrange
+            string productId = "B0001-65mm-9Y";
+            int quantityOnHand = 10;
+
+            SaleTestContext context = new SaleTestContext(
+                productId,
+                quantityOnHand,
+                "Test Product",
+                199.99m,
+                new Customer(1, "Test customer", 10)
+            );
+            context.Sale.AddItem(productId, 1);
+
+            SaleCalculator calculator = new SaleCalculator(context.Sale);
+            decimal totalDue = calculator.CalculateSubTotal();
+            context.Sale.MakePayment(totalDue);
+            context.Sale.CompleteSale(totalDue);
+
+            // Act & Assert
+            var exception = Assert.Throws<InvalidOperationException>(
+                () => context.Sale.RemoveItem(productId)
+            );
+            Assert.Equal("Sale cannot be modified unless it is open.", exception.Message);
         }
 
         [Fact]
@@ -200,30 +260,26 @@ namespace PointOfSale.Tests
             int initialQuantity = 10;
             int saleQuantity = 3;
 
-            TestProductSpecification product = new TestProductSpecification(
+            SaleTestContext context = new SaleTestContext(
                 productId,
+                initialQuantity,
                 "Test Product",
-                199.99m
+                199.99m,
+                new Customer(1, "Test customer", 10)
             );
+            context.Sale.AddItem(productId, saleQuantity);
 
-            IProductCatalogue catalogue = new ProductCatalogue();
-            catalogue.AddProduct(product);
-
-            InventoryManagement inventory = new InventoryManagement();
-            inventory.IncreaseStock(productId, initialQuantity);
-
-            Sale sale = new Sale(new Customer(1, "Test customer", 10), inventory, catalogue);
-            sale.AddItem(productId, saleQuantity);
-
-            int remainingQuantityOnHand = inventory.GetAllStockItems()[productId].QuantityOnHand;
+            int remainingQuantityOnHand = context
+                .Inventory.GetAllStockItems()[productId]
+                .QuantityOnHand;
 
             // Act
-            sale.RemoveItem(productId);
+            context.Sale.RemoveItem(productId);
 
             // Assert
             Assert.Equal(
                 remainingQuantityOnHand + saleQuantity,
-                inventory.GetAllStockItems()[productId].QuantityOnHand
+                context.Inventory.GetAllStockItems()[productId].QuantityOnHand
             );
         }
 
@@ -235,27 +291,21 @@ namespace PointOfSale.Tests
             int quantityOnHand = 10;
             int newQuantity = 5;
 
-            TestProductSpecification product = new TestProductSpecification(
+            SaleTestContext context = new SaleTestContext(
                 productId,
+                quantityOnHand,
                 "Test Product",
-                199.99m
+                199.99m,
+                new Customer(1, "Test customer", 10)
             );
-
-            IProductCatalogue catalogue = new ProductCatalogue();
-            catalogue.AddProduct(product);
-
-            InventoryManagement inventory = new InventoryManagement();
-            inventory.IncreaseStock(productId, quantityOnHand);
-
-            Sale sale = new Sale(new Customer(1, "Test customer", 10), inventory, catalogue);
-            sale.AddItem(productId, 2);
+            context.Sale.AddItem(productId, 2);
 
             //Act
-            sale.ChangeItemQuantity(productId, newQuantity);
+            context.Sale.ChangeItemQuantity(productId, newQuantity);
 
             // Assert
-            Assert.Single(sale.GetItems());
-            Assert.Equal(newQuantity, sale.GetItemQuantity(productId));
+            Assert.Single(context.Sale.GetItems());
+            Assert.Equal(newQuantity, context.Sale.GetItemQuantity(productId));
         }
 
         [InlineData(10, 2, 5)]
@@ -270,28 +320,22 @@ namespace PointOfSale.Tests
             // Arrange
             string productId = "B0001-65mm-9Y";
 
-            TestProductSpecification product = new TestProductSpecification(
+            SaleTestContext context = new SaleTestContext(
                 productId,
+                initialQuantityOnHand,
                 "Test Product",
-                199.99m
+                199.99m,
+                new Customer(1, "Test customer", 10)
             );
-
-            IProductCatalogue catalogue = new ProductCatalogue();
-            catalogue.AddProduct(product);
-
-            InventoryManagement inventory = new InventoryManagement();
-            inventory.IncreaseStock(productId, initialQuantityOnHand);
-
-            Sale sale = new Sale(new Customer(1, "Test customer", 10), inventory, catalogue);
-            sale.AddItem(productId, initialSaleQuantity);
+            context.Sale.AddItem(productId, initialSaleQuantity);
 
             //Act
-            sale.ChangeItemQuantity(productId, newSaleQuantity);
+            context.Sale.ChangeItemQuantity(productId, newSaleQuantity);
 
             // Assert
             Assert.Equal(
                 initialQuantityOnHand - newSaleQuantity,
-                inventory.GetAllStockItems()[productId].QuantityOnHand
+                context.Inventory.GetAllStockItems()[productId].QuantityOnHand
             );
         }
 
@@ -302,26 +346,20 @@ namespace PointOfSale.Tests
             string productId = "B0001-65mm-9Y";
             int quantityOnHand = 10;
 
-            TestProductSpecification product = new TestProductSpecification(
+            SaleTestContext context = new SaleTestContext(
                 productId,
+                quantityOnHand,
                 "Test Product",
-                199.99m
+                199.99m,
+                new Customer(1, "Test customer", 10)
             );
-
-            IProductCatalogue catalogue = new ProductCatalogue();
-            catalogue.AddProduct(product);
-
-            InventoryManagement inventory = new InventoryManagement();
-            inventory.IncreaseStock(productId, quantityOnHand);
-
-            Sale sale = new Sale(new Customer(1, "Test customer", 10), inventory, catalogue);
-            sale.AddItem(productId, 1);
+            context.Sale.AddItem(productId, 1);
 
             //Act
-            sale.ChangeItemQuantity(productId, 0);
+            context.Sale.ChangeItemQuantity(productId, 0);
 
             // Assert
-            Assert.Empty(sale.GetItems());
+            Assert.Empty(context.Sale.GetItems());
         }
 
         [Fact]
@@ -331,26 +369,50 @@ namespace PointOfSale.Tests
             string productId = "B0001-65mm-9Y";
             int quantityOnHand = 10;
 
-            TestProductSpecification product = new TestProductSpecification(
+            SaleTestContext context = new SaleTestContext(
                 productId,
+                quantityOnHand,
                 "Test Product",
-                199.99m
+                199.99m,
+                new Customer(1, "Test customer", 10)
             );
 
-            IProductCatalogue catalogue = new ProductCatalogue();
-            catalogue.AddProduct(product);
-
-            InventoryManagement inventory = new InventoryManagement();
-            inventory.IncreaseStock(productId, quantityOnHand);
-
-            Sale sale = new Sale(new Customer(1, "Test customer", 10), inventory, catalogue);
-            sale.AddItem(productId, 1);
+            context.Sale.AddItem(productId, 1);
 
             // Act & Assert
             var exception = Assert.Throws<QuantityException>(
-                () => sale.ChangeItemQuantity(productId, -1)
+                () => context.Sale.ChangeItemQuantity(productId, -1)
             );
             Assert.Equal("Quantity cannot be negative.", exception.Message);
+        }
+
+        [Fact]
+        public void ChangeItemQuantity_WhenSaleStatusIsCompleted_ThrowsException()
+        {
+            // Arrange
+            string productId = "B0001-65mm-9Y";
+            int quantityOnHand = 10;
+
+            SaleTestContext context = new SaleTestContext(
+                productId,
+                quantityOnHand,
+                "Test Product",
+                199.99m,
+                new Customer(1, "Test customer", 10)
+            );
+
+            context.Sale.AddItem(productId, 1);
+
+            SaleCalculator calculator = new SaleCalculator(context.Sale);
+            decimal totalDue = calculator.CalculateSubTotal();
+            context.Sale.MakePayment(totalDue);
+            context.Sale.CompleteSale(totalDue);
+
+            // Act & Assert
+            var exception = Assert.Throws<InvalidOperationException>(
+                () => context.Sale.ChangeItemQuantity(productId, -1)
+            );
+            Assert.Equal("Sale cannot be modified unless it is open.", exception.Message);
         }
 
         [Fact]
@@ -359,16 +421,10 @@ namespace PointOfSale.Tests
             // Arrange
             string productId = "B0001-65mm-9Y";
 
-            TestProductSpecification product = new TestProductSpecification(
-                productId,
-                "Test Product",
-                199.99m
-            );
-
             IProductCatalogue catalogue = new ProductCatalogue();
-            catalogue.AddProduct(product);
 
             InventoryManagement inventory = new InventoryManagement();
+
             Sale sale = new Sale(new Customer(1, "Test customer", 10), inventory, catalogue);
 
             // Act & Assert
@@ -379,6 +435,367 @@ namespace PointOfSale.Tests
                 $"The item with ID {productId} was not found in your sale.",
                 exception.Message
             );
+        }
+
+        [Fact]
+        public void CompleteSale_ChangesSaleStatusToCompleted()
+        {
+            // Arrange
+            string productId = "B0001-65mm-9Y";
+            int quantityOnHand = 10;
+
+            SaleTestContext context = new SaleTestContext(
+                productId,
+                quantityOnHand,
+                "Test Product",
+                199.99m,
+                new Customer(1, "Test customer", 10)
+            );
+            context.Sale.AddItem(productId, 1);
+
+            SaleCalculator calculator = new SaleCalculator(context.Sale);
+            decimal totalDue = calculator.CalculateSubTotal();
+            context.Sale.MakePayment(totalDue);
+
+            // Act
+            context.Sale.CompleteSale(totalDue);
+
+            // Assert
+            Assert.Equal(SaleStatus.Completed, context.Sale.Status);
+        }
+
+        [Fact]
+        public void CompleteSale_StatusAlreadyComplete_ThrowsException()
+        {
+            // Arrange
+            string productId = "B0001-65mm-9Y";
+            int quantityOnHand = 10;
+
+            SaleTestContext context = new SaleTestContext(
+                productId,
+                quantityOnHand,
+                "Test Product",
+                199.99m,
+                new Customer(1, "Test customer", 10)
+            );
+            context.Sale.AddItem(productId, 1);
+
+            SaleCalculator calculator = new SaleCalculator(context.Sale);
+            decimal totalDue = calculator.CalculateSubTotal();
+            context.Sale.MakePayment(totalDue);
+            context.Sale.CompleteSale(totalDue);
+
+            // Act
+            var exception = Assert.Throws<InvalidOperationException>(
+                () => context.Sale.CompleteSale(totalDue)
+            );
+            // Assert
+            Assert.Equal("Only an open sale can be completed.", exception.Message);
+        }
+
+        [Fact]
+        public void CompleteSale_NoItems_ThrowsException()
+        {
+            // Arrange
+            IProductCatalogue catalogue = new ProductCatalogue();
+            InventoryManagement inventory = new InventoryManagement();
+            Customer customer = new Customer(1, "Test customer", 10);
+
+            Sale sale = new Sale(customer, inventory, catalogue);
+
+            // Act
+            var exception = Assert.Throws<InvalidOperationException>(() => sale.CompleteSale(100m));
+
+            // Assert
+            Assert.Equal("Cannot complete a sale with no items.", exception.Message);
+        }
+
+        [Fact]
+        public void CompleteSale_PaymentNotMade_ThrowsException()
+        {
+            // Arrange
+            string productId = "B0001-65mm-9Y";
+            int quantityOnHand = 10;
+
+            SaleTestContext context = new SaleTestContext(
+                productId,
+                quantityOnHand,
+                "Test Product",
+                199.99m,
+                new Customer(1, "Test customer", 10)
+            );
+            context.Sale.AddItem(productId, 1);
+
+            SaleCalculator calculator = new SaleCalculator(context.Sale);
+            decimal totalDue = calculator.CalculateSubTotal();
+
+            // Act
+            var exception = Assert.Throws<PaymentException>(
+                () => context.Sale.CompleteSale(totalDue)
+            );
+
+            // Assert
+            Assert.Equal(
+                "Cannot complete sale until full payment has been made.",
+                exception.Message
+            );
+        }
+
+        [Fact]
+        public void CompleteSale_PaymentOnlyPartiallyMade_ThrowsException()
+        {
+            // Arrange
+            string productId = "B0001-65mm-9Y";
+            int quantityOnHand = 10;
+
+            SaleTestContext context = new SaleTestContext(
+                productId,
+                quantityOnHand,
+                "Test Product",
+                199.99m,
+                new Customer(1, "Test customer", 10)
+            );
+            context.Sale.AddItem(productId, 1);
+            context.Sale.MakePayment(100m);
+
+            SaleCalculator calculator = new SaleCalculator(context.Sale);
+            decimal totalDue = calculator.CalculateSubTotal();
+
+            // Act
+            var exception = Assert.Throws<PaymentException>(
+                () => context.Sale.CompleteSale(totalDue)
+            );
+
+            // Assert
+            Assert.Equal(
+                "Cannot complete sale until full payment has been made.",
+                exception.Message
+            );
+        }
+
+        [Fact]
+        public void CancelSale_ChangesStatusToCancelled()
+        {
+            // Arrange
+            string productId = "B0001-65mm-9Y";
+            int quantityOnHand = 10;
+
+            SaleTestContext context = new SaleTestContext(
+                productId,
+                quantityOnHand,
+                "Test Product",
+                199.99m,
+                new Customer(1, "Test customer", 10)
+            );
+            context.Sale.AddItem(productId, 1);
+
+            // Act
+            context.Sale.CancelSale();
+
+            // Assert
+            Assert.Equal(SaleStatus.Cancelled, context.Sale.Status);
+        }
+
+        [Fact]
+        public void CancelSale_RestoresInventoryStock()
+        {
+            // Arrange
+            string productId = "B0001-65mm-9Y";
+            int initialQuantityOnHand = 10;
+
+            SaleTestContext context = new SaleTestContext(
+                productId,
+                initialQuantityOnHand,
+                "Test Product",
+                199.99m,
+                new Customer(1, "Test customer", 10)
+            );
+
+            context.Sale.AddItem(productId, 1);
+
+            // Act
+            context.Sale.CancelSale();
+
+            // Assert
+            Assert.Equal(initialQuantityOnHand, context.Inventory.GetStockLevel(productId));
+        }
+
+        [Fact]
+        public void CancelSale_WhenStatusIsCompleted_ThrowsException()
+        {
+            // Arrange
+            string productId = "B0001-65mm-9Y";
+            int quantityOnHand = 10;
+
+            SaleTestContext context = new SaleTestContext(
+                productId,
+                quantityOnHand,
+                "Test Product",
+                199.99m,
+                new Customer(1, "Test customer", 10)
+            );
+            context.Sale.AddItem(productId, 1);
+
+            SaleCalculator calculator = new SaleCalculator(context.Sale);
+            decimal totalDue = calculator.CalculateSubTotal();
+            context.Sale.MakePayment(totalDue);
+            context.Sale.CompleteSale(totalDue);
+
+            // Act & Assert
+            var exception = Assert.Throws<InvalidOperationException>(
+                () => context.Sale.CancelSale()
+            );
+            Assert.Equal("Only an open sale can be cancelled.", exception.Message);
+        }
+
+        [Fact]
+        public void CancelSale_WhenStatusIsCancelled_ThrowsException()
+        {
+            // Arrange
+            string productId = "B0001-65mm-9Y";
+            int quantityOnHand = 10;
+
+            SaleTestContext context = new SaleTestContext(
+                productId,
+                quantityOnHand,
+                "Test Product",
+                199.99m,
+                new Customer(1, "Test customer", 10)
+            );
+
+            context.Sale.AddItem(productId, 1);
+            context.Sale.CancelSale();
+
+            // Act & Assert
+            var exception = Assert.Throws<InvalidOperationException>(
+                () => context.Sale.CancelSale()
+            );
+            Assert.Equal("Only an open sale can be cancelled.", exception.Message);
+        }
+
+        [Fact]
+        public void MakePayment_UpdatesTotalPaid()
+        {
+            // Arrange
+            string productId = "B0001-65mm-9Y";
+            int quantityOnHand = 10;
+
+            SaleTestContext context = new SaleTestContext(
+                productId,
+                quantityOnHand,
+                "Test Product",
+                199.99m,
+                new Customer(1, "Test customer", 10)
+            );
+            context.Sale.AddItem(productId, 1);
+
+            // Act
+            context.Sale.MakePayment(179.99m);
+
+            // Assert
+            // 199.99m - 10% discount = 179.99m
+            Assert.Equal(179.99m, context.Sale.GetTotalPaid());
+        }
+
+        [Fact]
+        public void MakePayment_WhenPaymentMadeTwice_ThrowsException()
+        {
+            // Arrange
+            string productId = "B0001-65mm-9Y";
+            int quantityOnHand = 10;
+
+            SaleTestContext context = new SaleTestContext(
+                productId,
+                quantityOnHand,
+                "Test Product",
+                199.99m,
+                new Customer(1, "Test customer", 10)
+            );
+            context.Sale.AddItem(productId, 1);
+            context.Sale.MakePayment(179.99m);
+
+            // Act
+            var exception = Assert.Throws<PaymentException>(
+                () => context.Sale.MakePayment(179.99m)
+            );
+
+            // Assert
+            Assert.Equal("Payment has already been made for this sale.", exception.Message);
+        }
+
+        [Fact]
+        public void MakePayment_PaymentAmountIsZero_ThrowsException()
+        {
+            // Arrange
+            string productId = "B0001-65mm-9Y";
+            int quantityOnHand = 10;
+
+            SaleTestContext context = new SaleTestContext(
+                productId,
+                quantityOnHand,
+                "Test Product",
+                199.99m,
+                new Customer(1, "Test customer", 10)
+            );
+            context.Sale.AddItem(productId, 1);
+
+            // Act & Assert
+            var exception = Assert.Throws<PaymentException>(() => context.Sale.MakePayment(0.0m));
+
+            Assert.Equal("Payment amount must be greater than zero.", exception.Message);
+        }
+
+        [Fact]
+        // Separate test from zero payment amount as I'm using a decimal data type and Inline Theory doesn't work with
+        // decimal data types.
+        public void MakePayment_PaymentAmountIsLessThanZero_ThrowsException()
+        {
+            // Arrange
+            string productId = "B0001-65mm-9Y";
+            int quantityOnHand = 10;
+
+            SaleTestContext context = new SaleTestContext(
+                productId,
+                quantityOnHand,
+                "Test Product",
+                199.99m,
+                new Customer(1, "Test customer", 10)
+            );
+            context.Sale.AddItem(productId, 1);
+
+            // Act & Assert
+            var exception = Assert.Throws<PaymentException>(() => context.Sale.MakePayment(-0.01m));
+
+            Assert.Equal("Payment amount must be greater than zero.", exception.Message);
+        }
+
+        [Fact]
+        public void MakePayment_SaleIsNotOpen_ThrowsException()
+        {
+            // Arrange
+            string productId = "B0001-65mm-9Y";
+            int quantityOnHand = 10;
+
+            SaleTestContext context = new SaleTestContext(
+                productId,
+                quantityOnHand,
+                "Test Product",
+                199.99m,
+                new Customer(1, "Test customer", 10)
+            );
+            context.Sale.AddItem(productId, 1);
+            
+            SaleCalculator calculator = new SaleCalculator(context.Sale);
+            decimal totalDue = calculator.CalculateSubTotal();
+            context.Sale.MakePayment(totalDue);
+            context.Sale.CompleteSale(totalDue);
+
+            // Act & Assert
+            var exception = Assert.Throws<InvalidOperationException>(
+                () => context.Sale.MakePayment(totalDue)
+            );
+
+            Assert.Equal("This sale is not open for payment.", exception.Message);
         }
     }
 }

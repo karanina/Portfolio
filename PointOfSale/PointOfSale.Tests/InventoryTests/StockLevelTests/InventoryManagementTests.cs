@@ -113,5 +113,39 @@ namespace PointOfSale.Tests.InventoryTests.StockLevelTests
                 exception.Message
             );
         }
+
+         [Fact]
+        public void GetStockLevel_ReturnsCurrentStockLevel()
+        {
+            // Arrange
+            string productId = "B0001-65mm-9Y";
+            int initialQuantity = 10;
+            InventoryManagement inventory = new InventoryManagement();
+            inventory.IncreaseStock(productId, initialQuantity);
+
+            // Act
+            int stockLevel = inventory.GetStockLevel(productId);
+
+            // Assert
+            Assert.Equal(initialQuantity, stockLevel);
+        }
+
+        [Fact]
+        public void GetStockLevel_StockItemNotFound_ThrowsException()
+        {
+            // Arrange
+            string productId = "B0001-65mm-9Y";
+            InventoryManagement inventory = new InventoryManagement();
+
+            // Act & Assert
+            var exception = Assert.Throws<StockItemNotFoundException>(
+                () => inventory.GetStockLevel(productId)
+            );
+
+            Assert.Equal(
+                $"The stock item with ID {productId} was not found in inventory.",
+                exception.Message
+            );
+        }
     }
 }

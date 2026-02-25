@@ -75,5 +75,7 @@ namespace PointOfSale.Tests.InventoryTests.StockLevelTests
                 exception.Message
             );
         }
+
+       
     }
 }

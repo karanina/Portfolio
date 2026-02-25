@@ -49,5 +49,16 @@ namespace PointOfSale.Inventory.StockLevel
             }
             _stock[productId].ReduceQuantity(quantity);
         }
+
+        public int GetStockLevel(string productId)
+        {
+            if (!_stock.ContainsKey(productId))
+            {
+                throw new StockItemNotFoundException(
+                    $"The stock item with ID {productId} was not found in inventory."
+                );
+            }
+            return _stock[productId].QuantityOnHand;
+        }
     }
 }

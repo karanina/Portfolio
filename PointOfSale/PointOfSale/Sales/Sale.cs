@@ -10,14 +10,29 @@ namespace PointOfSale.Sales
             : base(message) { }
     }
 
+    public class PaymentException : Exception
+    {
+        public PaymentException(string message)
+            : base(message) { }
+    }
+
+    public enum SaleStatus
+    {
+        Open,
+        Completed,
+        Cancelled,
+    }
+
+    public class Sale
     // Represents the collection of products being purchased in a sale
     // Is the aggregate root for SaleItems and SaleCalculator, as it is the main point of interaction for the UI and
     // other parts of the system when working with a sale.
-    public class Sale
     {
         private readonly Dictionary<string, SaleItem> _items;
         private readonly IProductCatalogue _catalogue;
         private readonly InventoryManagement _inventory;
+        public SaleStatus Status { get; private set; }
+        private decimal _totalPaid;
 
         // getter only as we don't want to be able to change the customer mid sale.
         public Customer Customer { get; }
@@ -33,10 +48,14 @@ namespace PointOfSale.Sales
             _catalogue = catalogue ?? throw new ArgumentNullException(nameof(catalogue));
 
             _items = new Dictionary<string, SaleItem>();
+            Status = SaleStatus.Open;
+            _totalPaid = 0m;
         }
 
         public void AddItem(string productId, int quantity)
         {
+            // Only an open sale can be modified.
+            CheckSaleIsOpen();
             // Guard clauses to ensure valid product ID and quantity are provided.
             if (string.IsNullOrWhiteSpace(productId))
             {
@@ -70,6 +89,8 @@ namespace PointOfSale.Sales
 
         public void RemoveItem(string productId)
         {
+            // Only an open sale can be modified.
+            CheckSaleIsOpen();
             if (!_items.ContainsKey(productId))
             {
                 throw new SaleItemNotFoundException(
@@ -93,6 +114,9 @@ namespace PointOfSale.Sales
 
         public void ChangeItemQuantity(string productId, int newQuantity)
         {
+            // Only an open sale can be modified.
+            CheckSaleIsOpen();
+
             if (!_items.ContainsKey(productId))
             {
                 throw new SaleItemNotFoundException(
@@ -171,6 +195,74 @@ namespace PointOfSale.Sales
                 // we ensure that all modifications to the sale items go through the defined methods on the Sale class,
                 // which can enforce business rules and maintain the integrity of the sale.
                 .AsReadOnly();
+        }
+
+        public void CompleteSale(decimal totalDue)
+        {
+            if (Status != SaleStatus.Open)
+            {
+                throw new InvalidOperationException("Only an open sale can be completed.");
+            }
+
+            if (!_items.Any())
+            {
+                throw new InvalidOperationException("Cannot complete a sale with no items.");
+            }
+
+            if (_totalPaid < totalDue)
+            {
+                throw new PaymentException(
+                    "Cannot complete sale until full payment has been made."
+                );
+            }
+
+            Status = SaleStatus.Completed;
+        }
+
+        public void CancelSale()
+        {
+            if (Status != SaleStatus.Open)
+            {
+                throw new InvalidOperationException("Only an open sale can be cancelled.");
+            }
+            foreach (var item in _items.Values)
+            {
+                _inventory.IncreaseStock(item.ProductId, item.Quantity);
+            }
+            _items.Clear();
+
+            Status = SaleStatus.Cancelled;
+        }
+
+        public void CheckSaleIsOpen()
+        {
+            if (Status != SaleStatus.Open)
+            {
+                throw new InvalidOperationException("Sale cannot be modified unless it is open.");
+            }
+        }
+
+        public decimal GetTotalPaid()
+        {
+            return _totalPaid;
+        }
+
+        public void MakePayment(decimal amount)
+        {
+            if (Status != SaleStatus.Open)
+            {
+                throw new InvalidOperationException("This sale is not open for payment.");
+            }
+            if (_totalPaid > 0)
+            {
+                throw new PaymentException("Payment has already been made for this sale.");
+            }
+
+            if (amount <= 0)
+            {
+                throw new PaymentException("Payment amount must be greater than zero.");
+            }
+            _totalPaid += amount;
         }
     }
 }
