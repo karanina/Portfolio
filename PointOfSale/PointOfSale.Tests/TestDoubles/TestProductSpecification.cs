@@ -1,4 +1,4 @@
-using PointOfSale.Inventory.Products;
+using PointOfSale.Domain.Inventory.Products;
 
 namespace PointOfSale.Tests.TestDoubles
 {
