@@ -1,7 +1,7 @@
 using PointOfSale;
-using PointOfSale.Inventory.Products;
-using PointOfSale.Inventory.StockLevel;
-using PointOfSale.Sales;
+using PointOfSale.Domain.Inventory.Products;
+using PointOfSale.Domain.Inventory.StockLevel;
+using PointOfSale.Domain.Sales;
 using PointOfSale.Tests.TestDoubles;
 
 public class SaleTestContext

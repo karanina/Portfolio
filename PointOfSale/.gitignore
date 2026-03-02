@@ -1,7 +1,10 @@
 .vscode
 
-/PointOfSale/bin
-/PointOfSale/obj
+/PointOfSale.Domain/bin
+/PointOfSale.Domain/obj
+
+/PointOfSale.Application/bin
+/PointOfSale.Application/obj
 
 /PointOfSale.Tests/bin
 /PointOfSale.Tests/obj
