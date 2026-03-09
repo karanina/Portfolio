@@ -34,6 +34,22 @@ namespace PointOfSale.Tests.Domain.InventoryTests.StockLevelTests
         }
 
         [Fact]
+        public void IncreaseQuantity_ValidQuantity_IncreasesQuantityOnHand()
+        {
+            // Arrange
+            string productId = "B0001-65mm-9Y";
+            int initialQuantity = 10;
+            StockItem stockItem = new StockItem(productId, initialQuantity);
+            int increaseAmount = 5;
+
+            // Act
+            stockItem.IncreaseQuantity(increaseAmount);
+
+            // Assert
+            Assert.Equal(initialQuantity + increaseAmount, stockItem.QuantityOnHand);
+        }
+
+        [Fact]
         public void IncreaseQuantity_NegativeQuantity_ThrowsException()
         {
             // Arrange
@@ -45,7 +61,23 @@ namespace PointOfSale.Tests.Domain.InventoryTests.StockLevelTests
         }
 
         [Fact]
-        public void ReduceStock_NegativeQuantity_ThrowsException()
+        public void ReduceQuantity_ValidQuantity_ReducesQuantityOnHand()
+        {
+            // Arrange
+            string productId = "B0001-65mm-9Y";
+            int initialQuantity = 10;
+            StockItem stockItem = new StockItem(productId, initialQuantity);
+            int reductionAmount = 5;
+
+            // Act
+            stockItem.ReduceQuantity(reductionAmount);
+
+            // Assert
+            Assert.Equal(initialQuantity - reductionAmount, stockItem.QuantityOnHand);
+        }
+
+        [Fact]
+        public void ReduceQuantity_NegativeQuantity_ThrowsException()
         {
             // Arrange
             StockItem stockItem = new StockItem("B0001-65mm-9Y", 5);
@@ -57,7 +89,7 @@ namespace PointOfSale.Tests.Domain.InventoryTests.StockLevelTests
         }
 
         [Fact]
-        public void ReduceStock_MoreThanAvailable_ThrowsException()
+        public void ReduceQuantity_MoreThanAvailable_ThrowsException()
         {
             // Arrange
             string productId = "B0001-65mm-9Y";
@@ -75,7 +107,5 @@ namespace PointOfSale.Tests.Domain.InventoryTests.StockLevelTests
                 exception.Message
             );
         }
-
-       
     }
 }

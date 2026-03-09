@@ -1,7 +1,8 @@
 using PointOfSale.Domain.Inventory.Products;
 using PointOfSale.Domain.Inventory.StockLevel;
 using PointOfSale.Domain.Sales;
-using PointOfSale.Tests.TestDoubles;
+using PointOfSale.Tests.TestDoubles.Dummies;
+using PointOfSale.Tests.TestDoubles.Fakes;
 using Xunit;
 
 namespace PointOfSale.Tests.Domain.SalesTests
@@ -17,7 +18,7 @@ namespace PointOfSale.Tests.Domain.SalesTests
             int quantityOnHand = 10;
             int saleQuantity = 2;
 
-            ProductSpecification product = new TestProductSpecification(
+            ProductSpecification product = new DummyProductSpecification(
                 productId,
                 "Test Product",
                 sellPrice
@@ -26,7 +27,7 @@ namespace PointOfSale.Tests.Domain.SalesTests
             IProductCatalogue catalogue = new ProductCatalogue();
             catalogue.AddProduct(product);
 
-            InventoryManagement inventory = new InventoryManagement();
+            IInventoryManagement inventory = new FakeInventoryManagement();
             inventory.IncreaseStock(productId, quantityOnHand);
 
             // No customer discount for simplicity in this test, as we're only testing that quantity is multiplied correctly
@@ -53,16 +54,16 @@ namespace PointOfSale.Tests.Domain.SalesTests
             int quantityOnHand = 10;
             int saleQuantity = 2;
 
-            ProductSpecification product = new TestProductSpecification(
+            ProductSpecification product = new DummyProductSpecification(
                 productId,
                 "Test Product",
                 sellPrice
             );
 
-            IProductCatalogue catalogue = new ProductCatalogue();
+            IProductCatalogue catalogue = new FakeProductCatalogue();
             catalogue.AddProduct(product);
 
-            InventoryManagement inventory = new InventoryManagement();
+            IInventoryManagement inventory = new FakeInventoryManagement();
             inventory.IncreaseStock(productId, quantityOnHand);
 
             Sale sale = new Sale(new Customer(1, "Test customer", 10), inventory, catalogue);
@@ -94,16 +95,16 @@ namespace PointOfSale.Tests.Domain.SalesTests
             int saleQuantity = 2;
             int manualDiscountRate = 20; // 20% manual discount
 
-            ProductSpecification product = new TestProductSpecification(
+            ProductSpecification product = new DummyProductSpecification(
                 productId,
                 "Test Product",
                 salePrice
             );
 
-            IProductCatalogue catalogue = new ProductCatalogue();
+            IProductCatalogue catalogue = new FakeProductCatalogue();
             catalogue.AddProduct(product);
 
-            InventoryManagement inventory = new InventoryManagement();
+            IInventoryManagement inventory = new FakeInventoryManagement();
             inventory.IncreaseStock(productId, quantityOnHand);
 
             Sale sale = new Sale(new Customer(1, "Test customer", 10), inventory, catalogue);
@@ -146,16 +147,16 @@ namespace PointOfSale.Tests.Domain.SalesTests
             int quantityOnHand = 10;
             int saleQuantity = 2;
 
-            ProductSpecification product = new TestProductSpecification(
+            ProductSpecification product = new DummyProductSpecification(
                 productId,
                 "Test Product",
                 salePrice
             );
 
-            IProductCatalogue catalogue = new ProductCatalogue();
+            IProductCatalogue catalogue = new FakeProductCatalogue();
             catalogue.AddProduct(product);
 
-            InventoryManagement inventory = new InventoryManagement();
+            IInventoryManagement inventory = new FakeInventoryManagement();
             inventory.IncreaseStock(productId, quantityOnHand);
 
             Sale sale = new Sale(new Customer(1, "Test customer", 10), inventory, catalogue);
@@ -191,16 +192,16 @@ namespace PointOfSale.Tests.Domain.SalesTests
             int quantityOnHand = 10;
             int saleQuantity = 2;
 
-            ProductSpecification product = new TestProductSpecification(
+            ProductSpecification product = new DummyProductSpecification(
                 productId,
                 "Test Product",
                 salePrice
             );
 
-            IProductCatalogue catalogue = new ProductCatalogue();
+            IProductCatalogue catalogue = new FakeProductCatalogue();
             catalogue.AddProduct(product);
 
-            InventoryManagement inventory = new InventoryManagement();
+            IInventoryManagement inventory = new FakeInventoryManagement();
             inventory.IncreaseStock(productId, quantityOnHand);
 
             Sale sale = new Sale(new Customer(1, "Test customer", 10), inventory, catalogue);
@@ -232,7 +233,7 @@ namespace PointOfSale.Tests.Domain.SalesTests
         }
 
         [Fact]
-        public void CalculateSubTotal_IsSumOfAllLineTotals()
+        public void CalculateTotal_IsSumOfAllLineTotals()
         {
             // Arrange
             string productId1 = "B0001-65mm-9Y";
@@ -245,23 +246,23 @@ namespace PointOfSale.Tests.Domain.SalesTests
             int quantityOnHand2 = 5;
             int saleQuantity2 = 1;
 
-            ProductSpecification product1 = new TestProductSpecification(
+            ProductSpecification product1 = new DummyProductSpecification(
                 productId1,
                 "Test Product 1",
                 salePrice1
             );
 
-            ProductSpecification product2 = new TestProductSpecification(
+            ProductSpecification product2 = new DummyProductSpecification(
                 productId2,
                 "Test Product 2",
                 salePrice2
             );
 
-            IProductCatalogue catalogue = new ProductCatalogue();
+            IProductCatalogue catalogue = new FakeProductCatalogue();
             catalogue.AddProduct(product1);
             catalogue.AddProduct(product2);
 
-            InventoryManagement inventory = new InventoryManagement();
+            IInventoryManagement inventory = new FakeInventoryManagement();
             inventory.IncreaseStock(productId1, quantityOnHand1);
             inventory.IncreaseStock(productId2, quantityOnHand2);
 
@@ -272,7 +273,7 @@ namespace PointOfSale.Tests.Domain.SalesTests
             SaleCalculator salecalculator = new SaleCalculator();
 
             // Act
-            var actual = salecalculator.CalculateSubTotal(sale);
+            var actual = salecalculator.CalculateTotal(sale);
 
             // Assert
             decimal expected = Math.Round(
@@ -295,16 +296,16 @@ namespace PointOfSale.Tests.Domain.SalesTests
             int saleQuantity = 2;
             int gstRate = 15; // 15% GST
 
-            ProductSpecification product = new TestProductSpecification(
+            ProductSpecification product = new DummyProductSpecification(
                 productId,
                 "Test Product",
                 salePrice
             );
 
-            IProductCatalogue catalogue = new ProductCatalogue();
+            IProductCatalogue catalogue = new FakeProductCatalogue();
             catalogue.AddProduct(product);
 
-            InventoryManagement inventory = new InventoryManagement();
+            IInventoryManagement inventory = new FakeInventoryManagement();
             inventory.IncreaseStock(productId, quantityOnHand);
 
             Sale sale = new Sale(new Customer(1, "Test customer"), inventory, catalogue);

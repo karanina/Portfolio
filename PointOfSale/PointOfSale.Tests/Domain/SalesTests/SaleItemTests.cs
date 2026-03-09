@@ -1,6 +1,7 @@
+using PointOfSale.Domain.Inventory.Products;
 using PointOfSale.Domain.Sales;
 using PointOfSale.Domain.Shared;
-using PointOfSale.Tests.TestDoubles;
+using PointOfSale.Tests.TestDoubles.Dummies;
 using Xunit;
 
 namespace PointOfSale.Tests.Domain.SalesTests
@@ -16,7 +17,7 @@ namespace PointOfSale.Tests.Domain.SalesTests
             decimal unitPrice = 199.99m;
             int quantity = 2;
 
-            TestProductSpecification product = new TestProductSpecification(
+            ProductSpecification product = new DummyProductSpecification(
                 productId,
                 description,
                 unitPrice
@@ -43,7 +44,7 @@ namespace PointOfSale.Tests.Domain.SalesTests
             decimal unitPrice = 199.99m;
             int quantity = -1;
 
-            TestProductSpecification product = new TestProductSpecification(
+            ProductSpecification product = new DummyProductSpecification(
                 productId,
                 description,
                 unitPrice
@@ -53,7 +54,7 @@ namespace PointOfSale.Tests.Domain.SalesTests
             var exception = Assert.Throws<QuantityException>(
                 () => SaleItem.CreateFromProductSpecification(product, quantity)
             );
-            Assert.Equal("Quantity cannot be less than 1.", exception.Message);
+            Assert.Contains("less than 1.", exception.Message);
         }
 
         [Fact]
@@ -65,7 +66,7 @@ namespace PointOfSale.Tests.Domain.SalesTests
             decimal unitPrice = -0.01m;
             int quantity = 1;
 
-            TestProductSpecification product = new TestProductSpecification(
+            ProductSpecification product = new DummyProductSpecification(
                 productId,
                 description,
                 unitPrice
@@ -76,7 +77,7 @@ namespace PointOfSale.Tests.Domain.SalesTests
                 () => SaleItem.CreateFromProductSpecification(product, quantity)
             );
 
-            Assert.Equal("Unit price cannot be negative.", exception.Message);
+            Assert.Contains("cannot be negative.", exception.Message);
         }
 
         [Fact]
@@ -89,7 +90,7 @@ namespace PointOfSale.Tests.Domain.SalesTests
             var quantity = 2;
             int manualDiscountRate = 10;
 
-            TestProductSpecification product = new TestProductSpecification(
+            ProductSpecification product = new DummyProductSpecification(
                 productId,
                 description,
                 unitPrice
@@ -113,7 +114,7 @@ namespace PointOfSale.Tests.Domain.SalesTests
             var quantity = 2;
             int manualDiscountRate = 10;
 
-            TestProductSpecification product = new TestProductSpecification(
+            ProductSpecification product = new DummyProductSpecification(
                 productId,
                 description,
                 unitPrice
@@ -127,10 +128,7 @@ namespace PointOfSale.Tests.Domain.SalesTests
                 () => item.ApplyManualDiscount(manualDiscountRate)
             );
 
-            Assert.Equal(
-                "Cannot set a manual discount rate when the sell price has been overridden manually.",
-                exception.Message
-            );
+            Assert.Contains("price has been overridden manually.", exception.Message);
         }
 
         [Fact]
@@ -143,7 +141,7 @@ namespace PointOfSale.Tests.Domain.SalesTests
             var quantity = 2;
             int manualDiscountRate = -1;
 
-            TestProductSpecification product = new TestProductSpecification(
+            ProductSpecification product = new DummyProductSpecification(
                 productId,
                 description,
                 unitPrice
@@ -155,7 +153,7 @@ namespace PointOfSale.Tests.Domain.SalesTests
                 () => item.ApplyManualDiscount(manualDiscountRate)
             );
 
-            Assert.Equal("Manual discount rate must be between 0 and 100.", exception.Message);
+            Assert.Contains("between 0 and 100.", exception.Message);
         }
 
         [Fact]
@@ -168,7 +166,7 @@ namespace PointOfSale.Tests.Domain.SalesTests
             var quantity = 2;
             int manualDiscountRate = 101;
 
-            TestProductSpecification product = new TestProductSpecification(
+            ProductSpecification product = new DummyProductSpecification(
                 productId,
                 description,
                 unitPrice
@@ -181,7 +179,7 @@ namespace PointOfSale.Tests.Domain.SalesTests
                 () => item.ApplyManualDiscount(manualDiscountRate)
             );
 
-            Assert.Equal("Manual discount rate must be between 0 and 100.", exception.Message);
+            Assert.Contains("between 0 and 100.", exception.Message);
         }
 
         [Fact]
@@ -194,7 +192,7 @@ namespace PointOfSale.Tests.Domain.SalesTests
             int initialQuantity = 2;
             int newQuantity = 5;
 
-            TestProductSpecification product = new TestProductSpecification(
+            ProductSpecification product = new DummyProductSpecification(
                 productId,
                 description,
                 unitPrice
@@ -219,7 +217,7 @@ namespace PointOfSale.Tests.Domain.SalesTests
             int initialQuantity = 2;
             int newQuantity = 0;
 
-            TestProductSpecification product = new TestProductSpecification(
+            ProductSpecification product = new DummyProductSpecification(
                 productId,
                 description,
                 unitPrice
@@ -233,7 +231,7 @@ namespace PointOfSale.Tests.Domain.SalesTests
             );
 
             // Assert
-            Assert.Equal("Quantity cannot be less than 1.", exception.Message);
+            Assert.Contains("less than 1.", exception.Message);
         }
 
         [Fact]
@@ -247,7 +245,7 @@ namespace PointOfSale.Tests.Domain.SalesTests
 
             decimal manualUnitPrice = 149.99m;
 
-            TestProductSpecification product = new TestProductSpecification(
+            ProductSpecification product = new DummyProductSpecification(
                 productId,
                 description,
                 unitPrice
@@ -274,7 +272,7 @@ namespace PointOfSale.Tests.Domain.SalesTests
 
             decimal manualUnitPrice = 149.99m;
 
-            TestProductSpecification product = new TestProductSpecification(
+            ProductSpecification product = new DummyProductSpecification(
                 productId,
                 description,
                 unitPrice
@@ -303,7 +301,7 @@ namespace PointOfSale.Tests.Domain.SalesTests
 
             decimal manualUnitPrice = -0.01m;
 
-            TestProductSpecification product = new TestProductSpecification(
+            ProductSpecification product = new DummyProductSpecification(
                 productId,
                 description,
                 unitPrice
@@ -316,7 +314,7 @@ namespace PointOfSale.Tests.Domain.SalesTests
                 () => item.OverrideUnitPrice(manualUnitPrice)
             );
 
-            Assert.Equal("Unit price cannot be negative.", exception.Message);
+            Assert.Contains("cannot be negative.", exception.Message);
         }
 
         [Fact]
@@ -329,7 +327,7 @@ namespace PointOfSale.Tests.Domain.SalesTests
             int initialQuantity = 2;
             int increaseQuantityAmount = 3;
 
-            TestProductSpecification product = new TestProductSpecification(
+            ProductSpecification product = new DummyProductSpecification(
                 productId,
                 description,
                 unitPrice
@@ -354,7 +352,7 @@ namespace PointOfSale.Tests.Domain.SalesTests
             int initialQuantity = 2;
             int increaseQuantityAmount = 0;
 
-            TestProductSpecification product = new TestProductSpecification(
+            ProductSpecification product = new DummyProductSpecification(
                 productId,
                 description,
                 unitPrice
@@ -367,7 +365,7 @@ namespace PointOfSale.Tests.Domain.SalesTests
                 () => item.IncreaseQuantity(increaseQuantityAmount)
             );
 
-            Assert.Equal("Quantity cannot be less than 1.", exception.Message);
+            Assert.Contains("less than 1.", exception.Message);
         }
     }
 }

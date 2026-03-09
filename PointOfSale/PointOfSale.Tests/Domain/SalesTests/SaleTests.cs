@@ -2,7 +2,8 @@ using PointOfSale.Domain.Inventory.Products;
 using PointOfSale.Domain.Inventory.StockLevel;
 using PointOfSale.Domain.Sales;
 using PointOfSale.Domain.Shared;
-using PointOfSale.Tests.TestDoubles;
+using PointOfSale.Tests.TestDoubles.Fakes;
+using PointOfSale.Tests.TestFixtures;
 using Xunit;
 
 namespace PointOfSale.Tests.Domain.SalesTests
@@ -13,9 +14,9 @@ namespace PointOfSale.Tests.Domain.SalesTests
         public void CreatingSale_StartsWithNoItems()
         {
             // Arrange
-            IProductCatalogue catalogue = new ProductCatalogue();
+            IProductCatalogue catalogue = new FakeProductCatalogue();
 
-            InventoryManagement inventory = new InventoryManagement();
+            IInventoryManagement inventory = new FakeInventoryManagement();
             Customer customer = new Customer(1, "Test customer", 10);
 
             // Act
@@ -30,8 +31,8 @@ namespace PointOfSale.Tests.Domain.SalesTests
         public void CreatingSale_IsAssociatedWithCorrectCustomer()
         {
             // Arrange
-            IProductCatalogue catalogue = new ProductCatalogue();
-            InventoryManagement inventory = new InventoryManagement();
+            IProductCatalogue catalogue = new FakeProductCatalogue();
+            IInventoryManagement inventory = new FakeInventoryManagement();
             Customer customer = new Customer(1, "Test customer", 10);
 
             // Act
@@ -42,11 +43,11 @@ namespace PointOfSale.Tests.Domain.SalesTests
         }
 
         [Fact]
-        public void CreateingSale_StatusIsOpen()
+        public void CreatingSale_StatusIsOpen()
         {
             // Arrange
-            IProductCatalogue catalogue = new ProductCatalogue();
-            InventoryManagement inventory = new InventoryManagement();
+            IProductCatalogue catalogue = new FakeProductCatalogue();
+            IInventoryManagement inventory = new FakeInventoryManagement();
             Customer customer = new Customer(1, "Test customer", 10);
 
             // Act
@@ -60,8 +61,8 @@ namespace PointOfSale.Tests.Domain.SalesTests
         public void CreatingSale_HasNoPaymentsRegistered()
         {
             // Arrange
-            IProductCatalogue catalogue = new ProductCatalogue();
-            InventoryManagement inventory = new InventoryManagement();
+            IProductCatalogue catalogue = new FakeProductCatalogue();
+            IInventoryManagement inventory = new FakeInventoryManagement();
             Customer customer = new Customer(1, "Test customer", 10);
 
             // Act
@@ -161,7 +162,7 @@ namespace PointOfSale.Tests.Domain.SalesTests
             context.Sale.AddItem(productId, 1);
 
             SaleCalculator calculator = new SaleCalculator();
-            decimal totalDue = calculator.CalculateSubTotal(context.Sale);
+            decimal totalDue = calculator.CalculateTotal(context.Sale);
             context.Sale.MakePayment(totalDue);
 
             context.Sale.CompleteSale(totalDue);
@@ -241,7 +242,7 @@ namespace PointOfSale.Tests.Domain.SalesTests
             context.Sale.AddItem(productId, 1);
 
             SaleCalculator calculator = new SaleCalculator();
-            decimal totalDue = calculator.CalculateSubTotal(context.Sale);
+            decimal totalDue = calculator.CalculateTotal(context.Sale);
             context.Sale.MakePayment(totalDue);
             context.Sale.CompleteSale(totalDue);
 
@@ -404,7 +405,7 @@ namespace PointOfSale.Tests.Domain.SalesTests
             context.Sale.AddItem(productId, 1);
 
             SaleCalculator calculator = new SaleCalculator();
-            decimal totalDue = calculator.CalculateSubTotal(context.Sale);
+            decimal totalDue = calculator.CalculateTotal(context.Sale);
             context.Sale.MakePayment(totalDue);
             context.Sale.CompleteSale(totalDue);
 
@@ -421,9 +422,9 @@ namespace PointOfSale.Tests.Domain.SalesTests
             // Arrange
             string productId = "B0001-65mm-9Y";
 
-            IProductCatalogue catalogue = new ProductCatalogue();
+            IProductCatalogue catalogue = new FakeProductCatalogue();
 
-            InventoryManagement inventory = new InventoryManagement();
+            IInventoryManagement inventory = new FakeInventoryManagement();
 
             Sale sale = new Sale(new Customer(1, "Test customer", 10), inventory, catalogue);
 
@@ -454,7 +455,7 @@ namespace PointOfSale.Tests.Domain.SalesTests
             context.Sale.AddItem(productId, 1);
 
             SaleCalculator calculator = new SaleCalculator();
-            decimal totalDue = calculator.CalculateSubTotal(context.Sale);
+            decimal totalDue = calculator.CalculateTotal(context.Sale);
             context.Sale.MakePayment(totalDue);
 
             // Act
@@ -481,7 +482,7 @@ namespace PointOfSale.Tests.Domain.SalesTests
             context.Sale.AddItem(productId, 1);
 
             SaleCalculator calculator = new SaleCalculator();
-            decimal totalDue = calculator.CalculateSubTotal(context.Sale);
+            decimal totalDue = calculator.CalculateTotal(context.Sale);
             context.Sale.MakePayment(totalDue);
             context.Sale.CompleteSale(totalDue);
 
@@ -497,8 +498,8 @@ namespace PointOfSale.Tests.Domain.SalesTests
         public void CompleteSale_NoItems_ThrowsException()
         {
             // Arrange
-            IProductCatalogue catalogue = new ProductCatalogue();
-            InventoryManagement inventory = new InventoryManagement();
+            IProductCatalogue catalogue = new FakeProductCatalogue();
+            IInventoryManagement inventory = new FakeInventoryManagement();
             Customer customer = new Customer(1, "Test customer", 10);
 
             Sale sale = new Sale(customer, inventory, catalogue);
@@ -527,7 +528,7 @@ namespace PointOfSale.Tests.Domain.SalesTests
             context.Sale.AddItem(productId, 1);
 
             SaleCalculator calculator = new SaleCalculator();
-            decimal totalDue = calculator.CalculateSubTotal(context.Sale);
+            decimal totalDue = calculator.CalculateTotal(context.Sale);
 
             // Act
             var exception = Assert.Throws<PaymentException>(
@@ -559,7 +560,7 @@ namespace PointOfSale.Tests.Domain.SalesTests
             context.Sale.MakePayment(100m);
 
             SaleCalculator calculator = new SaleCalculator();
-            decimal totalDue = calculator.CalculateSubTotal(context.Sale);
+            decimal totalDue = calculator.CalculateTotal(context.Sale);
 
             // Act
             var exception = Assert.Throws<PaymentException>(
@@ -637,7 +638,7 @@ namespace PointOfSale.Tests.Domain.SalesTests
             context.Sale.AddItem(productId, 1);
 
             SaleCalculator calculator = new SaleCalculator();
-            decimal totalDue = calculator.CalculateSubTotal(context.Sale);
+            decimal totalDue = calculator.CalculateTotal(context.Sale);
             context.Sale.MakePayment(totalDue);
             context.Sale.CompleteSale(totalDue);
 
@@ -786,7 +787,7 @@ namespace PointOfSale.Tests.Domain.SalesTests
             context.Sale.AddItem(productId, 1);
             
             SaleCalculator calculator = new SaleCalculator();
-            decimal totalDue = calculator.CalculateSubTotal(context.Sale);
+            decimal totalDue = calculator.CalculateTotal(context.Sale);
             context.Sale.MakePayment(totalDue);
             context.Sale.CompleteSale(totalDue);
 

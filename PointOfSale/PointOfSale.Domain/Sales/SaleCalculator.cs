@@ -1,7 +1,7 @@
 namespace PointOfSale.Domain.Sales
 {
     // A policy class responsible for calculating line totals, applying discounts, and generating the final total.
-    public class SaleCalculator
+    public class SaleCalculator : ISaleCalculator
     {
         // Calculates the line total for a single SaleItem.
         // If there is a manual discount rate on the item it is used instead of the Customer's discount rate.
@@ -28,7 +28,7 @@ namespace PointOfSale.Domain.Sales
         }
 
         // Returns the subtotal for the sale by summing the line totals.
-        public decimal CalculateSubTotal(Sale sale)
+        public decimal CalculateTotal(Sale sale)
         {
             return sale.GetItems().Sum(item => CalculateLineTotal(sale, item));
         }
@@ -36,7 +36,7 @@ namespace PointOfSale.Domain.Sales
         // Returns the GST amount for the sale based on the subtotal. Varying GST rates can be applied here if needed.
         public decimal CalculateGST(Sale sale, int gstRate)
         {
-            decimal subTotal = CalculateSubTotal(sale);
+            decimal subTotal = CalculateTotal(sale);
             return Math.Round(subTotal - (subTotal / (1 + (gstRate / 100m))), 2);
         }
     }

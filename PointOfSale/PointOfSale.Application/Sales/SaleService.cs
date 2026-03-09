@@ -11,8 +11,8 @@ namespace PointOfSale.Application.Sales
         // We don't want to allow a reassignment of catalogue, inventory or calculator as they are dependencies that
         // should be injected when the service is created and not changed.
         private readonly IProductCatalogue _catalogue;
-        private readonly InventoryManagement _inventory;
-        private readonly SaleCalculator _calculator;
+        private readonly IInventoryManagement _inventory;
+        private readonly ISaleCalculator _calculator;
 
         // _sale and CurrentSale are a guarded backing field pattern.
         private Sale? _sale; // backing field / storage of the sale
@@ -28,8 +28,8 @@ namespace PointOfSale.Application.Sales
 
         public SaleService(
             IProductCatalogue catalogue,
-            InventoryManagement inventory,
-            SaleCalculator calculator
+            IInventoryManagement inventory,
+            ISaleCalculator calculator
         )
         {
             _inventory = inventory ?? throw new ArgumentNullException(nameof(inventory));
@@ -60,7 +60,7 @@ namespace PointOfSale.Application.Sales
 
         public decimal GetTotal()
         {
-            return _calculator.CalculateSubTotal(CurrentSale);
+            return _calculator.CalculateTotal(CurrentSale);
         }
 
         public void MakePayment(decimal amount)
@@ -70,7 +70,7 @@ namespace PointOfSale.Application.Sales
 
         public SaleStatus CompleteSale()
         {
-            decimal totalDue = _calculator.CalculateSubTotal(CurrentSale);
+            decimal totalDue = _calculator.CalculateTotal(CurrentSale);
             CurrentSale.CompleteSale(totalDue);
 
             SaleStatus status = CurrentSale.Status;

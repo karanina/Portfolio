@@ -1,17 +1,18 @@
 using PointOfSale.Domain.Inventory.Products;
 using PointOfSale.Domain.Inventory.StockLevel;
 using PointOfSale.Domain.Sales;
-using PointOfSale.Tests.TestDoubles;
+using PointOfSale.Tests.TestDoubles.Dummies;
+using PointOfSale.Tests.TestDoubles.Fakes;
 
 namespace PointOfSale.Tests.TestFixtures
 {
     public class SaleServiceTestContext
     {
         // This context provides the standard setup for testing the SaleService class.
-        public TestProductSpecification Product { get; }
+        public DummyProductSpecification Product { get; }
         public IProductCatalogue Catalogue { get; }
-        public InventoryManagement Inventory { get; }
-        public SaleCalculator Calculator { get; }
+        public IInventoryManagement Inventory { get; }
+        public ISaleCalculator Calculator { get; }
 
         public SaleServiceTestContext(
             string productId,
@@ -20,15 +21,19 @@ namespace PointOfSale.Tests.TestFixtures
             decimal sellPrice
         )
         {
-            Product = new TestProductSpecification(productId, description, sellPrice);
+            Product = new DummyProductSpecification(productId, description, sellPrice);
 
-            Catalogue = new ProductCatalogue();
+            Catalogue = new FakeProductCatalogue();
             Catalogue.AddProduct(Product);
 
-            Inventory = new InventoryManagement();
+            Inventory = new FakeInventoryManagement();
             Inventory.IncreaseStock(productId, quantityOnHand);
-            
-            Calculator = new SaleCalculator();
+
+            Calculator = new FakeSaleCalculator
+            {
+                Total = sellPrice * quantityOnHand,
+                GST = sellPrice * quantityOnHand * 0.15m,
+            };
         }
     }
 }

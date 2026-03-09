@@ -13,7 +13,7 @@ namespace PointOfSale.Domain.Inventory.StockLevel
     }
 
     // This class manages the movement of a stock item in inventory.
-    public class InventoryManagement
+    public class InventoryManagement : IInventoryManagement
     {
         private readonly Dictionary<string, StockItem> _stock; // Key: Product ID, Value: StockItem details
 

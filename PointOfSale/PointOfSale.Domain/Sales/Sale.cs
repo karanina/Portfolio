@@ -29,14 +29,14 @@ namespace PointOfSale.Domain.Sales
     {
         private readonly Dictionary<string, SaleItem> _items;
         private readonly IProductCatalogue _catalogue;
-        private readonly InventoryManagement _inventory;
+        private readonly IInventoryManagement _inventory;
         public SaleStatus Status { get; private set; }
         private decimal _totalPaid;
 
         // getter only as we don't want to be able to change the customer mid sale.
         public Customer Customer { get; }
 
-        public Sale(Customer customer, InventoryManagement inventory, IProductCatalogue catalogue)
+        public Sale(Customer customer, IInventoryManagement inventory, IProductCatalogue catalogue)
         {
             // Guard clauses to ensure valid objects are provided for the sale.
 

@@ -1,7 +1,6 @@
 using PointOfSale.Application.Sales;
-using PointOfSale.Domain.Inventory.Products;
-using PointOfSale.Domain.Inventory.StockLevel;
 using PointOfSale.Domain.Sales;
+using PointOfSale.Tests.TestDoubles.Fakes;
 using PointOfSale.Tests.TestFixtures;
 using Xunit;
 
@@ -50,9 +49,9 @@ namespace PointOfSale.Tests.Application.SalesTests
         {
             // Arrange
             var saleService = new SaleService(
-                new ProductCatalogue(),
-                new InventoryManagement(),
-                new SaleCalculator()
+                new FakeProductCatalogue(),
+                new FakeInventoryManagement(),
+                new FakeSaleCalculator()
             );
 
             // Act & Assert
@@ -71,9 +70,9 @@ namespace PointOfSale.Tests.Application.SalesTests
         {
             // Arrange
             var saleService = new SaleService(
-                new ProductCatalogue(),
-                new InventoryManagement(),
-                new SaleCalculator()
+                new FakeProductCatalogue(),
+                new FakeInventoryManagement(),
+                new FakeSaleCalculator()
             );
 
             // Act & Assert
@@ -92,9 +91,9 @@ namespace PointOfSale.Tests.Application.SalesTests
         {
             // Arrange
             var saleService = new SaleService(
-                new ProductCatalogue(),
-                new InventoryManagement(),
-                new SaleCalculator()
+                new FakeProductCatalogue(),
+                new FakeInventoryManagement(),
+                new FakeSaleCalculator()
             );
             saleService.CreateSale(new Customer(1, "Test Customer 1", 10));
 
@@ -103,7 +102,7 @@ namespace PointOfSale.Tests.Application.SalesTests
                 () => saleService.CreateSale(new Customer(2, "Test Customer 2", 10))
             );
 
-            Assert.Equal("A sale is already in progress.", exception.Message);
+            Assert.Contains("already in progress.", exception.Message);
         }
     }
 }

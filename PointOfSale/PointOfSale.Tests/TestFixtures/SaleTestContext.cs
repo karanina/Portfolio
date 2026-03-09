@@ -1,36 +1,40 @@
-using PointOfSale;
+using PointOfSale.Domain;
 using PointOfSale.Domain.Inventory.Products;
 using PointOfSale.Domain.Inventory.StockLevel;
 using PointOfSale.Domain.Sales;
-using PointOfSale.Tests.TestDoubles;
+using PointOfSale.Tests.TestDoubles.Dummies;
+using PointOfSale.Tests.TestDoubles.Fakes;
 
-public class SaleTestContext
+namespace PointOfSale.Tests.TestFixtures
 {
-    // This context provides the standard setup for testing the Sale class.
-    public TestProductSpecification Product { get; }
-    public IProductCatalogue Catalogue { get; }
-    public InventoryManagement Inventory { get; }
-    public Customer Customer { get; }
-    public Sale Sale { get; }
-
-    public SaleTestContext(
-        string productId,
-        int quantityOnHand,
-        string description,
-        decimal sellPrice,
-        Customer customer
-    )
+    public class SaleTestContext
     {
-        Product = new TestProductSpecification(productId, description, sellPrice);
+        // This context provides the standard setup for testing the Sale class.
+        public ProductSpecification Product { get; }
+        public IProductCatalogue Catalogue { get; }
+        public IInventoryManagement Inventory { get; }
+        public Customer Customer { get; }
+        public Sale Sale { get; }
 
-        Catalogue = new ProductCatalogue();
-        Catalogue.AddProduct(Product);
+        public SaleTestContext(
+            string productId,
+            int quantityOnHand,
+            string description,
+            decimal sellPrice,
+            Customer customer
+        )
+        {
+            Product = new DummyProductSpecification(productId, description, sellPrice);
 
-        Inventory = new InventoryManagement();
-        Inventory.IncreaseStock(productId, quantityOnHand);
+            Catalogue = new FakeProductCatalogue();
+            Catalogue.AddProduct(Product);
 
-        Customer = customer;
+            Inventory = new FakeInventoryManagement();
+            Inventory.IncreaseStock(productId, quantityOnHand);
 
-        Sale = new Sale(Customer, Inventory, Catalogue);
+            Customer = customer;
+
+            Sale = new Sale(Customer, Inventory, Catalogue);
+        }
     }
 }

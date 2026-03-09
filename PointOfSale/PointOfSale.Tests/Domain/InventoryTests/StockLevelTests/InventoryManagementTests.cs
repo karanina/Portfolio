@@ -30,7 +30,7 @@ namespace PointOfSale.Tests.Domain.InventoryTests.StockLevelTests
         public void Constructor_Success_CreatesEmptyInventoryDictionary()
         {
             // Arrange & Act
-            InventoryManagement inventory = new InventoryManagement();
+            IInventoryManagement inventory = new InventoryManagement();
 
             // Assert
             Assert.NotNull(inventory);
@@ -41,7 +41,7 @@ namespace PointOfSale.Tests.Domain.InventoryTests.StockLevelTests
         public void IncreaseStock_AddsStockItemToInventory()
         {
             // Arrange
-            InventoryManagement inventory = new InventoryManagement();
+          IInventoryManagement inventory = new InventoryManagement();
             string productId = "B0001-65mm-9Y";
             int quantity = 10;
 
@@ -58,7 +58,7 @@ namespace PointOfSale.Tests.Domain.InventoryTests.StockLevelTests
         public void IncreaseStock_ExistingStockItem_IncreasesQuantity()
         {
             // Arrange
-            InventoryManagement inventory = new InventoryManagement();
+            IInventoryManagement inventory = new InventoryManagement();
             string productId = "B0001-65mm-9Y";
             int initialQuantity = 10;
             int additionalQuantity = 5;
@@ -80,7 +80,7 @@ namespace PointOfSale.Tests.Domain.InventoryTests.StockLevelTests
         public void ReduceStock_ReducesStockItemQuantityInInventory()
         {
             // Arrange
-            InventoryManagement inventory = new InventoryManagement();
+            IInventoryManagement inventory = new InventoryManagement();
             string productId = "B0001-65mm-9Y";
             int initialQuantity = 10;
             int reductionQuantity = 4;
@@ -96,10 +96,10 @@ namespace PointOfSale.Tests.Domain.InventoryTests.StockLevelTests
         }
 
         [Fact]
-        public void ReduceQuantity_StockItemDoesNotExist_ThrowException()
+        public void ReduceStock_StockItemDoesNotExist_ThrowException()
         {
             // Arrange
-            InventoryManagement inventory = new InventoryManagement();
+            IInventoryManagement inventory = new InventoryManagement();
             string invalidProductId = "INVALID_PRODUCT_ID";
             int reductionQuantity = 2;
 
@@ -120,7 +120,7 @@ namespace PointOfSale.Tests.Domain.InventoryTests.StockLevelTests
             // Arrange
             string productId = "B0001-65mm-9Y";
             int initialQuantity = 10;
-            InventoryManagement inventory = new InventoryManagement();
+            IInventoryManagement inventory = new InventoryManagement();
             inventory.IncreaseStock(productId, initialQuantity);
 
             // Act
@@ -135,7 +135,7 @@ namespace PointOfSale.Tests.Domain.InventoryTests.StockLevelTests
         {
             // Arrange
             string productId = "B0001-65mm-9Y";
-            InventoryManagement inventory = new InventoryManagement();
+            IInventoryManagement inventory = new InventoryManagement();
 
             // Act & Assert
             var exception = Assert.Throws<StockItemNotFoundException>(

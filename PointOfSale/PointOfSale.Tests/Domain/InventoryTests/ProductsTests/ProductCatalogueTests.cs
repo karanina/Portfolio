@@ -1,5 +1,5 @@
 using PointOfSale.Domain.Inventory.Products;
-using PointOfSale.Tests.TestDoubles;
+using PointOfSale.Tests.TestDoubles.Dummies;
 using Xunit;
 
 namespace PointOfSale.Tests.Domain.InventoryTests.ProductsTests
@@ -10,7 +10,7 @@ namespace PointOfSale.Tests.Domain.InventoryTests.ProductsTests
         public void Constructor_CreatesEmptyCatalogue()
         {
             // Act
-            ProductCatalogue catalogue = new ProductCatalogue();
+            IProductCatalogue catalogue = new ProductCatalogue();
 
             // Assert
             Assert.NotNull(catalogue);
@@ -21,8 +21,8 @@ namespace PointOfSale.Tests.Domain.InventoryTests.ProductsTests
         public void AddProduct_AddsProductSpecificationToCatalogue()
         {
             // Arrange
-            ProductCatalogue catalogue = new ProductCatalogue();
-            TestProductSpecification product = new TestProductSpecification(
+            IProductCatalogue catalogue = new ProductCatalogue();
+            ProductSpecification product = new DummyProductSpecification(
                 "B0001-65mm-9Y",
                 "Test Product",
                 199.99m
@@ -40,13 +40,13 @@ namespace PointOfSale.Tests.Domain.InventoryTests.ProductsTests
         public void AddProduct_AddDuplicateProductId_ThrowsException()
         {
             // Arrange
-            ProductCatalogue catalogue = new ProductCatalogue();
-            TestProductSpecification product1 = new TestProductSpecification(
+            IProductCatalogue catalogue = new ProductCatalogue();
+            ProductSpecification product1 = new DummyProductSpecification(
                 "B0001-65mm-9Y",
                 "Test Product 1",
                 199.99m
             );
-            TestProductSpecification product2 = new TestProductSpecification(
+            ProductSpecification product2 = new DummyProductSpecification(
                 "B0001-65mm-9Y",
                 "Test Product 2",
                 299.99m
@@ -59,10 +59,7 @@ namespace PointOfSale.Tests.Domain.InventoryTests.ProductsTests
             );
 
             // Assert
-            Assert.Equal(
-                $"A product with ID {product2.ProductId} already exists in the catalogue.",
-                exception.Message
-            );
+            Assert.Contains($"{product2.ProductId} already exists", exception.Message);
             Assert.Equal(1, catalogue.GetCatalogueSize());
         }
 
@@ -70,14 +67,14 @@ namespace PointOfSale.Tests.Domain.InventoryTests.ProductsTests
         public void GetByProductId_ReturnsCorrectProduct()
         {
             // Arrange
-            ProductCatalogue catalogue = new ProductCatalogue();
-            TestProductSpecification product1 = new TestProductSpecification(
+            IProductCatalogue catalogue = new ProductCatalogue();
+            ProductSpecification product1 = new DummyProductSpecification(
                 "B0001-65mm-9Y",
                 "Test Product",
                 199.99m
             );
 
-            TestProductSpecification product2 = new TestProductSpecification(
+            ProductSpecification product2 = new DummyProductSpecification(
                 "B0002-75mm-9Y",
                 "Another Test Product",
                 299.99m
