@@ -1,3 +1,4 @@
+using PointOfSale.Application.Sales;
 using PointOfSale.Domain.Inventory.Products;
 using PointOfSale.Domain.Inventory.StockLevel;
 using PointOfSale.Domain.Sales;
@@ -13,12 +14,14 @@ namespace PointOfSale.Tests.TestFixtures
         public IProductCatalogue Catalogue { get; }
         public IInventoryManagement Inventory { get; }
         public ISaleCalculator Calculator { get; }
+        public ISaleIdGenerator IdGenerator { get; }
 
         public SaleServiceTestContext(
             string productId,
             int quantityOnHand,
             string description,
-            decimal sellPrice
+            decimal sellPrice,
+            int saleQuantity
         )
         {
             Product = new DummyProductSpecification(productId, description, sellPrice);
@@ -31,9 +34,11 @@ namespace PointOfSale.Tests.TestFixtures
 
             Calculator = new FakeSaleCalculator
             {
-                Total = sellPrice * quantityOnHand,
-                GST = sellPrice * quantityOnHand * 0.15m,
+                Total = sellPrice * saleQuantity,
+                GST = sellPrice * saleQuantity * 0.15m,
             };
+            IdGenerator = new FakeSaleIdGenerator();
+
         }
     }
 }

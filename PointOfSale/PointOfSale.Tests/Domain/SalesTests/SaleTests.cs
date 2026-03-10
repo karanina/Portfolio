@@ -20,7 +20,7 @@ namespace PointOfSale.Tests.Domain.SalesTests
             Customer customer = new Customer(1, "Test customer", 10);
 
             // Act
-            Sale sale = new Sale(customer, inventory, catalogue);
+            Sale sale = new Sale(1, customer, inventory, catalogue);
 
             // Assert
             Assert.NotNull(sale);
@@ -36,7 +36,7 @@ namespace PointOfSale.Tests.Domain.SalesTests
             Customer customer = new Customer(1, "Test customer", 10);
 
             // Act
-            Sale sale = new Sale(customer, inventory, catalogue);
+            Sale sale = new Sale(1,customer, inventory, catalogue);
 
             // Assert
             Assert.Equal(customer, sale.Customer);
@@ -51,7 +51,7 @@ namespace PointOfSale.Tests.Domain.SalesTests
             Customer customer = new Customer(1, "Test customer", 10);
 
             // Act
-            Sale sale = new Sale(customer, inventory, catalogue);
+            Sale sale = new Sale(1,customer, inventory, catalogue);
 
             // Assert
             Assert.Equal(SaleStatus.Open, sale.Status);
@@ -66,7 +66,7 @@ namespace PointOfSale.Tests.Domain.SalesTests
             Customer customer = new Customer(1, "Test customer", 10);
 
             // Act
-            Sale sale = new Sale(customer, inventory, catalogue);
+            Sale sale = new Sale(1,customer, inventory, catalogue);
 
             // Assert
             Assert.Equal(0m, sale.GetTotalPaid());
@@ -426,7 +426,7 @@ namespace PointOfSale.Tests.Domain.SalesTests
 
             IInventoryManagement inventory = new FakeInventoryManagement();
 
-            Sale sale = new Sale(new Customer(1, "Test customer", 10), inventory, catalogue);
+            Sale sale = new Sale(1,new Customer(1, "Test customer", 10), inventory, catalogue);
 
             // Act & Assert
             var exception = Assert.Throws<SaleItemNotFoundException>(
@@ -502,7 +502,7 @@ namespace PointOfSale.Tests.Domain.SalesTests
             IInventoryManagement inventory = new FakeInventoryManagement();
             Customer customer = new Customer(1, "Test customer", 10);
 
-            Sale sale = new Sale(customer, inventory, catalogue);
+            Sale sale = new Sale(1,customer, inventory, catalogue);
 
             // Act
             var exception = Assert.Throws<InvalidOperationException>(() => sale.CompleteSale(100m));

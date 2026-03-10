@@ -28,10 +28,7 @@ namespace PointOfSale.Tests.TestDoubles.Fakes
 
         public IReadOnlyDictionary<string, StockItem> GetAllStockItems()
         {
-            return _stock.ToDictionary(
-                kvp => kvp.Key, 
-                kvp => new StockItem(kvp.Key, kvp.Value)
-                );
+            return _stock.ToDictionary(kvp => kvp.Key, kvp => new StockItem(kvp.Key, kvp.Value));
         }
 
         public int GetStockLevel(string productId)

@@ -1,7 +1,5 @@
-
 using PointOfSale.Domain;
 using Xunit;
-
 
 namespace PointOfSale.Tests.Domain
 {
@@ -68,7 +66,6 @@ namespace PointOfSale.Tests.Domain
         //     // Assert
         //     Assert.Equal("Discount rates must be between 0 and 100 percent", exception.Message);
         // }
-        
         // [Fact]
         // public void UpdateDiscountRate_ThrowsException_DiscountRateGreaterThan100()
         // {

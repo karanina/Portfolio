@@ -14,6 +14,11 @@ namespace PointOfSale.Application.Sales
         private readonly IInventoryManagement _inventory;
         private readonly ISaleCalculator _calculator;
 
+        private readonly ISaleIdGenerator _idGenerator;
+
+        // Assuming a GST rate of 15% This will be later configurable in a real application, but hardcoded here for simplicity.
+        private int GSTRate = 15;
+
         // _sale and CurrentSale are a guarded backing field pattern.
         private Sale? _sale; // backing field / storage of the sale
 
@@ -29,12 +34,14 @@ namespace PointOfSale.Application.Sales
         public SaleService(
             IProductCatalogue catalogue,
             IInventoryManagement inventory,
-            ISaleCalculator calculator
+            ISaleCalculator calculator,
+            ISaleIdGenerator idGenerator
         )
         {
             _inventory = inventory ?? throw new ArgumentNullException(nameof(inventory));
             _catalogue = catalogue ?? throw new ArgumentNullException(nameof(catalogue));
             _calculator = calculator ?? throw new ArgumentNullException(nameof(calculator));
+            _idGenerator = idGenerator ?? throw new ArgumentNullException(nameof(idGenerator));
         }
 
         public void CreateSale(Customer customer)
@@ -50,7 +57,14 @@ namespace PointOfSale.Application.Sales
                     "A valid customer must be provided to create a sale."
                 );
             }
-            _sale = new Sale(customer, _inventory, _catalogue);
+            int saleId = _idGenerator.NextId();
+            _sale = new Sale(saleId, customer, _inventory, _catalogue);
+        }
+
+        public CurrentSaleSummaryDto AddItemAndGetCurrentSummary(string productId, int quantity)
+        {
+            AddItem(productId, quantity);
+            return GetCurrentSaleSummary();
         }
 
         public void AddItem(string productId, int quantity)
@@ -68,14 +82,71 @@ namespace PointOfSale.Application.Sales
             CurrentSale.MakePayment(amount);
         }
 
-        public SaleStatus CompleteSale()
+        public ReceiptDto CompleteSale()
         {
-            decimal totalDue = _calculator.CalculateTotal(CurrentSale);
-            CurrentSale.CompleteSale(totalDue);
+            IReadOnlyList<ReceiptItemDto> items = GetCurrentSaleItems();
 
-            SaleStatus status = CurrentSale.Status;
-            _sale = null; // reset sale for next transaction
-            return status;
+            // calculate the totals
+            decimal subTotal = _calculator.CalculateTotal(CurrentSale);
+            decimal gst = _calculator.CalculateGST(CurrentSale, GSTRate);
+            decimal total = subTotal;
+
+            // complete the sale
+            CurrentSale.CompleteSale(total);
+
+            // build the receipt DTO to return to the presentation layer
+            ReceiptDto receipt = new ReceiptDto(
+                CurrentSale.Id,
+                new DateTime(),
+                CurrentSale.Customer.Name,
+                subTotal,
+                gst,
+                total,
+                subTotal,
+                items
+            );
+
+            // reset the sale for the next transaction
+            _sale = null;
+
+            return receipt;
         }
+
+        // build receipt items from the current sale items, calculating line totals for each item using the calculator
+        public IReadOnlyList<ReceiptItemDto> GetCurrentSaleItems()
+        {
+            return CurrentSale
+                .GetItems()
+                .Select(item =>
+                {
+                    decimal lineTotal = _calculator.CalculateLineTotal(CurrentSale, item);
+                    return new ReceiptItemDto(
+                        item.ProductId,
+                        item.Description,
+                        item.Quantity,
+                        item.UnitPrice,
+                        lineTotal
+                    );
+                })
+                .ToList()
+                .AsReadOnly();
+        }
+
+        // For use by presentation layer to display the current sale record, while the sale is open
+        public CurrentSaleSummaryDto GetCurrentSaleSummary()
+        {
+            // to avoid repeated guard checks that are brought on by using CurrentSale - will only check once
+            Sale sale = CurrentSale;
+
+            decimal subtotal = _calculator.CalculateTotal(sale);
+            decimal gst = _calculator.CalculateGST(sale, GSTRate);
+            decimal total = subtotal;
+
+            IReadOnlyList<ReceiptItemDto> items = GetCurrentSaleItems();
+
+            return new CurrentSaleSummaryDto(sale.Customer.Name, subtotal, total, gst, items);
+        }
+
+
     }
 }

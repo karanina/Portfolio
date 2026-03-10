@@ -34,7 +34,7 @@ namespace PointOfSale.Tests.TestFixtures
 
             Customer = customer;
 
-            Sale = new Sale(Customer, Inventory, Catalogue);
+            Sale = new Sale(1, Customer, Inventory, Catalogue);
         }
     }
 }

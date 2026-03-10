@@ -27,6 +27,7 @@ namespace PointOfSale.Domain.Sales
     // Represents the collection of products being purchased in a sale
     // Is the aggregate root for SaleItems.
     {
+        public int Id { get; }
         private readonly Dictionary<string, SaleItem> _items;
         private readonly IProductCatalogue _catalogue;
         private readonly IInventoryManagement _inventory;
@@ -36,16 +37,25 @@ namespace PointOfSale.Domain.Sales
         // getter only as we don't want to be able to change the customer mid sale.
         public Customer Customer { get; }
 
-        public Sale(Customer customer, IInventoryManagement inventory, IProductCatalogue catalogue)
+        public Sale(
+            int id,
+            Customer customer,
+            IInventoryManagement inventory,
+            IProductCatalogue catalogue
+        )
         {
             // Guard clauses to ensure valid objects are provided for the sale.
 
             // TODO: Validate customer is in Customer Collection
-
+            if (id <= 0)
+            {
+                throw new ArgumentException("Sale id must be greater than zero", nameof(id));
+            }
             Customer = customer ?? throw new ArgumentNullException(nameof(customer));
             _inventory = inventory ?? throw new ArgumentNullException(nameof(inventory));
             _catalogue = catalogue ?? throw new ArgumentNullException(nameof(catalogue));
 
+            Id = id;
             _items = new Dictionary<string, SaleItem>();
             Status = SaleStatus.Open;
             _totalPaid = 0m;

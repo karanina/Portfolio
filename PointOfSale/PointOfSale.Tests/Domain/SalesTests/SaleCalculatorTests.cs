@@ -31,7 +31,7 @@ namespace PointOfSale.Tests.Domain.SalesTests
             inventory.IncreaseStock(productId, quantityOnHand);
 
             // No customer discount for simplicity in this test, as we're only testing that quantity is multiplied correctly
-            Sale sale = new Sale(new Customer(1, "Test customer"), inventory, catalogue);
+            Sale sale = new Sale(1,new Customer(1, "Test customer"), inventory, catalogue);
             sale.AddItem(productId, saleQuantity);
 
             SaleItemView item = Assert.Single(sale.GetItems());
@@ -66,7 +66,7 @@ namespace PointOfSale.Tests.Domain.SalesTests
             IInventoryManagement inventory = new FakeInventoryManagement();
             inventory.IncreaseStock(productId, quantityOnHand);
 
-            Sale sale = new Sale(new Customer(1, "Test customer", 10), inventory, catalogue);
+            Sale sale = new Sale(1,new Customer(1, "Test customer", 10), inventory, catalogue);
             sale.AddItem(productId, saleQuantity);
 
             SaleItemView item = Assert.Single(sale.GetItems());
@@ -107,7 +107,7 @@ namespace PointOfSale.Tests.Domain.SalesTests
             IInventoryManagement inventory = new FakeInventoryManagement();
             inventory.IncreaseStock(productId, quantityOnHand);
 
-            Sale sale = new Sale(new Customer(1, "Test customer", 10), inventory, catalogue);
+            Sale sale = new Sale(1, new Customer(1, "Test customer", 10), inventory, catalogue);
             sale.AddItem(productId, saleQuantity);
 
             SaleItem item = sale.GetItem(productId);
@@ -159,7 +159,7 @@ namespace PointOfSale.Tests.Domain.SalesTests
             IInventoryManagement inventory = new FakeInventoryManagement();
             inventory.IncreaseStock(productId, quantityOnHand);
 
-            Sale sale = new Sale(new Customer(1, "Test customer", 10), inventory, catalogue);
+            Sale sale = new Sale(1, new Customer(1, "Test customer", 10), inventory, catalogue);
             sale.AddItem(productId, saleQuantity);
             SaleItem item = sale.GetItem(productId);
             item.OverrideUnitPrice(manualUnitPrice);
@@ -204,7 +204,7 @@ namespace PointOfSale.Tests.Domain.SalesTests
             IInventoryManagement inventory = new FakeInventoryManagement();
             inventory.IncreaseStock(productId, quantityOnHand);
 
-            Sale sale = new Sale(new Customer(1, "Test customer", 10), inventory, catalogue);
+            Sale sale = new Sale(1, new Customer(1, "Test customer", 10), inventory, catalogue);
             sale.AddItem(productId, saleQuantity);
             SaleItem item = sale.GetItem(productId);
 
@@ -266,7 +266,7 @@ namespace PointOfSale.Tests.Domain.SalesTests
             inventory.IncreaseStock(productId1, quantityOnHand1);
             inventory.IncreaseStock(productId2, quantityOnHand2);
 
-            Sale sale = new Sale(new Customer(1, "Test customer", 10), inventory, catalogue);
+            Sale sale = new Sale(1, new Customer(1, "Test customer", 10), inventory, catalogue);
             sale.AddItem(productId1, saleQuantity1);
             sale.AddItem(productId2, saleQuantity2);
 
@@ -308,7 +308,7 @@ namespace PointOfSale.Tests.Domain.SalesTests
             IInventoryManagement inventory = new FakeInventoryManagement();
             inventory.IncreaseStock(productId, quantityOnHand);
 
-            Sale sale = new Sale(new Customer(1, "Test customer"), inventory, catalogue);
+            Sale sale = new Sale(1,new Customer(1, "Test customer"), inventory, catalogue);
             sale.AddItem(productId, saleQuantity);
 
             SaleCalculator salecalculator = new SaleCalculator();
